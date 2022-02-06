@@ -1,0 +1,182 @@
+* {
+  margin: 0;
+}
+
+:root {
+  --primary-color: #3734a9;
+}
+
+.wrapper {
+  display: flex;
+  flex-direction: row;
+  height: 100%;
+  background-color: #f8f9fa;
+}
+
+.sidebar {
+  position: fixed;
+  width: 15%;
+  height: 100vh;
+  min-width: 230px;
+  border-radius: 50px;
+  background-color: white;
+}
+
+.content {
+  margin-left: 15em;
+}
+
+.content-wrapper {
+  width: 100%;
+  height: 100vh;
+}
+
+.content-wrapper .top {
+  margin-left: 15.8em;
+  height: 10%;
+  z-index: 999;
+}
+
+.content-wrapper .content {
+  height: 90%;
+  background-color: #f8f9fa;
+}
+
+.sidebar .logo {
+  margin-top: 1vh;
+  margin-left: 0.5em;
+  margin-bottom: 0.5em;
+}
+
+.nav-link {
+  color: #3734a9;
+}
+
+.nav-pills .nav-link.active,
+.nav-pills .show > .nav-link {
+  background-color: white;
+  font-weight: bold;
+  color: #3734a9;
+}
+
+.content .home-title {
+  margin-top: 1em;
+  margin-bottom: -1.5em;
+  margin-left: 0.5em;
+  color: #3734a9;
+  font-weight: bold;
+}
+
+.card .card-text {
+  text-align: center;
+}
+
+.card {
+  background-color: var(--primary-color);
+  cursor: pointer;
+}
+
+p.card-text {
+  color: white;
+}
+
+.btn-group img {
+  opacity: 0.5;
+}
+
+.btn-general {
+  width: 35px;
+  height: 35px;
+}
+
+#like {
+  content: url("../assets/pics/heart.png");
+  -webkit-appearance: none;
+  opacity: 0.5;
+}
+
+#like:hover {
+  width: 40px;
+  height: 40px;
+  opacity: 1;
+}
+
+#like:checked {
+  width: 40px;
+  height: 40px;
+  opacity: 1;
+}
+
+#comment {
+  content: url("../assets/pics/comment.png");
+  -webkit-appearance: none;
+}
+
+#comment:hover {
+  width: 40px;
+  height: 40px;
+}
+
+#comment:checked {
+  width: 40px;
+  height: 40px;
+}
+
+#findout {
+  content: url("../assets/pics/question.png");
+  -webkit-appearance: none;
+}
+
+#findout:hover {
+  width: 40px;
+  height: 40px;
+}
+
+#findout:checked {
+  width: 40px;
+  height: 40px;
+}
+
+.btn-group {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.tab-content {
+  margin-right: 3em;
+}
+
+.profile-item {
+  background-color: red;
+}
+
+.navbar-right {
+  margin-right: 3em;
+}
+
+.navbar {
+  background-color: var(--primary-color);
+}
+
+.searchbar {
+  display: flex;
+}
+
+.searchbar .btn {
+  margin-left: 0.5em;
+}
+
+.wrapper .logo {
+  display: flex;
+}
+
+.wrapper h4 {
+  color: var(--primary-color);
+  font-weight: bold;
+  margin-left: 0.2em;
+}
+
+.wrapper span {
+  font-weight: normal;
+}

@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" href="assets/pics/logo-pic.png">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous" />
+  <link rel="stylesheet" href="css/style.css" />
+  <title>Restify</title>
+</head>
+
+<body>
+  <div class="wrapper">
+    <!-- Start of sidebar -->
+    <!-- Sidebar Source: https://getbootstrap.com/docs/4.0/components/navs/ -->
+    <div class="sidebar">
+      <div class="logo">
+        <img src="assets/pics/logo-pic.png" alt="logo" />
+        <h4 class="mt-3">Resti<span>fy</span></h4>
+        <hr>
+      </div>
+
+      <div class="menus">
+        <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+          <a class="nav-link active" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-home" role="tab"
+            aria-controls="v-pills-home" aria-selected="true"> <img height="35px" width="35px"
+              src="assets/pics/home.png" alt="home"> Home</a>
+          <a class="nav-link" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-profile" role="tab"
+            aria-controls="v-pills-profile" aria-selected="false"><img height="35px" width="35px"
+              src="assets/pics/feed.png" alt="feed"> Feed</a>
+          <a class="nav-link" id="v-pills-messages-tab" data-toggle="pill" href="#v-pills-messages" role="tab"
+            aria-controls="v-pills-messages" aria-selected="false"><img height="35px" width="35px"
+              src="assets/pics/person.png" alt="profile"> My Profile</a>
+          <a class="nav-link" id="v-pills-settings-tab" data-toggle="pill" href="#v-pills-settings" role="tab"
+            aria-controls="v-pills-settings" aria-selected="false"><img height="35px" width="35px"
+              src="assets/pics/restaurant.png" alt="restaurant">My Restaurant</a>
+        </div>
+
+
+      </div>
+    </div>
+    <!-- End of sidebar -->
+
+    <div class="content-wrapper">
+      <!-- Start of Navbar (top portion of layout) -->
+      <div class="top">
+        <!-- Source: https://getbootstrap.com/docs/4.1/components/navbar,
+                     https://stackoverflow.com/questions/19733447/bootstrap-navbar-with-left-center-or-right-aligned-items -->
+        <nav class="navbar navbar-expand-md navbar-dark">
+          <div class="container-fluid">
+            <a class="navbar-brand abs" href="#">Main Menu</a>
+            <button class="navbar-toggler ms-auto" type="button" data-bs-toggle="collapse"
+              data-bs-target="#collapseNavbar">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="navbar-collapse collapse" id="collapseNavbar">
+              <form class="searchbar form-inline my-2 my-lg-0">
+                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
+              </form>
+              <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                  <a class="nav-link navbar-right" style="margin-right: 0.5em;" href="" data-bs-target="#myModal"
+                    data-bs-toggle="modal">
+                    <img width="25px" src="assets/pics/settings.png" alt=""> Settings
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link dropdown-toggle navbar-right" style="margin-right: 0.5em;" href="#"
+                    id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <img width="25px" src="assets/pics/notification.png" alt=""> Notifications
+                  </a>
+                  <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="#">Michael added a new item to their menu</a>
+                    <a class="dropdown-item" href="#">Richard added a new item to their menu</a>
+                  </div>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link dropdown-toggle navbar-right" href="#" id="navbarDropdown" role="button"
+                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <img width="25px" src="assets/pics/profile.png" alt=""> Scarlett
+                  </a>
+                  <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="#">Profile</a>
+                    <a class="dropdown-item" href="#">Edit Profile</a>
+                  </div>
+                </li>
+
+              </ul>
+            </div>
+          </div>
+        </nav>
+        <!-- End of navbar -->
+
+      </div>
+      <div class="content">
+        <div class="tab-content" id="v-pills-tabContent">
+
+
+          <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
+            <h3 class="home-title">Restaurants</h3>
+
+            <!-- Start of cards -->
+            <!-- Source: https://getbootstrap.com/docs/4.3/examples/album/ -->
+            <div class="album py-5 bg-light">
+              <div class="container mr-3">
+                <div class="row">
+                  <!-- card 1 -->
+                  <div class="col-md-3">
+                    <div class="card mb-2 shadow-sm">
+
+                      <img class="card-img-top" src="assets/pics/restaurant-img.png" alt="">
+
+                      <div class="card-body ">
+                        <p class="card-text"><b>Maor's</b> ChickenWings.</p>
+                        <div class="d-flex justify-content-between align-items-center">
+                          <small class="text-muted">9 Views</small>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="btn-group mb-3">
+                      <div class="left">
+                        <input type="checkbox" id="like" class="btn-general" class="btn-general" />
+                      </div>
+                      <div class="right">
+                        <input type="checkbox" id="comment" class="btn-general" />
+                        <input type="checkbox" id="findout" class="btn-general" />
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- card 1 -->
+                  <div class="col-md-3">
+                    <div class="card mb-2 shadow-sm">
+
+                      <img class="card-img-top" src="assets/pics/restaurant-img.png" alt="">
+
+                      <div class="card-body">
+                        <p class="card-text"><b>Maor's</b> ChickenWings.</p>
+                        <div class="d-flex justify-content-between align-items-center">
+                          <small class="text-muted">9 Views</small>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="btn-group mb-3">
+                      <div class="left">
+                        <input type="checkbox" id="like" class="btn-general" />
+                      </div>
+                      <div class="right">
+                        <input type="checkbox" id="comment" class="btn-general" />
+                        <input type="checkbox" id="findout" class="btn-general" />
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- card 2 -->
+                  <div class="col-md-3">
+                    <div class="card mb-2 shadow-sm">
+
+                      <img class="card-img-top" src="assets/pics/restaurant-img.png" alt="">
+
+                      <div class="card-body">
+                        <p class="card-text"><b>Maor's</b> ChickenWings.</p>
+                        <div class="d-flex justify-content-between align-items-center">
+                          <small class="text-muted">9 Views</small>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="btn-group mb-3">
+                      <div class="left">
+                        <input type="checkbox" id="like" class="btn-general" />
+                      </div>
+                      <div class="right">
+                        <input type="checkbox" id="comment" class="btn-general" />
+                        <input type="checkbox" id="findout" class="btn-general" />
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- card 3 -->
+                  <div class="col-md-3">
+                    <div class="card mb-2 shadow-sm">
+
+                      <img class="card-img-top" src="assets/pics/restaurant-img.png" alt="">
+
+                      <div class="card-body">
+                        <p class="card-text"><b>Maor's</b> ChickenWings.</p>
+                        <div class="d-flex justify-content-between align-items-center">
+                          <small class="text-muted">9 Views</small>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="btn-group mb-3">
+                      <div class="left">
+                        <input type="checkbox" id="like" class="btn-general" />
+                      </div>
+                      <div class="right">
+                        <input type="checkbox" id="comment" class="btn-general" />
+                        <input type="checkbox" id="findout" class="btn-general" />
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- card 4 -->
+                  <div class="col-md-3">
+                    <div class="card mb-2 shadow-sm">
+
+                      <img class="card-img-top" src="assets/pics/restaurant-img.png" alt="">
+
+                      <div class="card-body">
+                        <p class="card-text"><b>Maor's</b> ChickenWings.</p>
+                        <div class="d-flex justify-content-between align-items-center">
+                          <small class="text-muted">9 Views</small>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="btn-group mb-3">
+                      <div class="left">
+                        <input type="checkbox" id="like" class="btn-general" />
+                      </div>
+                      <div class="right">
+                        <input type="checkbox" id="comment" class="btn-general" />
+                        <input type="checkbox" id="findout" class="btn-general" />
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- card 5 -->
+                  <div class="col-md-3">
+                    <div class="card mb-2 shadow-sm">
+                      <img class="card-img-top" src="assets/pics/restaurant-img.png" alt="">
+                      <div class="card-body">
+                        <p class="card-text"><b>Maor's</b> ChickenWings.</p>
+                        <div class="d-flex justify-content-between align-items-center">
+                          <small class="text-muted">9 Views</small>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="btn-group mb-3">
+                      <div class="left">
+                        <input type="checkbox" id="like" class="btn-general" />
+                      </div>
+                      <div class="right">
+                        <input type="checkbox" id="comment" class="btn-general" />
+                        <input type="checkbox" id="findout" class="btn-general" />
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- card 6 -->
+                  <div class="col-md-3">
+                    <div class="card mb-2 shadow-sm">
+
+                      <img class="card-img-top" src="assets/pics/restaurant-img.png" alt="">
+
+                      <div class="card-body">
+                        <p class="card-text"><b>Maor's</b> ChickenWings.</p>
+                        <div class="d-flex justify-content-between align-items-center">
+                          <small class="text-muted">9 Views</small>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="btn-group mb-3">
+                      <div class="left">
+                        <input type="checkbox" id="like" class="btn-general" />
+                      </div>
+                      <div class="right">
+                        <input type="checkbox" id="comment" class="btn-general" />
+                        <input type="checkbox" id="findout" class="btn-general" />
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- card 7 -->
+                  <div class="col-md-3">
+                    <div class="card mb-2 shadow-sm">
+                      <img class="card-img-top" src="assets/pics/restaurant-img.png" alt="">
+                      <div class="card-body">
+                        <p class="card-text"><b>Maor's</b> ChickenWings.</p>
+                        <div class="d-flex justify-content-between align-items-center">
+                          <small class="text-muted">9 Views</small>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- card 8 -->
+                    <div class="btn-group mb-3">
+                      <div class="left">
+                        <input type="checkbox" id="like" class="btn-general" />
+                      </div>
+                      <div class="right">
+                        <input type="checkbox" id="comment" class="btn-general" />
+                        <input type="checkbox" id="findout" class="btn-general" />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">B
+          </div>
+          <div class="tab-pane fade" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab">C
+          </div>
+          <div class="tab-pane fade" id="v-pills-settings" role="tabpanel" aria-labelledby="v-pills-settings-tab">D
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap imports -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+    crossorigin="anonymous"></script>
+
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+    integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+    integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+    crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+    crossorigin="anonymous"></script>
+</body>
+
+</html>
