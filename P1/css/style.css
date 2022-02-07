@@ -88,14 +88,10 @@ p.card-text {
 }
 
 #like:hover {
-  width: 40px;
-  height: 40px;
   opacity: 1;
 }
 
 #like:checked {
-  width: 40px;
-  height: 40px;
   opacity: 1;
 }
 
@@ -105,13 +101,7 @@ p.card-text {
 }
 
 #comment:hover {
-  width: 40px;
-  height: 40px;
-}
-
-#comment:checked {
-  width: 40px;
-  height: 40px;
+  opacity: 0.5;
 }
 
 #findout {
@@ -120,8 +110,7 @@ p.card-text {
 }
 
 #findout:hover {
-  width: 40px;
-  height: 40px;
+  opacity: 0.5;
 }
 
 #findout:checked {
@@ -149,6 +138,7 @@ p.card-text {
 
 .navbar {
   background-color: var(--primary-color);
+  z-index: 999;
 }
 
 .searchbar {
@@ -184,31 +174,39 @@ p.card-text {
   background: #89f7fe;
 
   /* Chrome 10-25, Safari 5.1-6 */
-  background: -webkit-linear-gradient(to top, rgba(137, 247, 254, 1), rgba(102, 166, 255, 1));
+  background: -webkit-linear-gradient(
+    to top,
+    rgba(137, 247, 254, 1),
+    rgba(102, 166, 255, 1)
+  );
 
   /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-  background: linear-gradient(to top, rgba(137, 247, 254, 1), rgba(102, 166, 255, 1))
+  background: linear-gradient(
+    to top,
+    rgba(137, 247, 254, 1),
+    rgba(102, 166, 255, 1)
+  );
 }
 
-.BorderRadius{
+.BorderRadius {
   border-radius: 1000px;
 }
 
 .navbar-abs {
   position: absolute;
-  width:100%;
-  background:transparent;
+  width: 100%;
+  background: transparent;
 }
 
 a {
-    text-decoration: none;
+  text-decoration: none;
 }
 
 .btn-sml {
   border-radius: 8px;
 }
 
-.nav-item{
+.nav-item {
   padding-left: 20px;
 }
 
@@ -216,7 +214,7 @@ a {
   white-space: nowrap;
 }
 
-.use-flex{
+.use-flex {
   display: flex;
   align-items: center;
   justify-content: center;
