@@ -172,6 +172,9 @@ p.card-text {
   font-weight: normal;
 }
 
-.homeicon {
-  display: flex;
+.far,
+.fas {
+  width: 25px;
+  height: 25px;
+  color: white;
 }
