@@ -178,3 +178,46 @@ p.card-text {
   height: 25px;
   color: white;
 }
+
+.gradient-custom {
+  /* fallback for old browsers */
+  background: #89f7fe;
+
+  /* Chrome 10-25, Safari 5.1-6 */
+  background: -webkit-linear-gradient(to top, rgba(137, 247, 254, 1), rgba(102, 166, 255, 1));
+
+  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  background: linear-gradient(to top, rgba(137, 247, 254, 1), rgba(102, 166, 255, 1))
+}
+
+.BorderRadius{
+  border-radius: 1000px;
+}
+
+.navbar-abs {
+  position: absolute;
+  width:100%;
+  background:transparent;
+}
+
+a {
+    text-decoration: none;
+}
+
+.btn-sml {
+  border-radius: 8px;
+}
+
+.nav-item{
+  padding-left: 20px;
+}
+
+.no-break-label {
+  white-space: nowrap;
+}
+
+.use-flex{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
