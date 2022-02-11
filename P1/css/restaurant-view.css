@@ -25,3 +25,12 @@ p {
     overflow: visible;
   }
 }
+
+.nav-tabs {
+  border: none;
+}
+
+.nav-tabs .nav-link,
+.tab-pane {
+  color: white;
+}

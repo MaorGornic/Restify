@@ -74,6 +74,7 @@ p.card-text {
   content: url("../assets/pics/heart.png");
   -webkit-appearance: none;
   opacity: 0.5;
+  cursor: pointer;
 }
 
 #like:hover {
@@ -87,6 +88,7 @@ p.card-text {
 #comment {
   content: url("../assets/pics/comment.png");
   -webkit-appearance: none;
+  cursor: pointer;
 }
 
 #comment:hover {
@@ -96,6 +98,7 @@ p.card-text {
 #findout {
   content: url("../assets/pics/question.png");
   -webkit-appearance: none;
+  cursor: pointer;
 }
 
 #findout:hover {

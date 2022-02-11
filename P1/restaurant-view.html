@@ -96,11 +96,11 @@
 
       </div>
       <div class="content">
-        <div class="restaurant-frame p-3 container-fluid">
-          <h4 class="pt-4">Restaurant’s Information</h4>
+        <div class="restaurant-frame p-1 container-fluid">
+          <h4 class="px-2 pt-2">Restaurant’s Information</h4>
           <div class="container">
             <div class="row">
-              <div class="col-md-3 mt-2">
+              <div class="col-md-3 mt-3">
                 <div class="row-sm text-center">
                   <img height="420px" class="img-fluid rounded" src="assets/pics/restaurant-img.png"
                     alt="restaurant image">
@@ -123,19 +123,42 @@
                 </div>
               </div>
               <div class="col">
-                <nav class="navbar navbar-expand-sm navbar-dark">
-                  <ul class="navbar-nav">
-                    <li class="nav-item active">
-                      <a class="nav-link" href="#">General</a>
-                    </li>
-                    <li class="nav-item">
-                      <a class="nav-link" href="#">Comments</a>
-                    </li>
-                    <li class="nav-item">
-                      <a class="nav-link" href="#">Blog Posts</a>
-                    </li>
-                  </ul>
+
+                <!-- Nested Navbar Start -->
+                <!-- Source: https://getbootstrap.com/docs/5.0/components/navs-tabs/ -->
+                <nav>
+                  <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                    <button class="nav-link active btn" id="nav-general-info-tab" data-bs-toggle="tab"
+                      data-bs-target="#nav-general" type="button" role="tab" aria-controls="nav-general"
+                      aria-selected="true">General</button>
+                    <button class="nav-link btn" id="nav-comments-tab" data-bs-toggle="tab"
+                      data-bs-target="#nav-comments" type="button" role="tab" aria-controls="nav-comments"
+                      aria-selected="false">Comments</button>
+                    <button class="nav-link btn" id="nav-blogs-posts-tab" data-bs-toggle="tab"
+                      data-bs-target="#nav-blogs-posts" type="button" role="tab" aria-controls="nav-blogs-posts"
+                      aria-selected="false">Blog Posts</button>
+                  </div>
                 </nav>
+                <div class="tab-content" id="nav-tabContent">
+                  <div class="tab-pane fade show active" id="nav-general" role="tabpanel"
+                    aria-labelledby="nav-general-info-tab">
+                    <div class="container-fluid mt-3">
+                      Test1
+                    </div>
+                  </div>
+                  <div class="tab-pane fade" id="nav-comments" role="tabpanel" aria-labelledby="nav-comments-tab">
+                    <div class="container-fluid mt-3">
+                      Test2
+                    </div>
+                  </div>
+                  <div class="tab-pane fade" id="nav-blogs-posts" role="tabpanel" aria-labelledby="nav-blogs-posts-tab">
+                    <div class="container-fluid mt-3">
+                      Test3
+                    </div>
+                  </div>
+                </div>
+                <!-- Nested Navbar End -->
+
               </div>
             </div>
           </div>
