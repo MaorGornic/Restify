@@ -1,0 +1,27 @@
+:root {
+  --primary-color: #3734a9;
+}
+
+.wrapper {
+  overflow: hidden;
+}
+
+.restaurant-frame {
+  background-color: var(--primary-color);
+  /* height: 90%;
+  width: 90%; */
+}
+
+.restaurant-frame h4 {
+  color: white;
+}
+
+p {
+  color: white;
+}
+
+@media only screen and (max-width: 766px) {
+  .wrapper {
+    overflow: visible;
+  }
+}
