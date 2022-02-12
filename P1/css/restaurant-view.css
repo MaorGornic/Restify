@@ -77,16 +77,21 @@ p {
   cursor: pointer;
 }
 
-/* 
-.item-container {
-  display: flex;
+/* Source overlay starts */
+/* https://www.w3schools.com/howto/howto_css_image_overlay_title.asp */
+
+.overlay-menu-img {
+  position: absolute;
+  opacity: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  transition: 0.5s ease;
+  color: white;
+  font-size: 145%;
+  padding: 1%;
 }
 
-.item-desc {
-  background-color: red;
+.container-menu-img:hover .overlay-menu-img {
+  opacity: 1;
 }
-
-.item-pic {
-  width: 200px;
-  background-color: orange;
-} */
+/* Source overlay ends */
