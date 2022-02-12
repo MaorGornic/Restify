@@ -79,11 +79,11 @@
                 <li class="nav-item">
                   <a class="nav-link dropdown-toggle navbar-right" href="#" id="navbarDropdown" role="button"
                     data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <img width="25px" src="assets/pics/profile.png" alt=""> Scarlett
+                    <img width="25px" src="assets/pics/profile.png" alt=""> Todd
                   </a>
                   <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="#">Profile</a>
-                    <a class="dropdown-item" href="#">Edit Profile</a>
+                    <a class="dropdown-item" href="profile.html">Profile</a>
+                    <a class="dropdown-item" href="editprofile.html">Edit Profile</a>
                     <a class="dropdown-item" href="login.html">Log Out</a>
                   </div>
                 </li>
@@ -105,7 +105,7 @@
                   <img height="420px" class="img-fluid rounded" src="assets/pics/restaurant-img.png"
                     alt="restaurant image">
                   <p>Maor's ChickenWings</p>
-                  <button style="width: 300px; opacity: 0.75;" type="button" class="btn btn-dark">Follow</button>
+                  <button style="width: 95%; opacity: 0.75;" type="button" class="btn btn-dark">Follow</button>
                   <hr class="mt-1 mb-3" />
                   <kbd>
                     <p class="fa fa-users"></p> Followers 14
@@ -221,6 +221,7 @@
 
                     </div>
                   </div>
+                  <!-- Comments -->
                   <div class="tab-pane fade" id="nav-comments" role="tabpanel" aria-labelledby="nav-comments-tab">
                     <div class="container-fluid mt-3 overflow-auto">
                       <div class="overflow-auto p-3 mb-3 mb-md-0 me-md-3" style="max-height: 390px;">
@@ -287,7 +288,8 @@
                     <div class="container-fluid mt-3">
                       <h4 class="mb-3">Collection of pictures of the restaurant</h4>
 
-
+                      <!-- Carousel Start -->
+                      <!-- Source: https://getbootstrap.com/docs/5.0/components/carousel/ -->
                       <div id="carouselExampleFade" class="carousel slide" data-bs-ride="carousel">
                         <div class="carousel-inner">
                           <div class="carousel-item active">
@@ -315,14 +317,65 @@
                           <span class="visually-hidden">Next</span>
                         </button>
                       </div>
+                      <!-- Carousel End -->
 
                     </div>
                   </div>
                   <!-- Blog Posts -->
                   <div class="tab-pane fade" id="nav-blogs-posts" role="tabpanel" aria-labelledby="nav-blogs-posts-tab">
-                    <div class="container-fluid mt-3">
-                      Test4
+
+                    <div class="container-fluid mt-3 overflow-auto">
+                      <div class="overflow-auto p-3 mb-3 mb-md-0 me-md-3" style="max-height: 390px;">
+                        <!-- Blog Post 1 -->
+                        <div class="card w-75">
+                          <div class="row">
+                            <div class="col">
+                              <div class="card-body">
+                                <h5 class="card-title">Maor's ChickenWings</h5>
+                                <p class="card-text">How we make our chicken wings</p>
+                                <a href="blog-view.html" class="btn btn-dark">Read More</a>
+                              </div>
+                            </div>
+                            <div class="col">
+                              <img src="assets/pics/wings.png" class="rounded float-end w-50" alt=" ...">
+                            </div>
+                          </div>
+                        </div>
+
+                        <!-- Blog Post 2 -->
+                        <div class="card w-75 mt-2">
+                          <div class="row">
+                            <div class="col">
+                              <div class="card-body">
+                                <h5 class="card-title">Maor's ChickenWings</h5>
+                                <p class="card-text">How we make our chicken wings</p>
+                                <a href="blog-view.html" class="btn btn-dark">Read More</a>
+                              </div>
+                            </div>
+                            <div class="col">
+                              <img src="assets/pics/wings.png" class="rounded float-end w-50" alt=" ...">
+                            </div>
+                          </div>
+                        </div>
+
+                        <!-- Blog Post 3 -->
+                        <div class="card w-75 mt-2">
+                          <div class="row">
+                            <div class="col">
+                              <div class="card-body">
+                                <h5 class="card-title">Maor's ChickenWings</h5>
+                                <p class="card-text">How we make our chicken wings</p>
+                                <a href="blog-view.html" class="btn btn-dark">Read More</a>
+                              </div>
+                            </div>
+                            <div class="col">
+                              <img src="assets/pics/wings.png" class="rounded float-end w-50" alt=" ...">
+                            </div>
+                          </div>
+                        </div>
+                      </div>
                     </div>
+
                   </div>
                 </div>
                 <!-- Nested Navbar End -->
