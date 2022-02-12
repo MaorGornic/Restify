@@ -34,3 +34,59 @@ p {
 .tab-pane {
   color: white;
 }
+
+.nav-tabs .nav-link,
+.tab-pane .btn {
+  color: white;
+}
+
+.btn:hover {
+  color: var(--primary-color);
+}
+
+.tab-content .fas {
+  color: white;
+  opacity: 0.5;
+}
+
+.tab-content .fas:hover {
+  color: white;
+  opacity: 1;
+}
+
+.carousel-control-next-icon,
+.carousel-control-prev-icon {
+  background-image: none;
+}
+
+.carousel-inner .carousel-item {
+  margin-left: 5em;
+}
+
+.menu {
+  margin-left: -3rem;
+}
+
+.tab-pane .profile-pic {
+  width: 5%;
+  /* height: 50%; */
+}
+
+.comment-vote:hover {
+  color: #232444;
+  cursor: pointer;
+}
+
+/* 
+.item-container {
+  display: flex;
+}
+
+.item-desc {
+  background-color: red;
+}
+
+.item-pic {
+  width: 200px;
+  background-color: orange;
+} */
