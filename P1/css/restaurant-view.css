@@ -3,13 +3,12 @@
 }
 
 .wrapper {
-  overflow: hidden;
+  /* overflow: hidden; */
 }
 
 .restaurant-frame {
   background-color: var(--primary-color);
-  /* height: 90%;
-  width: 90%; */
+  height: 100%;
 }
 
 .restaurant-frame h4 {
@@ -20,11 +19,11 @@ p {
   color: white;
 }
 
-@media only screen and (max-width: 766px) {
+/* @media only screen and (max-width: 766px) {
   .wrapper {
     overflow: visible;
   }
-}
+} */
 
 .nav-tabs {
   border: none;
