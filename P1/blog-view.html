@@ -21,76 +21,78 @@
         <div class="content-wrapper">
             <!-- Blog View Source: https://startbootstrap.com/template/blog-post -->
             <!-- Start of Navbar (top portion of layout) -->
-            <div class="top mb-3">
-                <!-- Source: https://getbootstrap.com/docs/4.1/components/navbar,
+      <div class="top mb-3">
+        <!-- Source: https://getbootstrap.com/docs/4.1/components/navbar,
                      https://stackoverflow.com/questions/19733447/bootstrap-navbar-with-left-center-or-right-aligned-items -->
-                <nav class="navbar navbar-expand-md navbar-dark">
-                    <div class="container-fluid">
-                        <a class="navbar-brand abs" href="dashboard.html">
-                            <img class="mt-1" height="40px" src="assets/pics/logo-pic.png" alt="logo" />
-                            <h3 class="mt-1">Resti<span>fy</span></h3>
-                        </a>
-                        <button class="navbar-toggler ms-auto" type="button" data-bs-toggle="collapse"
-                            data-bs-target="#collapseNavbar">
-                            <span class="navbar-toggler-icon"></span>
-                        </button>
-                        <div class="navbar-collapse collapse" id="collapseNavbar">
-                            <form class="searchbar form-inline my-2 my-lg-0">
-                                <input class="form-control mr-sm-2" type="search" placeholder="Search"
-                                    aria-label="Search">
-                                <button class="btn btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
-                            </form>
-                            <ul class="navbar-nav">
-                                <li class="nav-item active">
-                                    <a class="nav-link" href="dashboard.html">
-                                        <span class="far fa-home"></span> Home
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="#">
-                                        <span class="fas fa-newspaper"></span> Feed
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="#" data-toggle="collapse">
-                                        <span class="fas fa-utensils"></span> My Restaurant
-                                    </a>
-                                </li>
-                            </ul>
-                            <ul class="navbar-nav ms-auto">
+        <nav class="navbar navbar-expand-md navbar-dark">
+          <div class="container-fluid">
+            <a class="navbar-brand abs" href="#">
+              <img class="mt-1" height="40px" src="assets/pics/logo-pic.png" alt="logo" />
+              <h3 class="mt-1">Resti<span>fy</span></h3>
+            </a>
+            <button class="navbar-toggler ms-auto" type="button" data-bs-toggle="collapse"
+              data-bs-target="#collapseNavbar">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="navbar-collapse collapse" id="collapseNavbar">
+              <form class="searchbar form-inline my-2 my-lg-0">
+                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                <a href="dashboard-specific.html">
+                  <button class="btn btn btn-secondary my-2 my-sm-0" type="button">Search</button>
+                </a>
+                
+              </form>
+              <ul class="navbar-nav">
+                <li class="nav-item active">
+                  <a class="nav-link" href="dashboard.html">
+                    <span class="far fa-home"></span> Home
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="feed.html">
+                    <span class="fas fa-newspaper"></span> Feed
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="new-restaurant.html">
+                    <span class="fas fa-utensils"></span> My Restaurant
+                  </a>
+                </li>
+              </ul>
+              <ul class="navbar-nav ms-auto">
 
-                                <li class="nav-item">
-                                    <a class="nav-link dropdown-toggle navbar-right" style="margin-right: 0.5em;"
-                                        href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
-                                        aria-haspopup="true" aria-expanded="false">
-                                        <img width="25px" src="assets/pics/notification.png" alt=""> Notifications
-                                    </a>
-                                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                        <p>General</p>
-                                        <a class="dropdown-item" href="#">Michael added a new item to their menu</a>
-                                        <a class="dropdown-item" href="#">Richard added a new item to their menu</a>
-                                        <div class="dropdown-divider"></div>
-                                        <p>Restaurant Related</p>
-                                        <a class="dropdown-item" href="#">A new review was added to your restaurant</a>
-                                    </div>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link dropdown-toggle navbar-right" href="#" id="navbarDropdown"
-                                        role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        <img width="25px" src="assets/pics/profile.png" alt=""> Scarlett
-                                    </a>
-                                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                        <a class="dropdown-item" href="profile.html">Profile</a>
-                                        <a class="dropdown-item" href="editprofile">Edit Profile</a>
-                                        <a class="dropdown-item" href="login.html">Log Out</a>
-                                    </div>
-                                </li>
+                <li class="nav-item">
+                  <a class="nav-link dropdown-toggle navbar-right" style="margin-right: 0.5em;" href="#"
+                    id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <img width="25px" src="assets/pics/notification.png" alt=""> Notifications
+                  </a>
+                  <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <p>General</p>
+                    <a class="dropdown-item" href="restaurant-view.html">Michael added a new item to their menu</a>
+                    <a class="dropdown-item" href="restaurant-view.html">Richard added a new item to their menu</a>
+                    <div class="dropdown-divider"></div>
+                    <p>Restaurant Related</p>
+                    <a class="dropdown-item" href="my-restaurant.html">A new review was added to your restaurant</a>
+                  </div>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link dropdown-toggle navbar-right" href="#" id="navbarDropdown" role="button"
+                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <img width="25px" src="assets/pics/profile.png" alt="">
+                    Todd
+                  </a>
+                  <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="profile.html">Profile</a>
+                    <a class="dropdown-item" href="editprofile.html">Edit Profile</a>
+                    <a class="dropdown-item" href="login.html">Log Out</a>
+                  </div>
+                </li>
 
-                            </ul>
-                        </div>
-                    </div>
-                </nav>
-                <!-- End of navbar -->
+              </ul>
+            </div>
+          </div>
+        </nav>
+        <!-- End of navbar -->
 
             </div>
             <div class="content">
