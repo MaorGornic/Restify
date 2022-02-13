@@ -77,6 +77,15 @@ p {
   cursor: pointer;
 }
 
+.delete-comment {
+  color: #f01e1f;
+  opacity: 0.6;
+}
+
+.delete-comment:hover {
+  opacity: 1;
+  cursor: pointer;
+}
 /* Source overlay starts */
 /* https://www.w3schools.com/howto/howto_css_image_overlay_title.asp */
 
@@ -94,4 +103,33 @@ p {
 .container-menu-img:hover .overlay-menu-img {
   opacity: 1;
 }
+
+.overlay-pictures {
+  position: absolute;
+  opacity: 0;
+  bottom: 5%;
+  background: rgba(0, 0, 0, 0.5);
+  transition: 0.5s ease;
+  color: white;
+  font-size: 145%;
+  padding: 1%;
+}
+
+.container-pictures:hover .overlay-pictures {
+  opacity: 1;
+}
 /* Source overlay ends */
+
+.menu-item-img {
+  cursor: pointer;
+}
+
+.add-menu-item {
+  color: #23ce6b;
+  opacity: 0.6;
+  cursor: pointer;
+}
+
+.add-menu-item:hover {
+  opacity: 1;
+}

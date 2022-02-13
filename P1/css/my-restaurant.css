@@ -1,0 +1,9 @@
+.btn-restaurant {
+  color: white;
+  background-color: #3734a9;
+}
+
+.btn-restaurant:hover {
+  background-color: #323232;
+  color: white;
+}
