@@ -100,11 +100,11 @@
 
                 <h4 class="px-5 pt-2">Create Blog Post</h4>
 
-                <form class="px-5">
+                <form class="px-5" action="blog-view.html">
                     <div class="form-row">
                         <div class="form-group">
                             <label for="inputAddress mt-2">Title</label>
-                            <input type="text" class="form-control" id="inputName" placeholder="Your Blog Post's title">
+                            <input type="text" class="form-control" id="inputName" placeholder="Your Blog Post's title" required>
                         </div>
                         <!-- Ask for resturant logo as a file image -->
                         <div class="form-group">
@@ -114,8 +114,8 @@
 
                         <div class="form-group">
                             <label for="inputLogo" class="mt-2">Contents</label>
-                            <textarea name="contact-information" id="contact-info" class="form-control mt-2"
-                                style="height: 15rem" placeholder="Write your blog post here"></textarea>
+                            <textarea name="post-contents" id="post-contents" class="form-control mt-2"
+                                style="height: 15rem" placeholder="Write your blog post here" required></textarea>
                         </div>
                         <!-- Ask for a phone number for the resturant -->
                         <div class=" form-group">
@@ -125,10 +125,7 @@
                         </div>
 
                         <div class="form-group mt-3">
-                            <a href="my-restaurant-edit.html">
-                                <button class="btn-restaurant btn btn-primary profile-button" type="button">Create
-                                    Blog Post</button>
-                            </a>
+                            <input type="submit" class="btn-restaurant btn btn-primary profile-button" value="Create Blog Post">
                 </form>
 
             </div>
