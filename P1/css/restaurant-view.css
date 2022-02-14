@@ -8,7 +8,7 @@
 
 .restaurant-frame {
   background-color: var(--primary-color);
-  height: 100%;
+  /* height: 100%;  */
 }
 
 .restaurant-frame h4 {

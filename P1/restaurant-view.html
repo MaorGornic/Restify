@@ -38,7 +38,7 @@
                 <a href="dashboard-specific.html">
                   <button class="btn btn btn-secondary my-2 my-sm-0" type="button">Search</button>
                 </a>
-                
+
               </form>
               <ul class="navbar-nav">
                 <li class="nav-item active">
@@ -96,7 +96,7 @@
       <div class="content">
         <div class="restaurant-frame p-1 container-fluid">
           <h4 class="px-2 pt-2">Restaurant’s Information</h4>
-          <div class="container">
+          <div class="container-fluid">
             <div class="row">
               <div class="col-md-3 mt-3">
                 <div class="row-sm text-center">
@@ -104,17 +104,23 @@
                     alt="restaurant image">
                   <p>Maor's ChickenWings</p>
                   <button style="width: 95%; opacity: 0.75;" type="button" class="btn btn-dark">Follow</button>
-                  <hr class="mt-1 mb-3" />
+                  <button style="width: 95%; opacity: 0.75;" type="button" class="btn btn-dark mt-1"><i
+                      class="fa fa-solid fa-heart"></i> Like</button>
+                  <br><br>
                   <kbd>
                     <p class="fa fa-users"></p> Followers 14
                   </kbd>
-                  <hr class="mt-1 mb-1" />
+                  <br>
                   <kbd>
-                    <p class="fa fa-star"></p> Rating 4.3
+                    <p class="fa fa-solid fa-heart" style="opacity: 1; font-size: 14px;"></p> Likes 3
                   </kbd>
-                  <hr class="mt-1 mb-1" />
+                  <br>
+                  <kbd>
+                    <p class="fa fa-star"></p> Rating 4.1
+                  </kbd>
+                  <br>
                   <p style="opacity: 0.5;" class="fa fa-star"></p>
-                  <p style="opacity: 0.5;" class="fa fa-star"></p>
+                  <p class="fa fa-star"></p>
                   <p class="fa fa-star"></p>
                   <p class="fa fa-star"></p>
                   <p class="fa fa-star"></p>
@@ -173,7 +179,7 @@
                             <div class="carousel-item active">
                               <img src="assets/pics/chickenwings.jpeg" alt="item1"
                                 class="rounded float-start w-25 px-3">
-                              <div class="container">
+                              <div class="container-fluid">
                                 <div class="badge bg-primary text-wrap mb">
                                   Dish Name:
                                 </div>
@@ -184,13 +190,17 @@
                                 <p class="text-break">For only $12, you can get 14 well-cocked chicken wings. <br>
                                   724 calories per one
                                   serving.</p>
+                                <div class="badge bg-primary text-wrap">
+                                  Price:
+                                </div>
+                                $12
                               </div>
                             </div>
 
                             <div class="carousel-item">
                               <img src="assets/pics/chickenwings.jpeg" alt="item1"
                                 class="rounded float-start w-25 px-3">
-                              <div class="container">
+                              <div class="container-fluid">
                                 <div class="badge bg-primary text-wrap mb">
                                   Dish Name:
                                 </div>
@@ -222,7 +232,7 @@
                   <!-- Comments -->
                   <div class="tab-pane fade" id="nav-comments" role="tabpanel" aria-labelledby="nav-comments-tab">
                     <div class="container-fluid mt-3 overflow-auto">
-                      <div class="overflow-auto p-3 mb-3 mb-md-0 me-md-3" style="max-height: 390px;">
+                      <div class="overflow-auto p-3 mb-3 mb-md-0 me-md-3" style="max-height: 80%">
                         <div class="d-flex">
                           <img class="img-fluid img-responsive rounded-circle mr-2 profile-pic"
                             src="assets/pics/profile.png">
@@ -323,7 +333,7 @@
                   <div class="tab-pane fade" id="nav-blogs-posts" role="tabpanel" aria-labelledby="nav-blogs-posts-tab">
 
                     <div class="container-fluid mt-3 overflow-auto">
-                      <div class="overflow-auto p-3 mb-3 mb-md-0 me-md-3" style="max-height: 390px;">
+                      <div class="overflow-auto p-3 mb-3 mb-md-0 me-md-3" style="max-height: 80%">
                         <!-- Blog Post 1 -->
                         <div class="card w-75">
                           <div class="row">
@@ -332,6 +342,7 @@
                                 <h5 class="card-title">Maor's ChickenWings</h5>
                                 <p class="card-text">How we make our chicken wings</p>
                                 <a href="blog-view.html" class="btn btn-dark">Read More</a>
+                                <a href="#" class="btn btn-dark"><i class="fa fa-solid fa-heart"></i> Like</a>
                               </div>
                             </div>
                             <div class="col">
@@ -348,6 +359,7 @@
                                 <h5 class="card-title">Maor's ChickenWings</h5>
                                 <p class="card-text">How we make our chicken wings</p>
                                 <a href="blog-view.html" class="btn btn-dark">Read More</a>
+                                <a href="#" class="btn btn-dark"><i class="fa fa-solid fa-heart"></i> Like</a>
                               </div>
                             </div>
                             <div class="col">
@@ -364,6 +376,24 @@
                                 <h5 class="card-title">Maor's ChickenWings</h5>
                                 <p class="card-text">How we make our chicken wings</p>
                                 <a href="blog-view.html" class="btn btn-dark">Read More</a>
+                                <a href="#" class="btn btn-dark"><i class="fa fa-solid fa-heart"></i> Like</a>
+                              </div>
+                            </div>
+                            <div class="col">
+                              <img src="assets/pics/wings.png" class="rounded float-end w-50" alt=" ...">
+                            </div>
+                          </div>
+                        </div>
+
+                        <!-- Blog Post 4 -->
+                        <div class="card w-75 mt-2">
+                          <div class="row">
+                            <div class="col">
+                              <div class="card-body">
+                                <h5 class="card-title">Maor's ChickenWings</h5>
+                                <p class="card-text">How we make our chicken wings</p>
+                                <a href="blog-view.html" class="btn btn-dark">Read More</a>
+                                <a href="#" class="btn btn-dark"><i class="fa fa-solid fa-heart"></i> Like</a>
                               </div>
                             </div>
                             <div class="col">
