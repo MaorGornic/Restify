@@ -219,3 +219,16 @@ a {
 .card small {
   opacity: 0.5;
 }
+
+.fa-heart {
+  color: white;
+  font-size: 20px;
+  -webkit-appearance: none;
+  opacity: 0.5;
+  cursor: pointer;
+}
+
+.fa-heart:hover {
+  color: #3434a9;
+  opacity: 1;
+}
