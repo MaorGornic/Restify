@@ -71,12 +71,15 @@
                                     </a>
                                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                         <p>General</p>
-                                        <a class="dropdown-item" href="restaurant-view.html">Wedny's added a new item to their menu</a>
-                                        <a class="dropdown-item" href="restaurant-view.html">Katsuya's added a new item to their menu</a>
+                                        <a class="dropdown-item" href="restaurant-view.html">Wedny's added a new item to
+                                            their menu</a>
+                                        <a class="dropdown-item" href="restaurant-view.html">Katsuya's added a new item
+                                            to their menu</a>
                                         <div class="dropdown-divider"></div>
                                         <p>Restaurant Related</p>
-                                        <a class="dropdown-item" href="my-restaurant.html">Michael commented on your restaurant</a>
-                                      </div>
+                                        <a class="dropdown-item" href="my-restaurant.html">Michael commented on your
+                                            restaurant</a>
+                                    </div>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link dropdown-toggle navbar-right" href="#" id="navbarDropdown"
@@ -110,17 +113,22 @@
                                     <p>Maor's ChickenWings</p>
                                     <a style="width: 95%; opacity: 0.75;" class="btn btn-dark"
                                         href="my-restaurant.html">Save</a>
-                                    <hr class="mt-1 mb-3" />
+                                    <br><br>
                                     <kbd>
                                         <p class="fa fa-users"></p> Followers 14
                                     </kbd>
-                                    <hr class="mt-1 mb-1" />
+                                    <br>
                                     <kbd>
-                                        <p class="fa fa-star"></p> Rating 4.3
+                                        <p class="fa fa-solid fa-heart" style="opacity: 1; font-size: 14px;"></p> Likes
+                                        3
                                     </kbd>
-                                    <hr class="mt-1 mb-1" />
+                                    <br>
+                                    <kbd>
+                                        <p class="fa fa-star"></p> Rating 4.1
+                                    </kbd>
+                                    <br>
                                     <p style="opacity: 0.5;" class="fa fa-star"></p>
-                                    <p style="opacity: 0.5;" class="fa fa-star"></p>
+                                    <p class="fa fa-star"></p>
                                     <p class="fa fa-star"></p>
                                     <p class="fa fa-star"></p>
                                     <p class="fa fa-star"></p>
@@ -185,57 +193,86 @@
                                                         <div class="carousel-item active">
                                                             <!-- Edit Picture trigger modal -->
                                                             <!-- Source: https://getbootstrap.com/docs/5.0/components/modal/ -->
-                                                            <div class="container-fluid-menu-img">
-                                                                <a><img data-bs-toggle="modal"
-                                                                        data-bs-target="#staticBackdrop"
-                                                                        src="assets/pics/chickenwings.jpeg" alt="item1"
-                                                                        class="menu-item-img rounded float-start w-25 px-3"></a>
-                                                                <div class="overlay-menu-img px-3 w-25 text-center">Edit
+                                                            <div class="row">
+                                                                <div class="col-lg-3">
+                                                                    <div class="container-menu-img">
+                                                                        <a><img data-bs-toggle="modal"
+                                                                                data-bs-target="#staticBackdrop"
+                                                                                width="120%;"
+                                                                                src="assets/pics/chickenwings.jpeg"
+                                                                                alt="item1"
+                                                                                class="menu-item-img rounded px-3"></a>
+                                                                        <div class="overlay-menu-img px-3 text-center">
+                                                                            Edit
+                                                                        </div>
+                                                                    </div>
                                                                 </div>
-                                                            </div>
-
-                                                            <div class="container-fluid">
-                                                                <div class="badge bg-primary text-wrap mb-1">
-                                                                    Dish Name:
+                                                                <div class="col-md-9">
+                                                                    <div class="container-fluid">
+                                                                        <div class="badge bg-primary text-wrap mb-1">
+                                                                            Dish Name:
+                                                                        </div>
+                                                                        <input type="text" class="form-control w-50"
+                                                                            value="Smoked Chicken Wings with Sweet-and-Sticky Sauces">
+                                                                        <div class="badge bg-primary text-wrap mb-1">
+                                                                            Description:
+                                                                        </div>
+                                                                        <textarea name="description"
+                                                                            id="description-info"
+                                                                            class="form-control w-50"
+                                                                            style="resize: none; height: 55px;">For only $12, you can get 14 well-cocked chicken wings. 724 calories per one serving.</textarea>
+                                                                        <div class="badge bg-primary text-wrap mt-1">
+                                                                            Price:
+                                                                        </div>
+                                                                        <input type="text"
+                                                                            class="form-control w-50 mt-1" value="$12">
+                                                                    </div>
                                                                 </div>
-                                                                <input type="text" class="form-control w-50"
-                                                                    value="Smoked Chicken Wings with Sweet-and-Sticky Sauces">
-                                                                <div class="badge bg-primary text-wrap mb-1">
-                                                                    Description:
-                                                                </div>
-                                                                <textarea name="description" id="description-info"
-                                                                    class="form-control w-50"
-                                                                    style="resize: none; height: 55px;">For only $12, you can get 14 well-cocked chicken wings. 724 calories per one serving.</textarea>
                                                             </div>
                                                         </div>
 
-                                                        <!-- Carousel item 1 -->
+                                                        <!-- Carousel item 2 -->
                                                         <div class="carousel-item">
                                                             <!-- Edit Picture trigger modal -->
                                                             <!-- Source: https://getbootstrap.com/docs/5.0/components/modal/ -->
-                                                            <div class=" container-fluid-menu-img">
-                                                                <a><img data-bs-toggle="modal"
-                                                                        data-bs-target="#staticBackdrop"
-                                                                        src="assets/pics/chickenwings.jpeg" alt="item1"
-                                                                        class="menu-item-img rounded float-start w-25 px-3"></a>
-                                                                <div class="overlay-menu-img px-3 w-25 text-center">Edit
+                                                            <div class="row">
+                                                                <div class="col-lg-3">
+                                                                    <div class="container-menu-img">
+                                                                        <a><img data-bs-toggle="modal"
+                                                                                data-bs-target="#staticBackdrop"
+                                                                                width="120%;"
+                                                                                src="assets/pics/chickenwings.jpeg"
+                                                                                alt="item1"
+                                                                                class="menu-item-img rounded px-3"></a>
+                                                                        <div class="overlay-menu-img px-3 text-center">
+                                                                            Edit
+                                                                        </div>
+                                                                    </div>
                                                                 </div>
-                                                            </div>
-
-                                                            <div class="container-fluid">
-                                                                <div class="badge bg-primary text-wrap mb-1">
-                                                                    Dish Name:
+                                                                <div class="col-md-9">
+                                                                    <div class="container-fluid">
+                                                                        <div class="badge bg-primary text-wrap mb-1">
+                                                                            Dish Name:
+                                                                        </div>
+                                                                        <input type="text" class="form-control w-50"
+                                                                            value="Smoked Chicken Wings with Sweet-and-Sticky Sauces">
+                                                                        <div class="badge bg-primary text-wrap mb-1">
+                                                                            Description:
+                                                                        </div>
+                                                                        <textarea name="description"
+                                                                            id="description-info"
+                                                                            class="form-control w-50"
+                                                                            style="resize: none; height: 55px;">For only $12, you can get 14 well-cocked chicken wings. 724 calories per one serving.</textarea>
+                                                                        <div class="badge bg-primary text-wrap mt-1">
+                                                                            Price:
+                                                                        </div>
+                                                                        <input type="text"
+                                                                            class="form-control w-50 mt-1" value="$12">
+                                                                    </div>
                                                                 </div>
-                                                                <input type="text" class="form-control w-50"
-                                                                    value="Smoked Chicken Wings with Sweet-and-Sticky Sauces">
-                                                                <div class="badge bg-primary text-wrap mb-1">
-                                                                    Description:
-                                                                </div>
-                                                                <textarea name="description" id="description-info"
-                                                                    class="form-control w-50"
-                                                                    style="resize: none; height: 55px;">For only $12, you can get 14 well-cocked chicken wings. 724 calories per one serving.</textarea>
                                                             </div>
                                                         </div>
+
                                                     </div>
                                                     <a class="carousel-control-prev" href="#carouselExampleIndicators"
                                                         role="button" data-slide="prev">
@@ -260,7 +297,7 @@
                                         aria-labelledby="nav-comments-tab">
                                         <div class="container-fluid mt-3 overflow-auto">
                                             <div class="overflow-auto p-3 mb-3 mb-md-0 me-md-3"
-                                                style="max-height: 390px;">
+                                                style="max-height: 80%;">
                                                 <div class="d-flex">
                                                     <img class="img-fluid img-responsive rounded-circle mr-2 profile-pic"
                                                         src="assets/pics/profile.png">
@@ -344,7 +381,7 @@
                                                 data-bs-ride="carousel">
                                                 <div class="carousel-inner">
                                                     <div class="carousel-item active">
-                                                        <div class="container-fluid-pictures">
+                                                        <div class="container-pictures">
                                                             <a> <img data-bs-toggle="modal"
                                                                     data-bs-target="#staticBackdrop"
                                                                     src="assets/pics/restaurant-view-1.png"
@@ -358,7 +395,7 @@
                                                     </div>
                                                     <div class="carousel-item">
 
-                                                        <div class="container-fluid-pictures">
+                                                        <div class="container-pictures">
                                                             <a> <img data-bs-toggle="modal"
                                                                     data-bs-target="#staticBackdrop"
                                                                     src="assets/pics/restaurant-view-2.jpg"
@@ -371,7 +408,7 @@
                                                     </div>
                                                     <div class="carousel-item">
 
-                                                        <div class="container-fluid-pictures">
+                                                        <div class="container-pictures">
                                                             <a> <img data-bs-toggle="modal"
                                                                     data-bs-target="#staticBackdrop"
                                                                     src="assets/pics/restaurant-view-3.jpg"
@@ -406,7 +443,7 @@
                                             <h4 class="mb-3">Collection of Blog Posts <a href="create-blog-post.html"><i
                                                         class="add-menu-item fa fa-circle-plus"></i></a> <br></h4>
                                             <div class="overflow-auto p-3 mb-3 mb-md-0 me-md-3"
-                                                style="max-height: 390px;">
+                                                style="max-height: 80%;">
                                                 <!-- Blog Post 1 -->
                                                 <div class="card w-75">
                                                     <div class="row">

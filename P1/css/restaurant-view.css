@@ -97,6 +97,8 @@ p {
   color: white;
   font-size: 145%;
   padding: 1%;
+  width: 26%;
+  margin-left: 1%;
 }
 
 .container-menu-img:hover .overlay-menu-img {
