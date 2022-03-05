@@ -1,18 +1,8 @@
 from django.db import models
 from django.core.validators import MinValueValidator 
-from django.contrib.auth.models import User
+from accounts.models import ModifiedUser
 
 # Create your models here.
-
-"""
-User (extends user model) (first name, last name, phone number, email,
-avatar, owned restaurant id), following (many to many field to Restaurant)
-"""
-class ModifiedUser(User):
-    phone_num = models.CharField(max_length=10)
-    # TODO: Fix upload_to
-    avatar = models.ImageField(upload_to='user_avatar/', null=True, blank=True)
-
 """
 (user id, date, restaurant id)
 """
