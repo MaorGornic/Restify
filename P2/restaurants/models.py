@@ -41,18 +41,18 @@ class Restaurant(models.Model):
     owner = models.OneToOneField(to=ModifiedUser, related_name='restaurant_owner', on_delete=models.CASCADE)
 
     # Many-to-many relationship: A restaurant can have _many_ followers and many users can follow _many_ restaurants
-    followers = models.ManyToManyField(to=ModifiedUser, related_name="restaurant_followers")
+    followers = models.ManyToManyField(to=ModifiedUser, related_name="restaurant_followers", null=True, blank=True)
 
     name = models.CharField(max_length=200)
     address = models.CharField(max_length=200)
     email = models.CharField(max_length=100)
     phone_num = models.CharField(max_length=10)
     views = models.IntegerField(validators=[MinValueValidator(0)])
-    likes = models.ManyToManyField(to=ModifiedUser, related_name="restaurant_likes")
+    likes = models.ManyToManyField(to=ModifiedUser, related_name="restaurant_likes", null=True, blank=True)
 
     # One-to-many relationship: A resturant can have many comments. A comment can be attributed to only one restaurant
-    comment = models.ForeignKey(to=ModifiedUser, on_delete=models.CASCADE, related_name='comments')
-    blog = models.ForeignKey(to=Blog, on_delete=models.CASCADE, related_name='blogs')
+    comment = models.ForeignKey(to=ModifiedUser, on_delete=models.CASCADE, related_name='comments', null=True, blank=True)
+    blog = models.ForeignKey(to=Blog, on_delete=models.CASCADE, related_name='blogs', null=True, blank=True)
 
     # TODO: Fix upload_to
     logo = models.ImageField(upload_to='store_avatars/', null=True, blank=True)
@@ -69,7 +69,7 @@ class Notification(models.Model):
 class MenuItem(models.Model):
     name = models.CharField(max_length=100)
     description = models.CharField(max_length=200)
-    price = models.IntegerField(validators=[MinValueValidator(0)])
+    price = models.DecimalField(max_digits=8, decimal_places=2, validators=[MinValueValidator(0)])
     picture = models.ImageField(upload_to='menu/', null=True, blank=True)
     restaurant = models.ForeignKey(to=Restaurant, on_delete=models.CASCADE, related_name='menuitems')
 

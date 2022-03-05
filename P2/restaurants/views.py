@@ -1,15 +1,32 @@
 from django.shortcuts import render
-from rest_framework import generics
-from restaurants.models import MenuItem
+from rest_framework.generics import get_object_or_404, CreateAPIView
+from restaurants.models import MenuItem, Restaurant
 from restaurants.serializers import MenuItemSerializer
+from rest_framework.permissions import IsAuthenticated
 
 # Create your views here.
-class CreateMenuItem(generics.CreateAPIView):
+class CreateMenuItem(CreateAPIView):
     serializer_class = MenuItemSerializer
-    queryset = MenuItem.objects.all() 
+    permission_classes = [IsAuthenticated]
+    # queryset = MenuItem.objects.all() 
+
+    # def dispatch(self, request, *args, **kwargs):
+    #     if 
+    #     return super().dispatch(request, *args, **kwargs)
+
+    def dispatch(self, request, *args, **kwargs):
+        print("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"*20)
+        print(self.kwargs['restaurant_id'])
+        self.restaurant = get_object_or_404(Restaurant, id=self.kwargs['restaurant_id'])
+        return super().dispatch(request, *args, **kwargs)
 
     def perform_create(self, serializer):
-        return serializer.save()
+        # print("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"*20)
+        # print(serializer.data['name'])
+        # print(self.request.POST['name'])
+        new_data = {'name': serializer.validated_data['name'], 'description': serializer.validated_data['description'], 
+                        'price': serializer.validated_data['price'], 'restaurant': self.restaurant}
+        return serializer.create(data=new_data)
 
 class UpdateMenuItem():
     pass
