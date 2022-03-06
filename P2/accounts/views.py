@@ -38,6 +38,8 @@ class APIUserView(RetrieveAPIView):
     serializer_class = UserSerializer
 
     def get_object(self):
+        print("Request", self.request)
+        print("Request user", self.request.user)
         return get_object_or_404(ModifiedUser, id=self.request.user.id)
 
 
@@ -45,6 +47,8 @@ class APIUpdateView(generics.UpdateAPIView):
     permission_classes = (IsAuthenticated,)
     serializer_class = UserSerializer
 
-    def patch(self, request, *args, **kwargs):
-        pass
-    # TODO
+    # def get_object(self):
+    #
+    # def patch(self, request, *args, **kwargs):
+    #     pass
+    # # TODO

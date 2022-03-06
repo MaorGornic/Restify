@@ -4,6 +4,7 @@ from django.contrib.auth.password_validation import validate_password
 from .models import ModifiedUser
 
 
+# TODO: Add avatar
 class RegisterSerializer(serializers.ModelSerializer):
     email = serializers.EmailField(
         required=True,
