@@ -1,14 +1,16 @@
 from django.http import Http404, JsonResponse
-from django.shortcuts import render
-from rest_framework.generics import get_object_or_404, CreateAPIView, UpdateAPIView
+from rest_framework.generics import get_object_or_404, CreateAPIView, UpdateAPIView, ListCreateAPIView, DestroyAPIView
+from restaurants.permissions import isRestaurantOwner
 from restaurants.models import MenuItem, Restaurant
 from restaurants.serializers import MenuItemSerializer
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, AllowAny
+from django.http import HttpResponseRedirect
+from django.urls import reverse  
 
 # Create your views here.
 class CreateMenuItem(CreateAPIView):
     serializer_class = MenuItemSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated, isRestaurantOwner]
 
     def dispatch(self, request, *args, **kwargs):
         try:
@@ -16,22 +18,15 @@ class CreateMenuItem(CreateAPIView):
         except Http404:
             return JsonResponse({"detail": "Restaurant not found"}, status=404)
 
-        # Getting JWT token from user
-        ret = super().dispatch(request, *args, **kwargs)
-
-        if self.request.user.id != self.restaurant.owner_id:
-            return JsonResponse({"detail": "Not owner of restaurant"}, status=403)
-        return ret
+        return super().dispatch(request, *args, **kwargs)
 
     def perform_create(self, serializer):
         return serializer.save(restaurant=self.restaurant)
 
-
-
 class UpdateMenuItem(UpdateAPIView):
     queryset = MenuItem.objects.all()
     serializer_class = MenuItemSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated, isRestaurantOwner]
 
     def dispatch(self, request, *args, **kwargs):
         try:
@@ -39,17 +34,43 @@ class UpdateMenuItem(UpdateAPIView):
         except Http404:
             return JsonResponse({"detail": "Restaurant not found"}, status=404)
 
-        # Getting JWT token from user
-        ret = super().dispatch(request, *args, **kwargs)
-        
-        if self.request.user.id != self.restaurant.owner_id:
-            return JsonResponse({"detail": "Not owner of restaurant"}, status=403)
-        return ret
+        try:
+            get_object_or_404(MenuItem, id=self.kwargs['pk'])
+        except Http404:
+            return JsonResponse({"detail": "Menu item not found"}, status=404)
+
+        return super().dispatch(request, *args, **kwargs)
 
 
     def update(self, request, *args, **kwargs):
         return super().update(request, *args, **kwargs)
 
+class FetchAllMenuItems(ListCreateAPIView):
+    queryset = MenuItem.objects.all()
+    serializer_class = MenuItemSerializer
+    permission_classes = [AllowAny]
 
-class DeleteMenuItem:
-    pass
+class DeleteMenuItem(DestroyAPIView):
+    queryset = MenuItem.objects.all()
+    serializer_class = MenuItemSerializer
+    permission_classes = [IsAuthenticated, isRestaurantOwner]
+
+    def dispatch(self, request, *args, **kwargs):
+        try:
+            self.restaurant = get_object_or_404(Restaurant, id=self.kwargs['restaurant_id'])
+        except Http404:
+            return JsonResponse({"detail": "Restaurant not found"}, status=404)
+
+        try:
+            get_object_or_404(MenuItem, id=self.kwargs['pk'])
+        except Http404:
+            return JsonResponse({"detail": "Menu item not found"}, status=404)
+
+        return super().dispatch(request, *args, **kwargs)
+
+    def finalize_response(self, request, response, *args, **kwargs):
+        response = super().finalize_response(request, response, *args, **kwargs)
+        if response.status_code not in [401, 403]:
+            return HttpResponseRedirect(reverse('restaurants:menuitems', kwargs={'restaurant_id': self.restaurant.id})) 
+        return response   
+    
