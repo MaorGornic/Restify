@@ -4,6 +4,7 @@ from django.contrib.auth.password_validation import validate_password
 from .models import ModifiedUser
 
 
+# TODO: Add avatar
 class RegisterSerializer(serializers.ModelSerializer):
     email = serializers.EmailField(
         required=True,
@@ -39,3 +40,9 @@ class RegisterSerializer(serializers.ModelSerializer):
         user.save()
 
         return user
+
+
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ModifiedUser
+        fields = ['id', 'username', 'email', 'avatar', 'password', 'first_name', 'last_name', 'phone_num', 'avatar']
