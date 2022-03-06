@@ -16,12 +16,10 @@ class CreateMenuItem(CreateAPIView):
         except Http404:
             return JsonResponse({"detail": "Restaurant not found"}, status=404)
 
-        # check if owner of restaurant
-        print("B"*50)
-        print(self.request.user)
         return super().dispatch(request, *args, **kwargs)
 
     def perform_create(self, serializer):
+        print(self.request.user)
         return serializer.save(restaurant=self.restaurant)
 
 
