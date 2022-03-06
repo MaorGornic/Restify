@@ -1,4 +1,5 @@
 from django.db import models
+<<<<<<< HEAD
 from django.core.validators import MinValueValidator
 from django.contrib.auth.models import User
 
@@ -16,6 +17,12 @@ class ModifiedUser(User):
     avatar = models.ImageField(upload_to='user_avatar/', null=True, blank=True)
 
 
+=======
+from django.core.validators import MinValueValidator 
+from accounts.models import ModifiedUser
+
+# Create your models here.
+>>>>>>> origin/auth
 """
 (user id, date, restaurant id)
 """
