@@ -63,9 +63,13 @@ Notification (message, user id)
 
 class Notification(models.Model):
     message = models.CharField(max_length=200)
-    redirection = models.CharField(max_length=100)
-    user = models.ForeignKey(to=ModifiedUser, related_name='notification', on_delete=models.CASCADE)
-
+    # Enum
+    NOTIFICATION_TYPE = (
+        ("GENERAL", "general"),
+        ("RESTAURANT", "restaurant"),
+    )
+    type = models.CharField(max_length=10, choices=NOTIFICATION_TYPE, default="GENERAL")
+    user = models.ForeignKey(to=ModifiedUser, on_delete=models.CASCADE, related_name='users')
 
 class MenuItem(models.Model):
     name = models.CharField(max_length=100)

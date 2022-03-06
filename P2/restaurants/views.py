@@ -1,6 +1,6 @@
 from django.http import Http404, JsonResponse
 from rest_framework.generics import get_object_or_404, CreateAPIView, UpdateAPIView, ListCreateAPIView, DestroyAPIView
-from restaurants.permissions import isRestaurantOwner
+from restaurants.permissions import IsRestaurantOwner
 from restaurants.models import MenuItem, Restaurant
 from restaurants.serializers import MenuItemSerializer
 from rest_framework.permissions import IsAuthenticated, AllowAny
@@ -10,7 +10,7 @@ from django.urls import reverse
 # Create your views here.
 class CreateMenuItem(CreateAPIView):
     serializer_class = MenuItemSerializer
-    permission_classes = [IsAuthenticated, isRestaurantOwner]
+    permission_classes = [IsAuthenticated, IsRestaurantOwner]
 
     def dispatch(self, request, *args, **kwargs):
         try:
@@ -26,7 +26,7 @@ class CreateMenuItem(CreateAPIView):
 class UpdateMenuItem(UpdateAPIView):
     queryset = MenuItem.objects.all()
     serializer_class = MenuItemSerializer
-    permission_classes = [IsAuthenticated, isRestaurantOwner]
+    permission_classes = [IsAuthenticated, IsRestaurantOwner]
 
     def dispatch(self, request, *args, **kwargs):
         try:
@@ -53,7 +53,7 @@ class FetchAllMenuItems(ListCreateAPIView):
 class DeleteMenuItem(DestroyAPIView):
     queryset = MenuItem.objects.all()
     serializer_class = MenuItemSerializer
-    permission_classes = [IsAuthenticated, isRestaurantOwner]
+    permission_classes = [IsAuthenticated, IsRestaurantOwner]
 
     def dispatch(self, request, *args, **kwargs):
         try:

@@ -4,7 +4,7 @@ from rest_framework.exceptions import APIException
 from restaurants.models import Restaurant
 from rest_framework import status
 
-class isRestaurantOwner(permissions.BasePermission):
+class IsRestaurantOwner(permissions.BasePermission):
     def has_permission(self, request, view):
         restaurant = get_object_or_404(Restaurant, id=view.restaurant.id)
         if restaurant.owner_id != request.user.id:
