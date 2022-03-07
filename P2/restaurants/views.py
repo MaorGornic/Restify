@@ -2,7 +2,7 @@ from django.http import Http404, JsonResponse
 from rest_framework.generics import get_object_or_404, CreateAPIView, UpdateAPIView, ListCreateAPIView, DestroyAPIView
 from restaurants.permissions import IsRestaurantOwner
 from restaurants.models import MenuItem, Restaurant
-from restaurants.serializers import MenuItemSerializer
+from restaurants.serializers import MenuItemSerializer, RestaurantSerializer
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from django.http import HttpResponseRedirect
 from django.urls import reverse  
@@ -50,6 +50,12 @@ class FetchAllMenuItems(ListCreateAPIView):
     serializer_class = MenuItemSerializer
     permission_classes = [AllowAny]
 
+    def dispatch(self, request, *args, **kwargs):
+        if not Restaurant.objects.filter(id=self.kwargs['restaurant_id']):
+            return JsonResponse({"detail": "Restaurant not found"}, status=404)
+
+        return super().dispatch(request, *args, **kwargs)
+
 class DeleteMenuItem(DestroyAPIView):
     queryset = MenuItem.objects.all()
     serializer_class = MenuItemSerializer
@@ -74,3 +80,7 @@ class DeleteMenuItem(DestroyAPIView):
             return HttpResponseRedirect(reverse('restaurants:menuitems', kwargs={'restaurant_id': self.restaurant.id})) 
         return response   
     
+class FetchAllRestaurants(ListCreateAPIView):
+    queryset = Restaurant.objects.all()
+    serializer_class = RestaurantSerializer
+    permission_classes = [AllowAny]

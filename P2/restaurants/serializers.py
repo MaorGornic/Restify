@@ -3,9 +3,34 @@ from rest_framework import serializers
 from restaurants.models import Notification, Restaurant, MenuItem
 
 class RestaurantSerializer(serializers.ModelSerializer):
+    owner = serializers.ReadOnlyField()
+    followers = serializers.ReadOnlyField()
+    views = serializers.ReadOnlyField()
+    likes = serializers.ReadOnlyField()
+
+    def to_representation(self, instance):
+        rep = super().to_representation(instance)
+        self.owner = rep.get("owner", None)
+        rep.pop('owner')
+        rep.update({'owner_id': self.owner.id})
+
+        followers = []
+        likes = []
+
+        if "followers" in rep:
+            for follower in rep["followers"].all().iterator():
+                followers.append(follower.id)
+        
+        if "likes" in rep:
+            for like in rep["likes"].all().iterator():
+                likes.append(like.id)
+
+        rep.update({"followers": followers, "likes": likes})
+        return rep
+
     class Meta:
         model = Restaurant
-        fields = ['id', 'owner', 'followers', 'name', 'address', 'email', 'phone_num', 'views', 'likes', 'comment', 'blog', 'logo']
+        fields = ['id', 'owner', 'followers', 'name', 'address', 'email', 'phone_num', 'views', 'likes', 'logo']
 
 
 class MenuItemSerializer(serializers.ModelSerializer):
