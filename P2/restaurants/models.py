@@ -13,22 +13,6 @@ class Comment(models.Model):
     timestamp = models.DateTimeField(auto_created=True)
     restaurant = models.ForeignKey(to=ModifiedUser, related_name='restaurant', on_delete=models.CASCADE)
 
-
-"""
-Blog (Title, Image, Contents, publish date, restaurant id foreign key, likes (many to many field to User))
-"""
-
-
-class Blog(models.Model):
-    title = models.CharField(max_length=200)
-    # TODO: Fix upload_to
-    banner = models.ImageField(upload_to='store_avatars/', null=True, blank=True)
-
-    contents = models.CharField(max_length=5000)
-    publish_timestamp = models.DateTimeField(auto_created=True)
-    likes = models.ManyToManyField(to=ModifiedUser, related_name="blog_likes")
-
-
 """
 Restaurant (name, address, Contact information, logo, views, likes (many to many field to User)) 
 """
@@ -46,15 +30,21 @@ class Restaurant(models.Model):
     phone_num = models.CharField(max_length=10)
     views = models.IntegerField(validators=[MinValueValidator(0)])
     likes = models.ManyToManyField(to=ModifiedUser, related_name="restaurant_likes", null=True, blank=True)
+    logo = models.ImageField(upload_to='restaurant_logo/', null=True, blank=True)
 
-    # One-to-many relationship: A restaurant can have many comments. A comment can be attributed to only one restaurant
-    comment = models.ForeignKey(to=ModifiedUser, on_delete=models.CASCADE, related_name='comments', null=True,
-                                blank=True)
-    blog = models.ForeignKey(to=Blog, on_delete=models.CASCADE, related_name='blogs', null=True, blank=True)
+"""
+Blog (Title, Image, Contents, publish date, restaurant id foreign key, likes (many to many field to User))
+"""
 
-    # TODO: Fix upload_to
-    logo = models.ImageField(upload_to='store_avatars/', null=True, blank=True)
 
+class Blog(models.Model):
+    restaurant = models.ForeignKey(to=Restaurant, related_name='restaurant', on_delete=models.CASCADE)
+    title = models.CharField(max_length=200)
+    banner = models.ImageField(upload_to='blogs/', null=True, blank=True)
+
+    contents = models.CharField(max_length=5000)
+    publish_timestamp = models.DateTimeField(auto_created=True)
+    likes = models.ManyToManyField(to=ModifiedUser, related_name="blog_likes")
 
 """
 Notification (message, user id)
