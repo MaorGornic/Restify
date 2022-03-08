@@ -1,6 +1,7 @@
 from django.urls import path
 
-from restaurants.views import CreateMenuItem, UpdateMenuItem, FetchAllMenuItems, DeleteMenuItem, FetchAllRestaurants
+from restaurants.views import CreateMenuItem, FetchComments, UpdateMenuItem, \
+    FetchAllMenuItems, DeleteMenuItem, FetchAllRestaurants
 
 app_name = 'restaurants'
 
@@ -10,4 +11,6 @@ urlpatterns = [
     path('<int:restaurant_id>/menu/items/', FetchAllMenuItems.as_view(), name='menuitems'),
     path('<int:restaurant_id>/menu/<int:pk>/remove/', DeleteMenuItem.as_view(), name='delete-menuitems'),
     path('all/', FetchAllRestaurants.as_view(), name='restaurants'),
+    # Comments endpoints
+    path('<int:restaurant_id>/comments/all/', FetchComments.as_view(), name='fetch-comments'),
 ]
