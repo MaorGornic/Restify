@@ -1,5 +1,5 @@
-from django.http import Http404, JsonResponse
-from rest_framework.generics import get_object_or_404, CreateAPIView, UpdateAPIView, ListCreateAPIView, DestroyAPIView
+from django.http import Http404, JsonResponse, HttpResponseNotFound
+from rest_framework.generics import get_object_or_404, CreateAPIView, UpdateAPIView, ListCreateAPIView, DestroyAPIView, RetrieveAPIView
 from restaurants.permissions import IsRestaurantOwner
 from restaurants.models import MenuItem, Restaurant
 from restaurants.serializers import MenuItemSerializer, RestaurantSerializer
@@ -84,3 +84,16 @@ class FetchAllRestaurants(ListCreateAPIView):
     queryset = Restaurant.objects.all()
     serializer_class = RestaurantSerializer
     permission_classes = [AllowAny]
+
+class FetchRestaurantByName(RetrieveAPIView):
+    serializer_class = RestaurantSerializer
+    permission_classes = [AllowAny]
+
+    def get_object(self):
+        return Restaurant.objects.filter(name=self.kwargs['name']).first()
+
+    def retrieve(self, request, *args, **kwargs):
+        ret = super().retrieve(request, *args, **kwargs)
+        if 'id' not in ret.data:
+            return JsonResponse({"detail": "Restaurant with the given name was not found"}, status=404)
+        return ret

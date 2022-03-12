@@ -28,7 +28,7 @@ class Restaurant(models.Model):
     address = models.CharField(max_length=200)
     email = models.CharField(max_length=100)
     phone_num = models.CharField(max_length=10)
-    views = models.IntegerField(validators=[MinValueValidator(0)])
+    views = models.IntegerField(default=0, validators=[MinValueValidator(0)])
     likes = models.ManyToManyField(to=ModifiedUser, related_name="restaurant_likes", null=True, blank=True)
     logo = models.ImageField(upload_to='restaurant_logo/', null=True, blank=True)
 
