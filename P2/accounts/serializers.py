@@ -42,7 +42,7 @@ class RegisterSerializer(serializers.ModelSerializer):
         return user
 
 
-class UserSerializer(serializers.ModelSerializer):
+class ModifiedUserSerializer(serializers.ModelSerializer):
     class Meta:
         model = ModifiedUser
-        fields = ['id', 'username', 'email', 'avatar', 'password', 'first_name', 'last_name', 'phone_num', 'avatar']
+        fields = ['id', 'username', 'first_name', 'last_name', 'email', 'avatar', 'phone_num']

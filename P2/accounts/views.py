@@ -5,11 +5,12 @@ from rest_framework.generics import RetrieveAPIView, get_object_or_404
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from django.http import Http404, JsonResponse
 from rest_framework_simplejwt.token_blacklist.models import OutstandingToken, BlacklistedToken
 from rest_framework_simplejwt.tokens import RefreshToken
 
 from .models import ModifiedUser
-from .serializers import RegisterSerializer, UserSerializer
+from .serializers import RegisterSerializer, ModifiedUserSerializer
 
 
 # Create your views here.
@@ -35,20 +36,17 @@ class APILogoutView(APIView):
 
 class APIUserView(RetrieveAPIView):
     permission_classes = (IsAuthenticated,)
-    serializer_class = UserSerializer
+    serializer_class = ModifiedUserSerializer
 
     def get_object(self):
-        print("Request", self.request)
-        print("Request user", self.request.user)
         return get_object_or_404(ModifiedUser, id=self.request.user.id)
 
 
 class APIUpdateView(generics.UpdateAPIView):
+    queryset = ModifiedUser.objects.all()
     permission_classes = (IsAuthenticated,)
-    serializer_class = UserSerializer
+    serializer_class = ModifiedUserSerializer
 
-    # def get_object(self):
-    #
-    # def patch(self, request, *args, **kwargs):
-    #     pass
-    # # TODO
+    def update(self, request, *args, **kwargs):
+        self.kwargs["pk"] = self.request.user.id
+        return super().update(request, *args, **kwargs)

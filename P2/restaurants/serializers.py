@@ -1,11 +1,6 @@
 from rest_framework import serializers
-from accounts.models import ModifiedUser
 from restaurants.models import Notification, Restaurant, Comment, Notification, MenuItem
-
-class ModifiedUserSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = ModifiedUser
-        fields = ['id', 'username', 'first_name', 'last_name', 'email', 'avatar', 'phone_num'] 
+from accounts.serializers import ModifiedUserSerializer
         
 class RestaurantSerializer(serializers.ModelSerializer):
     owner = serializers.ReadOnlyField()

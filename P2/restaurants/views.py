@@ -43,10 +43,6 @@ class UpdateMenuItem(UpdateAPIView):
 
         return super().dispatch(request, *args, **kwargs)
 
-
-    def update(self, request, *args, **kwargs):
-        return super().update(request, *args, **kwargs)
-
 class FetchAllMenuItems(ListCreateAPIView):
     queryset = MenuItem.objects.all()
     serializer_class = MenuItemSerializer

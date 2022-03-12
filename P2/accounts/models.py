@@ -8,6 +8,5 @@ avatar, owned restaurant id), following (many to many field to Restaurant)
 
 
 class ModifiedUser(User):
-    phone_num = models.CharField(max_length=10)
-    # TODO: Fix upload_to
+    phone_num = models.CharField(max_length=10, blank=True, null=True)
     avatar = models.ImageField(upload_to='user_avatar/', null=True, blank=True)
