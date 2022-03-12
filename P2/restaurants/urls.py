@@ -1,8 +1,7 @@
 from django.urls import path
 
-from restaurants.views import CreateMenuItem, UpdateMenuItem, FetchAllMenuItems, DeleteMenuItem, \
+from restaurants.views import CreateMenuItem, UpdateMenuItem, FetchAllMenuItems, DeleteMenuItem, FetchComments, \
                               FetchAllRestaurants, FetchRestaurantByName, FetchFollowersRestaurants
-
 app_name = 'restaurants'
 
 urlpatterns = [
@@ -13,4 +12,7 @@ urlpatterns = [
     path('all/', FetchAllRestaurants.as_view(), name='restaurants'),
     path('name/<str:name>/', FetchRestaurantByName.as_view(), name='restaurant'),
     path('<int:restaurant_id>/followers/', FetchFollowersRestaurants.as_view(), name='restaurant-followers'),
+    
+    # Comments endpoints
+    path('<int:restaurant_id>/comments/all/', FetchComments.as_view(), name='fetch-comments'),
 ]

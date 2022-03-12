@@ -1,8 +1,8 @@
 from django.db import models
-from django.core.validators import MinValueValidator 
+from django.core.validators import MinValueValidator
 from accounts.models import ModifiedUser
 
-# Create your models here.
+# Models created
 """
 (user id, date, restaurant id)
 """
@@ -12,6 +12,7 @@ class Comment(models.Model):
     user = models.OneToOneField(to=ModifiedUser, related_name='comment', on_delete=models.CASCADE)
     timestamp = models.DateTimeField(auto_created=True)
     restaurant = models.ForeignKey(to=ModifiedUser, related_name='restaurant', on_delete=models.CASCADE)
+
 
 """
 Restaurant (name, address, Contact information, logo, views, likes (many to many field to User)) 
@@ -60,6 +61,7 @@ class Notification(models.Model):
     )
     type = models.CharField(max_length=10, choices=NOTIFICATION_TYPE, default="GENERAL")
     user = models.ForeignKey(to=ModifiedUser, on_delete=models.CASCADE, related_name='users')
+
 
 class MenuItem(models.Model):
     name = models.CharField(max_length=100)
