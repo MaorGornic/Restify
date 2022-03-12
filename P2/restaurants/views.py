@@ -1,4 +1,5 @@
-from django.http import Http404, JsonResponse, HttpResponseNotFound
+from typing import OrderedDict
+from django.http import Http404, JsonResponse
 from rest_framework.generics import get_object_or_404, CreateAPIView, UpdateAPIView, ListCreateAPIView, DestroyAPIView, RetrieveAPIView
 from restaurants.permissions import IsRestaurantOwner
 from restaurants.models import MenuItem, Restaurant
@@ -89,11 +90,41 @@ class FetchRestaurantByName(RetrieveAPIView):
     serializer_class = RestaurantSerializer
     permission_classes = [AllowAny]
 
+    def dispatch(self, request, *args, **kwargs):
+        try:
+            self.restaurant = get_object_or_404(Restaurant, name=self.kwargs['name'])
+        except Http404:
+            return JsonResponse({"detail": "Restaurant not found"}, status=404)
+        return super().dispatch(request, *args, **kwargs)
+
     def get_object(self):
-        return Restaurant.objects.filter(name=self.kwargs['name']).first()
+        return self.restaurant
 
     def retrieve(self, request, *args, **kwargs):
         ret = super().retrieve(request, *args, **kwargs)
         if 'id' not in ret.data:
             return JsonResponse({"detail": "Restaurant with the given name was not found"}, status=404)
+        return ret
+
+# Followers field is many to many so.... look into this. maybe there is a different way to do that.
+class FetchFollowersRestaurants(RetrieveAPIView):
+    serializer_class = RestaurantSerializer
+    # [discuss] to we want to allow everyone to see who is following a particular restaurant?
+    permission_classes = [IsAuthenticated, IsRestaurantOwner]
+
+    def dispatch(self, request, *args, **kwargs):
+        try:
+            self.restaurant = get_object_or_404(Restaurant, id=self.kwargs['restaurant_id'])
+        except Http404:
+            return JsonResponse({"detail": "Restaurant not found"}, status=404)
+        return super().dispatch(request, *args, **kwargs)
+
+    def get_object(self):
+       return self.restaurant
+
+    def retrieve(self, request, *args, **kwargs):
+        ret =super().retrieve(request, *args, **kwargs)
+        if 'id' not in ret.data:
+            return JsonResponse({"detail": "Restaurant with the given id was not found"}, status=404)
+        ret.data = OrderedDict({'followers': ret.data['followers']})
         return ret

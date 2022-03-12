@@ -1,7 +1,12 @@
 from rest_framework import serializers
-
+from accounts.models import ModifiedUser
 from restaurants.models import Notification, Restaurant, MenuItem
 
+class ModifiedUserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ModifiedUser
+        fields = ['id', 'username', 'first_name', 'last_name', 'email', 'avatar', 'phone_num'] 
+        
 class RestaurantSerializer(serializers.ModelSerializer):
     owner = serializers.ReadOnlyField()
     followers = serializers.ReadOnlyField()
@@ -19,11 +24,11 @@ class RestaurantSerializer(serializers.ModelSerializer):
 
         if "followers" in rep:
             for follower in rep["followers"].all().iterator():
-                followers.append(follower.id)
+                followers.append(ModifiedUserSerializer(follower).data)
         
         if "likes" in rep:
             for like in rep["likes"].all().iterator():
-                likes.append(like.id)
+                likes.append(ModifiedUserSerializer(like).data)
 
         rep.update({"followers": followers, "likes": likes})
         return rep
