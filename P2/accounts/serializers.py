@@ -2,6 +2,7 @@ from rest_framework import serializers
 from rest_framework.validators import UniqueValidator
 from django.contrib.auth.password_validation import validate_password
 from .models import ModifiedUser
+from restaurants.models import Notification
 
 
 # TODO: Add avatar
@@ -46,3 +47,9 @@ class ModifiedUserSerializer(serializers.ModelSerializer):
     class Meta:
         model = ModifiedUser
         fields = ['id', 'username', 'first_name', 'last_name', 'email', 'avatar', 'phone_num']
+
+
+class NotificationRecordsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Notification
+        fields = ['user', 'type', 'viewed', 'blog', 'restaurant', 'actor_user']

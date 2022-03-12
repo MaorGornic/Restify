@@ -2,6 +2,7 @@ from django.shortcuts import render
 from rest_framework import generics
 from django.contrib.auth.models import User
 from rest_framework.generics import RetrieveAPIView, get_object_or_404
+from rest_framework.pagination import PageNumberPagination
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -10,7 +11,8 @@ from rest_framework_simplejwt.token_blacklist.models import OutstandingToken, Bl
 from rest_framework_simplejwt.tokens import RefreshToken
 
 from .models import ModifiedUser
-from .serializers import RegisterSerializer, ModifiedUserSerializer
+from restaurants.models import Notification
+from .serializers import RegisterSerializer, ModifiedUserSerializer, NotificationRecordsSerializer
 
 
 # Create your views here.
@@ -41,6 +43,10 @@ class APIUserView(RetrieveAPIView):
     def get_object(self):
         return get_object_or_404(ModifiedUser, id=self.request.user.id)
 
+class NotificationView(generics.ListAPIView):
+    queryset = Notification.objects.all()
+    serializer_class = NotificationRecordsSerializer
+    pagination_class = PageNumberPagination
 
 class APIUpdateView(generics.UpdateAPIView):
     queryset = ModifiedUser.objects.all()

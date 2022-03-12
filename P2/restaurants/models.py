@@ -42,25 +42,9 @@ class Blog(models.Model):
     restaurant = models.ForeignKey(to=Restaurant, related_name='restaurant', on_delete=models.CASCADE)
     title = models.CharField(max_length=200)
     banner = models.ImageField(upload_to='blogs/', null=True, blank=True)
-
     contents = models.CharField(max_length=5000)
     publish_timestamp = models.DateTimeField(auto_created=True)
     likes = models.ManyToManyField(to=ModifiedUser, related_name="blog_likes")
-
-"""
-Notification (message, user id)
-"""
-
-
-class Notification(models.Model):
-    message = models.CharField(max_length=200)
-    # Enum
-    NOTIFICATION_TYPE = (
-        ("GENERAL", "general"),
-        ("RESTAURANT", "restaurant"),
-    )
-    type = models.CharField(max_length=10, choices=NOTIFICATION_TYPE, default="GENERAL")
-    user = models.ForeignKey(to=ModifiedUser, on_delete=models.CASCADE, related_name='users')
 
 
 class MenuItem(models.Model):
@@ -69,3 +53,29 @@ class MenuItem(models.Model):
     price = models.DecimalField(max_digits=8, decimal_places=2, validators=[MinValueValidator(0)])
     picture = models.ImageField(upload_to='menu/', null=True, blank=True)
     restaurant = models.ForeignKey(to=Restaurant, on_delete=models.CASCADE, related_name='menuitems')
+
+
+
+"""
+Notification
+"""
+
+class Notification(models.Model):
+    user = models.ForeignKey(to=ModifiedUser, on_delete=models.CASCADE, related_name='users')
+    # Enum, all possible notification types
+    NOTIFICATION_TYPE = (
+        ("NEWBLOG", "newblog"),
+        ("MENUUPDATE", "menuupdate"),
+        ("FOLLOWED", "followed"),
+        ("LIKEDRES", "likedres"),
+        ("LIKEDBLOG", "likedblog"),
+        ("COMMENTED", "commented")
+    )
+    type = models.CharField(max_length=10, choices=NOTIFICATION_TYPE, default="GENERAL")
+    # Indicates whether the notification was viewed or not.
+    viewed = models.BooleanField(default=False)
+    # The user that receiver the notification
+    blog = models.ForeignKey(to=Blog, on_delete=models.CASCADE, blank=True, null=True)
+    restaurant = models.ForeignKey(to=Restaurant, on_delete=models.CASCADE, blank=True, null=True)
+    # A user that triggered the notification. For example, a follower, liker or a commenter.
+    actor_user = models.ForeignKey(to=ModifiedUser, on_delete=models.CASCADE, blank=True, null=True)

@@ -1,7 +1,9 @@
 from rest_framework import serializers
-from restaurants.models import Notification, Restaurant, Comment, Notification, MenuItem
+from restaurants.models import Notification
+from restaurants.models import Restaurant, Comment, MenuItem
 from accounts.serializers import ModifiedUserSerializer
-        
+
+
 class RestaurantSerializer(serializers.ModelSerializer):
     owner = serializers.ReadOnlyField()
     followers = serializers.ReadOnlyField()
