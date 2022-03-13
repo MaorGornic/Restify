@@ -1,5 +1,6 @@
 from django.utils import timezone
 from rest_framework import serializers
+from accounts.models import ModifiedUser
 from restaurants.models import Notification
 from restaurants.models import Restaurant, Comment, MenuItem
 from accounts.serializers import ModifiedUserSerializer
@@ -14,21 +15,22 @@ class RestaurantSerializer(serializers.ModelSerializer):
     def to_representation(self, instance):
         rep = super().to_representation(instance)
         self.owner = rep.get("owner", None)
-        rep.pop('owner')
-        rep.update({'owner_id': self.owner.id})
+        if self.owner:
+            rep.pop('owner')
+            rep.update({'owner_id': self.owner.id})
 
-        followers = []
-        likes = []
+            followers = []
+            likes = []
 
-        if "followers" in rep:
-            for follower in rep["followers"].all().iterator():
-                followers.append(ModifiedUserSerializer(follower).data)
+            if "followers" in rep:
+                for follower in rep["followers"].all().iterator():
+                    followers.append(ModifiedUserSerializer(follower).data)
 
-        if "likes" in rep:
-            for like in rep["likes"].all().iterator():
-                likes.append(ModifiedUserSerializer(like).data)
+            if "likes" in rep:
+                for like in rep["likes"].all().iterator():
+                    likes.append(ModifiedUserSerializer(like).data)
 
-        rep.update({"followers": followers, "likes": likes})
+            rep.update({"followers": followers, "likes": likes})
         return rep
 
     class Meta:
@@ -50,8 +52,8 @@ class MenuItemSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         self.restaurant = validated_data.get("restaurant", None)
         for follower in self.restaurant.followers.all().iterator():
-            Notification.objects.create(message=f"{self.restaurant.name} has added a new item to their menu",
-                                        type="GENERAL", user=follower)
+            Notification.objects.create(type="MENUUPDATE", user=follower, 
+            restaurant=self.restaurant)
         return super().create(validated_data)
 
     class Meta:
