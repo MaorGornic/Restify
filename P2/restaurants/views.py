@@ -127,7 +127,9 @@ class FetchFollowersRestaurants(RetrieveAPIView):
         ret.data = OrderedDict({'followers': ret.data['followers']})
         return ret
 
+
 # Comment views
+# For comments model, User comments under restaurant, get comments from a restaurant
 class FetchComments(ListCreateAPIView):
     queryset = Comment.objects.all()
     serializer_class = CommentSerializer
@@ -138,3 +140,20 @@ class FetchComments(ListCreateAPIView):
             return JsonResponse({"detail": "Restaurant ID for Comments is not found"}, status=404)
 
         return super().dispatch(request, *args, **kwargs)
+
+
+class CreateComments(CreateAPIView):
+    serializer_class = CommentSerializer
+    permission_classes = [IsAuthenticated] # Must be authenticated
+
+    def dispatch(self, request, *args, **kwargs):
+        try:
+            self.restaurant = get_object_or_404(Restaurant, id=self.kwargs['restaurant_id'])
+        except Http404:
+            return JsonResponse({"detail": "Restaurant not found"}, status=404)
+
+        return super().dispatch(request, *args, **kwargs)
+
+    def perform_create(self, serializer):
+        return serializer.save(restaurant=self.restaurant)
+

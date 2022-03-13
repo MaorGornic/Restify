@@ -1,3 +1,4 @@
+from django.utils import timezone
 from rest_framework import serializers
 from restaurants.models import Notification
 from restaurants.models import Restaurant, Comment, MenuItem
@@ -58,10 +59,12 @@ class MenuItemSerializer(serializers.ModelSerializer):
         fields = ['id', 'name', 'description', 'price', 'picture', 'restaurant']
 
 
-
 # Comments Serializer
 class CommentSerializer(serializers.ModelSerializer):
     restaurant = serializers.ReadOnlyField()
+    user = serializers.ReadOnlyField()
+    timestamp = serializers.DateTimeField()
+    # curr_user = serializers.SerializerMethodField('_user')
 
     def to_representation(self, instance):
         rep = super().to_representation(instance)
@@ -71,6 +74,19 @@ class CommentSerializer(serializers.ModelSerializer):
         rep.update({'restaurant_id': self.restaurant.id})
         return rep
 
+    def create(self, validated_data):
+        self.restaurant = validated_data.get("restaurant", None)
+        comment = Comment.objects.create(
+            user=validated_data['user'],
+            # timestamp=timezone.now(),
+            restaurant=validated_data['restaurant'],
+        )
+        Notification.objects.create(message=f"A new comment has been posted under {self.restaurant.name}",
+                                    type="COMMENTED", user=self.restaurant.owner)  # Owner gets the notification
+        # return super().create(validated_data)
+        return comment
+
     class Meta:
         model = Comment
         fields = ['id', 'user', 'timestamp', 'restaurant']
+
