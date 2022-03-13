@@ -6,9 +6,10 @@ from rest_framework import status
 
 class IsRestaurantOwner(permissions.BasePermission):
     def has_permission(self, request, view):
-        restaurant = get_object_or_404(Restaurant, id=view.restaurant.id)
-        if restaurant.owner_id != request.user.id:
-            raise NotRestaurantOwner()
+        if hasattr(view, 'restaurant'):
+            restaurant = get_object_or_404(Restaurant, id=view.restaurant.id)
+            if restaurant.owner_id != request.user.id:
+                raise NotRestaurantOwner()
         return super().has_permission(request, view)
 
 class NotRestaurantOwner(APIException):

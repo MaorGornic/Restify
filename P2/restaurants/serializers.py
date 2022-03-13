@@ -1,6 +1,4 @@
-from django.utils import timezone
 from rest_framework import serializers
-from accounts.models import ModifiedUser
 from restaurants.models import Notification
 from restaurants.models import Restaurant, Comment, MenuItem
 from accounts.serializers import ModifiedUserSerializer

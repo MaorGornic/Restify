@@ -1,6 +1,6 @@
 from typing import OrderedDict
 from django.http import Http404, JsonResponse
-from rest_framework.generics import get_object_or_404, CreateAPIView, UpdateAPIView, ListCreateAPIView, DestroyAPIView, RetrieveAPIView
+from rest_framework.generics import get_object_or_404, CreateAPIView, UpdateAPIView, ListAPIView, DestroyAPIView, RetrieveAPIView
 from accounts.models import ModifiedUser
 from restaurants.permissions import IsRestaurantOwner
 from restaurants.models import Comment, MenuItem, Restaurant
@@ -44,7 +44,7 @@ class UpdateMenuItem(UpdateAPIView):
 
         return super().dispatch(request, *args, **kwargs)
 
-class FetchAllMenuItems(ListCreateAPIView):
+class FetchAllMenuItems(ListAPIView):
     queryset = MenuItem.objects.all()
     serializer_class = MenuItemSerializer
     permission_classes = [AllowAny]
@@ -93,7 +93,7 @@ class CreateRestaurant(CreateAPIView):
     def perform_create(self, serializer):
         return serializer.save(owner=self.owner)
 
-class FetchAllRestaurants(ListCreateAPIView):
+class FetchAllRestaurants(ListAPIView):
     queryset = Restaurant.objects.all()
     serializer_class = RestaurantSerializer
     permission_classes = [AllowAny]
@@ -159,7 +159,7 @@ class UpdateRestaurantInfo(UpdateAPIView):
 
 # ==================== Comment Views ========================
 # For comments model, User comments under restaurant, get comments from a restaurant
-class FetchComments(ListCreateAPIView):
+class FetchComments(ListAPIView):
     queryset = Comment.objects.all()
     serializer_class = CommentSerializer
     permission_classes = [AllowAny]
@@ -167,7 +167,6 @@ class FetchComments(ListCreateAPIView):
     def dispatch(self, request, *args, **kwargs):
         if not Restaurant.objects.filter(id=self.kwargs['restaurant_id']):
             return JsonResponse({"detail": "Restaurant ID for Comments is not found"}, status=404)
-
         return super().dispatch(request, *args, **kwargs)
 
 
