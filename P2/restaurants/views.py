@@ -1,6 +1,8 @@
 from typing import OrderedDict
 from django.http import Http404, JsonResponse
 from rest_framework.generics import get_object_or_404, CreateAPIView, UpdateAPIView, ListCreateAPIView, DestroyAPIView, RetrieveAPIView
+
+from accounts.models import ModifiedUser
 from restaurants.permissions import IsRestaurantOwner
 from restaurants.models import Comment, MenuItem, Restaurant
 from restaurants.serializers import CommentSerializer, MenuItemSerializer, \
@@ -155,5 +157,5 @@ class CreateComments(CreateAPIView):
         return super().dispatch(request, *args, **kwargs)
 
     def perform_create(self, serializer):
-        return serializer.save(restaurant=self.restaurant)
+        return serializer.save(restaurant=self.restaurant, user=ModifiedUser.objects.get(id=self.request.user.id))
 

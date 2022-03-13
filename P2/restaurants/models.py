@@ -3,16 +3,6 @@ from django.core.validators import MinValueValidator
 from accounts.models import ModifiedUser
 
 # Models created
-"""
-(user id, date, restaurant id)
-"""
-
-
-class Comment(models.Model):
-    user = models.OneToOneField(to=ModifiedUser, related_name='comment', on_delete=models.CASCADE)
-    timestamp = models.DateTimeField(auto_created=True)
-    restaurant = models.ForeignKey(to=ModifiedUser, related_name='restaurant', on_delete=models.CASCADE)
-
 
 """
 Restaurant (name, address, Contact information, logo, views, likes (many to many field to User)) 
@@ -32,6 +22,17 @@ class Restaurant(models.Model):
     views = models.IntegerField(default=0, validators=[MinValueValidator(0)])
     likes = models.ManyToManyField(to=ModifiedUser, related_name="restaurant_likes", null=True, blank=True)
     logo = models.ImageField(upload_to='restaurant_logo/', null=True, blank=True)
+
+
+"""
+(user id, date, restaurant id)
+"""
+
+class Comment(models.Model):
+    user = models.ForeignKey(to=ModifiedUser, related_name='comment', on_delete=models.CASCADE)
+    timestamp = models.DateTimeField(auto_created=True, auto_now_add=True)
+    restaurant = models.ForeignKey(to=Restaurant, related_name='restaurant_comment', on_delete=models.CASCADE)
+
 
 """
 Blog (Title, Image, Contents, publish date, restaurant id foreign key, likes (many to many field to User))

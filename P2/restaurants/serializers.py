@@ -63,7 +63,7 @@ class MenuItemSerializer(serializers.ModelSerializer):
 class CommentSerializer(serializers.ModelSerializer):
     restaurant = serializers.ReadOnlyField()
     user = serializers.ReadOnlyField()
-    timestamp = serializers.DateTimeField()
+    timestamp = serializers.ReadOnlyField(required=False)
     # curr_user = serializers.SerializerMethodField('_user')
 
     def to_representation(self, instance):
@@ -71,18 +71,21 @@ class CommentSerializer(serializers.ModelSerializer):
         if not hasattr(self, "restaurant"):
             self.restaurant = rep.get("restaurant", None)
         rep.pop('restaurant')
+        if "user" in rep:
+            rep.update({'user': ModifiedUserSerializer(rep["user"]).data})
         rep.update({'restaurant_id': self.restaurant.id})
         return rep
 
     def create(self, validated_data):
         self.restaurant = validated_data.get("restaurant", None)
         comment = Comment.objects.create(
+            # user=ModifiedUserSerializer(validated_data['user']).data,
             user=validated_data['user'],
             # timestamp=timezone.now(),
             restaurant=validated_data['restaurant'],
         )
-        Notification.objects.create(message=f"A new comment has been posted under {self.restaurant.name}",
-                                    type="COMMENTED", user=self.restaurant.owner)  # Owner gets the notification
+        Notification.objects.create(type="COMMENTED", user=self.restaurant.owner,
+                                    actor_user=validated_data['user'], restaurant=validated_data['restaurant']) # Owner gets the notification
         # return super().create(validated_data)
         return comment
 
