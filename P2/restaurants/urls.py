@@ -1,20 +1,25 @@
 from django.urls import path
 
-from restaurants.views import CreateComments, CreateMenuItem, UpdateMenuItem, \
-    FetchAllMenuItems, DeleteMenuItem, FetchComments, \
+from restaurants.views import CreateComments, CreateMenuItem, UpdateMenuItem, CreateRestaurant, \
+    FetchAllMenuItems, DeleteMenuItem, FetchComments, UpdateRestaurantInfo, \
     FetchAllRestaurants, FetchRestaurantByName, FetchFollowersRestaurants
 app_name = 'restaurants'
 
 urlpatterns = [
+    # Menu endpoints
     path('<int:restaurant_id>/menu/new/', CreateMenuItem.as_view(), name='create-menuitem'),
     path('<int:restaurant_id>/menu/<int:pk>/edit/', UpdateMenuItem.as_view(), name='update-menuitem'),
     path('<int:restaurant_id>/menu/items/', FetchAllMenuItems.as_view(), name='menuitems'),
     path('<int:restaurant_id>/menu/<int:pk>/remove/', DeleteMenuItem.as_view(), name='delete-menuitems'),
+
+    # Restaurant endpoints
+    path('new/', CreateRestaurant.as_view(), name='restaurant-create'),
     path('all/', FetchAllRestaurants.as_view(), name='restaurants'),
     path('name/<str:name>/', FetchRestaurantByName.as_view(), name='restaurant'),
     path('<int:restaurant_id>/followers/', FetchFollowersRestaurants.as_view(), name='restaurant-followers'),
+    path('<int:restaurant_id>/edit/', UpdateRestaurantInfo.as_view(), name='restaurant-edit'),
 
-    # Comments endpoints
+    # Comment endpoints
     path('<int:restaurant_id>/comments/all/', FetchComments.as_view(), name='fetch-comments'),
     path('<int:restaurant_id>/comments/new/', CreateComments.as_view(), name='create-comments'),
 ]

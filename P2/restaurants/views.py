@@ -1,6 +1,8 @@
 from typing import OrderedDict
+from django.db import IntegrityError
 from django.http import Http404, JsonResponse
 from rest_framework.generics import get_object_or_404, CreateAPIView, UpdateAPIView, ListCreateAPIView, DestroyAPIView, RetrieveAPIView
+from accounts.models import ModifiedUser
 from restaurants.permissions import IsRestaurantOwner
 from restaurants.models import Comment, MenuItem, Restaurant
 from restaurants.serializers import CommentSerializer, MenuItemSerializer, \
@@ -9,7 +11,7 @@ from rest_framework.permissions import IsAuthenticated, AllowAny
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 
-# Create your views here.
+# ==================== MenuItem Views ========================
 class CreateMenuItem(CreateAPIView):
     serializer_class = MenuItemSerializer
     permission_classes = [IsAuthenticated, IsRestaurantOwner]
@@ -78,6 +80,19 @@ class DeleteMenuItem(DestroyAPIView):
             return HttpResponseRedirect(reverse('restaurants:menuitems', kwargs={'restaurant_id': self.restaurant.id}))
         return response
 
+# ==================== Restaurant Views ========================
+class CreateRestaurant(CreateAPIView):
+    serializer_class = RestaurantSerializer
+    permission_classes = [IsAuthenticated]
+    
+    def create(self, request, *args, **kwargs):
+        self.owner = ModifiedUser.objects.get(id=request.user.id)
+        if Restaurant.objects.filter(owner=self.owner):
+            return JsonResponse({"detail": "Same user cannot own more than one restaurant"}, status=400)
+        return super().create(request, *args, **kwargs)
+
+    def perform_create(self, serializer):
+        return serializer.save(owner=self.owner)
 
 class FetchAllRestaurants(ListCreateAPIView):
     queryset = Restaurant.objects.all()
@@ -104,7 +119,6 @@ class FetchRestaurantByName(RetrieveAPIView):
             return JsonResponse({"detail": "Restaurant with the given name was not found"}, status=404)
         return ret
 
-# Followers field is many to many so.... look into this. maybe there is a different way to do that.
 class FetchFollowersRestaurants(RetrieveAPIView):
     serializer_class = RestaurantSerializer
     # [discuss] to we want to allow everyone to see who is following a particular restaurant?
@@ -127,8 +141,24 @@ class FetchFollowersRestaurants(RetrieveAPIView):
         ret.data = OrderedDict({'followers': ret.data['followers']})
         return ret
 
+class UpdateRestaurantInfo(UpdateAPIView):
+    queryset = Restaurant.objects.all()
+    serializer_class = RestaurantSerializer
+    permission_classes = [IsAuthenticated, IsRestaurantOwner]
 
-# Comment views
+    def dispatch(self, request, *args, **kwargs):
+        try:
+            self.restaurant = get_object_or_404(Restaurant, id=self.kwargs['restaurant_id'])
+        except Http404:
+            return JsonResponse({"detail": "Restaurant not found"}, status=404)
+
+        return super().dispatch(request, *args, **kwargs)
+
+    def update(self, request, *args, **kwargs):
+        self.kwargs['pk'] = self.kwargs['restaurant_id']
+        return super().update(request, *args, **kwargs)
+
+# ==================== Comment Views ========================
 # For comments model, User comments under restaurant, get comments from a restaurant
 class FetchComments(ListCreateAPIView):
     queryset = Comment.objects.all()
