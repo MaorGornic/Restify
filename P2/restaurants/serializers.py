@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from restaurants.models import Notification
+from restaurants.models import Blog, Notification
 from restaurants.models import Restaurant, Comment, MenuItem
 from accounts.serializers import ModifiedUserSerializer
 
@@ -50,7 +50,7 @@ class MenuItemSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         self.restaurant = validated_data.get("restaurant", None)
         for follower in self.restaurant.followers.all().iterator():
-            Notification.objects.create(type="MENUUPDATE", user=follower, 
+            Notification.objects.create(type="MENUUPDATE", user=follower,
             restaurant=self.restaurant)
         return super().create(validated_data)
 
@@ -92,4 +92,41 @@ class CommentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Comment
         fields = ['id', 'user', 'timestamp', 'restaurant']
+
+
+# Blog Serializer
+class BlogSerializer(serializers.ModelSerializer):
+    restaurant = serializers.ReadOnlyField()
+    title = serializers.ReadOnlyField()
+    banner = serializers.ReadOnlyField()
+    contents = serializers.ReadOnlyField()
+    publish_timestamp = serializers.ReadOnlyField(required=False)
+    likes = serializers.ReadOnlyField()
+
+    def to_representation(self, instance):
+        rep = super().to_representation(instance)
+        if not hasattr(self, "restaurant"):
+            self.restaurant = rep.get("restaurant", None)
+        rep.pop('restaurant')
+        rep.update({'restaurant_id': self.restaurant.id})
+        return rep
+
+    # def create(self, validated_data):
+    #     self.restaurant = validated_data.get("restaurant", None)
+    #     blog = Blog.objects.create(
+    #         # user=ModifiedUserSerializer(validated_data['user']).data,
+    #         # user=validated_data['user'],
+    #         # publish_timestamp=timezone.now(),
+    #         restaurant=validated_data['restaurant'],
+    #         # TODO
+    #     )
+    #     # Creating a notification for all followers regarding the new blog
+    #     for follower in self.restaurant.followers.all().iterator():
+    #         Notification.objects.create(type="NEWBLOG", user=follower,
+    #                                     restaurant=self.restaurant) # Followers get the notification
+    #     return blog
+
+    class Meta:
+        model = Blog
+        fields = ['id', 'restaurant', 'title', 'banner', 'contents', 'publish_timestamp', 'likes']
 

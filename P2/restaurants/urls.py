@@ -1,6 +1,7 @@
 from django.urls import path
 
-from restaurants.views import CreateComments, CreateMenuItem, UpdateMenuItem, CreateRestaurant, \
+from restaurants.views import CreateComments, CreateMenuItem, GetBlog, \
+    UpdateMenuItem, CreateRestaurant, \
     FetchAllMenuItems, DeleteMenuItem, FetchComments, UpdateRestaurantInfo, \
     FetchAllRestaurants, FetchRestaurantByName, FetchFollowersRestaurants
 app_name = 'restaurants'
@@ -22,4 +23,7 @@ urlpatterns = [
     # Comment endpoints
     path('<int:restaurant_id>/comments/all/', FetchComments.as_view(), name='fetch-comments'),
     path('<int:restaurant_id>/comments/new/', CreateComments.as_view(), name='create-comments'),
+
+    # Blog endpoints
+    path('<int:blog_id>/get/', GetBlog.as_view(), name='get-blog'),
 ]

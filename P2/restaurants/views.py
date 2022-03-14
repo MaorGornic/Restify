@@ -3,8 +3,9 @@ from django.http import Http404, JsonResponse
 from rest_framework.generics import get_object_or_404, CreateAPIView, UpdateAPIView, ListAPIView, DestroyAPIView, RetrieveAPIView
 from accounts.models import ModifiedUser
 from restaurants.permissions import IsRestaurantOwner
-from restaurants.models import Comment, MenuItem, Restaurant
-from restaurants.serializers import CommentSerializer, MenuItemSerializer, \
+from restaurants.models import Blog, Comment, MenuItem, Notification, Restaurant
+from restaurants.serializers import BlogSerializer, CommentSerializer, \
+    MenuItemSerializer, \
     RestaurantSerializer
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from django.http import HttpResponseRedirect
@@ -83,7 +84,7 @@ class DeleteMenuItem(DestroyAPIView):
 class CreateRestaurant(CreateAPIView):
     serializer_class = RestaurantSerializer
     permission_classes = [IsAuthenticated]
-    
+
     def create(self, request, *args, **kwargs):
         self.owner = ModifiedUser.objects.get(id=request.user.id)
         if Restaurant.objects.filter(owner=self.owner):
@@ -184,4 +185,62 @@ class CreateComments(CreateAPIView):
 
     def perform_create(self, serializer):
         return serializer.save(restaurant=self.restaurant, user=ModifiedUser.objects.get(id=self.request.user.id))
+
+
+# ==================== Blog Views ========================
+# For Blog model
+class GetBlog(RetrieveAPIView):
+    serializer_class = BlogSerializer
+    permission_classes = [AllowAny]
+
+    def dispatch(self, request, *args, **kwargs):
+        if not Blog.objects.filter(id=self.kwargs['blog_id']):
+            return JsonResponse({"detail": "Blog ID is not found"}, status=404)
+        self.blog = get_object_or_404(Blog, id=self.kwargs['blog_id'])
+        return super().dispatch(request, *args, **kwargs)
+
+    def get_object(self):
+        return self.blog
+
+    def retrieve(self, request, *args, **kwargs):
+        ret = super().retrieve(request, *args, **kwargs)
+        if 'id' not in ret.data:
+            return JsonResponse({"detail": "Blog ID is not found"}, status=404)
+        return ret
+
+
+# class DeleteBlog(DestroyAPIView):
+#     queryset = Blog.objects.all()
+#     serializer_class = BlogSerializer
+#     permission_classes = [IsAuthenticated, IsRestaurantOwner]
+#
+#     def dispatch(self, request, *args, **kwargs):
+#         if not Blog.objects.filter(id=self.kwargs['blog_id']):
+#             return JsonResponse({"detail": "Blog ID is not found"}, status=404)
+#         self.restaurant = get_object_or_404(Blog, id=self.kwargs['blog_id']).restaurant
+#         return super().dispatch(request, *args, **kwargs)
+#
+#     # Redirect to my restaurant after remove a blog?
+#     def finalize_response(self, request, response, *args, **kwargs):
+#         response = super().finalize_response(request, response, *args, **kwargs)
+#         if response.status_code not in [401, 403]:
+#             return HttpResponseRedirect(reverse('restaurants:restaurant', kwargs={'name': self.restaurant.name}))
+#         return response
+#
+#
+# class CreateBlog(CreateAPIView):
+#     serializer_class = BlogSerializer
+#     permission_classes = [IsAuthenticated, IsRestaurantOwner] # Must be authenticated
+#
+#     def dispatch(self, request, *args, **kwargs):
+#         try:
+#             self.restaurant = get_object_or_404(Restaurant, id=self.kwargs['restaurant_id'])
+#         except Http404:
+#             return JsonResponse({"detail": "Restaurant not found"}, status=404)
+#
+#         return super().dispatch(request, *args, **kwargs)
+#
+#     def perform_create(self, serializer):
+#         return serializer.save(restaurant=self.restaurant, user=ModifiedUser.objects.get(id=self.request.user.id))
+
 
