@@ -2,7 +2,7 @@ from typing import OrderedDict
 from django.http import Http404, JsonResponse
 from rest_framework.generics import get_object_or_404, CreateAPIView, UpdateAPIView, ListAPIView, DestroyAPIView, RetrieveAPIView
 from accounts.serializers import ModifiedUserSerializer
-                                                       
+
 from accounts.models import ModifiedUser
 from restaurants.permissions import IsRestaurantOwner
 from restaurants.models import Blog, Comment, MenuItem, Notification, Restaurant
@@ -186,7 +186,7 @@ class FollowRestaurant(UpdateAPIView):
             return JsonResponse({"detail": "User already follows this restaurant"}, status=400)
         self.kwargs['pk'] = self.kwargs['restaurant_id']
         return super().update(request, *args, **kwargs)
-    
+
     def perform_update(self, serializer):
         serializer.validated_data.update({'followers': [ModifiedUser.objects.get(id=self.request.user.id)]})
         return super().perform_update(serializer)
@@ -217,7 +217,7 @@ class UnfollowRestaurant(UpdateAPIView):
             return JsonResponse({"detail": "User does not follow this restaurant"}, status=400)
         self.kwargs['pk'] = self.kwargs['restaurant_id']
         return super().update(request, *args, **kwargs)
-    
+
     def perform_update(self, serializer):
         self.restaurant.followers.remove(ModifiedUser.objects.get(id=self.request.user.id))
         return super().perform_update(serializer)
@@ -248,7 +248,7 @@ class LikeRestaurant(UpdateAPIView):
             return JsonResponse({"detail": "User already likes this restaurant"}, status=400)
         self.kwargs['pk'] = self.kwargs['restaurant_id']
         return super().update(request, *args, **kwargs)
-    
+
     def perform_update(self, serializer):
         serializer.validated_data.update({'likes': [ModifiedUser.objects.get(id=self.request.user.id)]})
         return super().perform_update(serializer)
@@ -279,7 +279,7 @@ class UnlikeRestaurant(UpdateAPIView):
             return JsonResponse({"detail": "User does not like this restaurant"}, status=400)
         self.kwargs['pk'] = self.kwargs['restaurant_id']
         return super().update(request, *args, **kwargs)
-    
+
     def perform_update(self, serializer):
         self.restaurant.likes.remove(ModifiedUser.objects.get(id=self.request.user.id))
         return super().perform_update(serializer)
@@ -368,5 +368,35 @@ class CreateBlog(CreateAPIView):
 
     def perform_create(self, serializer):
         return serializer.save(restaurant=self.restaurant, user=ModifiedUser.objects.get(id=self.request.user.id))
+
+
+class LikeBlog(UpdateAPIView):
+    queryset = Blog.objects.all()
+    serializer_class = BlogSerializer
+    permission_classes = [IsAuthenticated]
+
+    def dispatch(self, request, *args, **kwargs):
+        if not Blog.objects.filter(id=self.kwargs['blog_id']):
+            return JsonResponse({"detail": "Blog ID is not found"}, status=404)
+        self.blog = get_object_or_404(Blog, id=self.kwargs['blog_id'])
+        return super().dispatch(request, *args, **kwargs)
+
+    def get_serializer(self, *args, **kwargs):
+        serializer = super().get_serializer(*args, **kwargs)
+        # Making this endpoint ignore the given body
+        for field in serializer.fields:
+            serializer.fields[field].read_only = True
+        return serializer
+
+    def update(self, request, *args, **kwargs):
+        # Check if the current blog is already followed by this user
+        if self.blog.likes.filter(id=self.request.user.id).exists():
+            return JsonResponse({"detail": "User already liked this blog"}, status=400)
+        self.kwargs['pk'] = self.kwargs['blog_id']
+        return super().update(request, *args, **kwargs)
+
+    def perform_update(self, serializer):
+        serializer.validated_data.update({'likes': [ModifiedUser.objects.get(id=self.request.user.id)]})
+        return super().perform_update(serializer)
 
 

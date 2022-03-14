@@ -36,13 +36,13 @@ class RestaurantSerializer(serializers.ModelSerializer):
             # add a follower to the many to many field of followers
             followers = validated_data.pop('followers')
             for follower in followers:
-                instance.followers.add(follower)     
+                instance.followers.add(follower)
 
         if 'likes' in validated_data:
             # add a follower to the many to many field of followers
             likes = validated_data.pop('likes')
             for like in likes:
-                instance.likes.add(like)             
+                instance.likes.add(like)
         return super().update(instance, validated_data)
 
     class Meta:
@@ -119,10 +119,18 @@ class BlogSerializer(serializers.ModelSerializer):
 
     def to_representation(self, instance):
         rep = super().to_representation(instance)
-        if not hasattr(self, "restaurant"):
-            self.restaurant = rep.get("restaurant", None)
-        rep.pop('restaurant')
-        rep.update({'restaurant_id': self.restaurant.id})
+        self.restaurant = rep.get("restaurant", None)
+        if self.restaurant:
+            rep.pop('restaurant')
+            rep.update({'restaurant_id': self.restaurant.id})
+
+            likes = []
+
+            if "likes" in rep:
+                for like in rep["likes"].all().iterator():
+                    likes.append(ModifiedUserSerializer(like).data)
+
+            rep.update({"likes": likes})
         return rep
 
     def create(self, validated_data):
@@ -135,6 +143,14 @@ class BlogSerializer(serializers.ModelSerializer):
             Notification.objects.create(type="NEWBLOG", user=follower,
                                         restaurant=self.restaurant) # Followers get the notification
         return blog
+
+    def update(self, instance, validated_data):
+        if 'likes' in validated_data:
+            # add a follower to the many to many field of followers
+            likes = validated_data.pop('likes')
+            for like in likes:
+                instance.likes.add(like)
+        return super().update(instance, validated_data)
 
     class Meta:
         model = Blog

@@ -1,7 +1,8 @@
 from django.urls import path
 
 from restaurants.views import CreateBlog, CreateComments, CreateMenuItem, \
-    DeleteBlog, FollowRestaurant, GetBlog, UpdateMenuItem, CreateRestaurant, \
+    DeleteBlog, FollowRestaurant, GetBlog, LikeBlog, UpdateMenuItem, \
+    CreateRestaurant, \
     FetchAllMenuItems, DeleteMenuItem, FetchComments, UpdateRestaurantInfo, \
     FetchAllRestaurants, FetchRestaurantByName, FetchFollowersRestaurants, \
     UnfollowRestaurant, LikeRestaurant, UnlikeRestaurant
@@ -34,4 +35,5 @@ urlpatterns = [
     path('blog/<int:blog_id>/get/', GetBlog.as_view(), name='get-blog'),
     path('blog/<int:blog_id>/delete/', DeleteBlog.as_view(), name='delete-blog'),
     path('<int:restaurant_id>/blog/new/', CreateBlog.as_view(), name='create-blog'),
+    path('blog/<int:blog_id>/like/', LikeBlog.as_view(), name='like-blog'),
 ]
