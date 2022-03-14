@@ -31,6 +31,20 @@ class RestaurantSerializer(serializers.ModelSerializer):
             rep.update({"followers": followers, "likes": likes})
         return rep
 
+    def update(self, instance, validated_data):
+        if 'followers' in validated_data:
+            # add a follower to the many to many field of followers
+            followers = validated_data.pop('followers')
+            for follower in followers:
+                instance.followers.add(follower)     
+
+        if 'likes' in validated_data:
+            # add a follower to the many to many field of followers
+            likes = validated_data.pop('likes')
+            for like in likes:
+                instance.likes.add(like)             
+        return super().update(instance, validated_data)
+
     class Meta:
         model = Restaurant
         fields = ['id', 'owner', 'followers', 'name', 'address', 'email', 'phone_num', 'views', 'likes', 'logo']

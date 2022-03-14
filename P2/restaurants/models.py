@@ -13,14 +13,14 @@ class Restaurant(models.Model):
     owner = models.OneToOneField(to=ModifiedUser, related_name='restaurant_owner', on_delete=models.CASCADE)
 
     # Many-to-many relationship: A restaurant can have _many_ followers and many users can follow _many_ restaurants
-    followers = models.ManyToManyField(to=ModifiedUser, related_name="restaurant_followers")
+    followers = models.ManyToManyField(to=ModifiedUser, related_name="restaurant_followers", blank=True)
 
     name = models.CharField(max_length=200)
     address = models.CharField(max_length=200)
     email = models.CharField(max_length=100)
     phone_num = models.CharField(max_length=10)
     views = models.IntegerField(default=0, validators=[MinValueValidator(0)])
-    likes = models.ManyToManyField(to=ModifiedUser, related_name="restaurant_likes")
+    likes = models.ManyToManyField(to=ModifiedUser, related_name="restaurant_likes", blank=True)
     logo = models.ImageField(upload_to='restaurant_logo/', null=True, blank=True)
 
 
