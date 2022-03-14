@@ -209,25 +209,25 @@ class GetBlog(RetrieveAPIView):
         return ret
 
 
-# class DeleteBlog(DestroyAPIView):
-#     queryset = Blog.objects.all()
-#     serializer_class = BlogSerializer
-#     permission_classes = [IsAuthenticated, IsRestaurantOwner]
-#
-#     def dispatch(self, request, *args, **kwargs):
-#         if not Blog.objects.filter(id=self.kwargs['blog_id']):
-#             return JsonResponse({"detail": "Blog ID is not found"}, status=404)
-#         self.restaurant = get_object_or_404(Blog, id=self.kwargs['blog_id']).restaurant
-#         return super().dispatch(request, *args, **kwargs)
-#
-#     # Redirect to my restaurant after remove a blog?
-#     def finalize_response(self, request, response, *args, **kwargs):
-#         response = super().finalize_response(request, response, *args, **kwargs)
-#         if response.status_code not in [401, 403]:
-#             return HttpResponseRedirect(reverse('restaurants:restaurant', kwargs={'name': self.restaurant.name}))
-#         return response
-#
-#
+class DeleteBlog(DestroyAPIView):
+    queryset = Blog.objects.all()
+    serializer_class = BlogSerializer
+    permission_classes = [IsAuthenticated, IsRestaurantOwner]
+
+    def dispatch(self, request, *args, **kwargs):
+        if not Blog.objects.filter(id=self.kwargs['blog_id']):
+            return JsonResponse({"detail": "Blog ID is not found"}, status=404)
+        self.restaurant = get_object_or_404(Blog, id=self.kwargs['blog_id']).restaurant
+        return super().dispatch(request, *args, **kwargs)
+
+    # Redirect to my restaurant after remove a blog?
+    def finalize_response(self, request, response, *args, **kwargs):
+        response = super().finalize_response(request, response, *args, **kwargs)
+        if response.status_code not in [401, 403]:
+            return HttpResponseRedirect(reverse('restaurants:restaurant', kwargs={'name': self.restaurant.name}))
+        return response
+
+
 # class CreateBlog(CreateAPIView):
 #     serializer_class = BlogSerializer
 #     permission_classes = [IsAuthenticated, IsRestaurantOwner] # Must be authenticated

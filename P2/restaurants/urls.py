@@ -1,6 +1,7 @@
 from django.urls import path
 
-from restaurants.views import CreateComments, CreateMenuItem, GetBlog, \
+from restaurants.views import CreateComments, CreateMenuItem, DeleteBlog, \
+    GetBlog, \
     UpdateMenuItem, CreateRestaurant, \
     FetchAllMenuItems, DeleteMenuItem, FetchComments, UpdateRestaurantInfo, \
     FetchAllRestaurants, FetchRestaurantByName, FetchFollowersRestaurants
@@ -26,4 +27,5 @@ urlpatterns = [
 
     # Blog endpoints
     path('<int:blog_id>/get/', GetBlog.as_view(), name='get-blog'),
+    path('<int:blog_id>/delete/', DeleteBlog.as_view(), name='delete-blog'),
 ]
