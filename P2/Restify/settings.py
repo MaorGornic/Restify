@@ -89,6 +89,14 @@ DATABASES = {
     }
 }
 
+# Swagger
+# https://django-rest-swagger.readthedocs.io/en/latest/settings/
+SWAGGER_SETTINGS = {
+'USE_SESSION_AUTH': False,
+"is_authenticated": True,  
+"is_superuser": True,
+'unauthenticated_user': 'django.contrib.auth.models.AnonymousUser',
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
