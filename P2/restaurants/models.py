@@ -1,6 +1,7 @@
 from django.db import models
 from django.core.validators import MinValueValidator
 from accounts.models import ModifiedUser
+from phonenumber_field.modelfields import PhoneNumberField
 
 # Models created
 
@@ -18,7 +19,7 @@ class Restaurant(models.Model):
     name = models.CharField(max_length=200)
     address = models.CharField(max_length=200)
     email = models.CharField(max_length=100)
-    phone_num = models.CharField(max_length=10)
+    phone_num = PhoneNumberField(null=False, blank=False, unique=False)
     views = models.IntegerField(default=0, validators=[MinValueValidator(0)])
     likes = models.ManyToManyField(to=ModifiedUser, related_name="restaurant_likes", blank=True)
     logo = models.ImageField(upload_to='restaurant_logo/', null=True, blank=True)
