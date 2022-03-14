@@ -228,19 +228,19 @@ class DeleteBlog(DestroyAPIView):
         return response
 
 
-# class CreateBlog(CreateAPIView):
-#     serializer_class = BlogSerializer
-#     permission_classes = [IsAuthenticated, IsRestaurantOwner] # Must be authenticated
-#
-#     def dispatch(self, request, *args, **kwargs):
-#         try:
-#             self.restaurant = get_object_or_404(Restaurant, id=self.kwargs['restaurant_id'])
-#         except Http404:
-#             return JsonResponse({"detail": "Restaurant not found"}, status=404)
-#
-#         return super().dispatch(request, *args, **kwargs)
-#
-#     def perform_create(self, serializer):
-#         return serializer.save(restaurant=self.restaurant, user=ModifiedUser.objects.get(id=self.request.user.id))
+class CreateBlog(CreateAPIView):
+    serializer_class = BlogSerializer
+    permission_classes = [IsAuthenticated, IsRestaurantOwner] # Must be authenticated
+
+    def dispatch(self, request, *args, **kwargs):
+        try:
+            self.restaurant = get_object_or_404(Restaurant, id=self.kwargs['restaurant_id'])
+        except Http404:
+            return JsonResponse({"detail": "Restaurant not found"}, status=404)
+
+        return super().dispatch(request, *args, **kwargs)
+
+    def perform_create(self, serializer):
+        return serializer.save(restaurant=self.restaurant, user=ModifiedUser.objects.get(id=self.request.user.id))
 
 
