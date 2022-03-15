@@ -5,11 +5,11 @@ from .views import RegisterView, APILogoutView, APIUpdateView, APIUserView, Noti
 app_name = 'accounts'
 
 urlpatterns = [
-    path(r'api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
-    path(r'api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
-    path(r'register/', RegisterView.as_view(), name='register'),
-    path(r'logout_token/', APILogoutView.as_view(), name='logout_token'),
-    path(r'update/', APIUpdateView.as_view(), name='update'),
-    path(r'view/', APIUserView.as_view(), name='update'),
-    path(r'notifications/', NotificationView.as_view(), name='view-notification')
+    path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+    path('register/', RegisterView.as_view(), name='register'),
+    path('logout_token/', APILogoutView.as_view(), name='logout_token'),
+    path('update/', APIUpdateView.as_view(), name='update'),
+    path('view/', APIUserView.as_view(), name='update'),
+    path('notifications/', NotificationView.as_view(), name='view-notification')
 ]

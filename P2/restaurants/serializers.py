@@ -5,7 +5,7 @@ from accounts.serializers import ModifiedUserSerializer
 
 class ImageModelSerializer(serializers.ModelSerializer):
     restaurant = serializers.ReadOnlyField()
-    
+
     def to_representation(self, instance):
         rep = super().to_representation(instance)
         if not hasattr(self, "restaurant"):
@@ -17,10 +17,6 @@ class ImageModelSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         if 'ref_img' not in validated_data:
             raise serializers.ValidationError({"detail": "Image is required"})
-        # self.restaurant = validated_data.get("restaurant", None)
-        # for follower in self.restaurant.followers.all().iterator():
-        #     Notification.objects.create(type="MENUUPDATE", user=follower,
-        #                                 restaurant=self.restaurant)
         return super().create(validated_data)
 
     class Meta:
@@ -40,8 +36,12 @@ class RestaurantSerializer(serializers.ModelSerializer):
             rep.pop('owner')
             rep.update({'owner_id': self.owner.id})
 
+            images = []
             followers = []
             likes = []
+
+            for image in ImageModel.objects.filter(restaurant=rep["id"]).all().iterator():
+                images.append(ImageModelSerializer(image).data)
 
             if "followers" in rep:
                 for follower in rep["followers"].all().iterator():
@@ -51,7 +51,7 @@ class RestaurantSerializer(serializers.ModelSerializer):
                 for like in rep["likes"].all().iterator():
                     likes.append(ModifiedUserSerializer(like).data)
 
-            rep.update({"followers": followers, "likes": likes})
+            rep.update({"followers": followers, "likes": likes, "images": images})
         return rep
 
     def update(self, instance, validated_data):

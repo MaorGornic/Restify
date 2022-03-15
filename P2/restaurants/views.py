@@ -6,7 +6,7 @@ from accounts.serializers import ModifiedUserSerializer
 
 from accounts.models import ModifiedUser
 from restaurants.permissions import IsRestaurantOwner
-from restaurants.models import Blog, Comment, MenuItem, Restaurant
+from restaurants.models import Blog, Comment, ImageModel, MenuItem, Restaurant
 from restaurants.serializers import BlogSerializer, CommentSerializer, ImageModelSerializer, \
     MenuItemSerializer, \
     RestaurantSerializer
@@ -319,6 +319,15 @@ class UnlikeRestaurant(UpdateAPIView):
         self.restaurant.likes.remove(ModifiedUser.objects.get(id=self.request.user.id))
         return super().perform_update(serializer)
 
+class FetchImagesRestaurant(ListAPIView):
+    queryset = ImageModel.objects.all()
+    serializer_class = ImageModelSerializer
+    permission_classes = [AllowAny]
+
+    def dispatch(self, request, *args, **kwargs):
+        if not Restaurant.objects.filter(id=self.kwargs['restaurant_id']):
+            return JsonResponse({"detail": "Restaurant ID for Comments is not found"}, status=404)
+        return super().dispatch(request, *args, **kwargs)
 
 class UploadRestaurantImage(CreateAPIView):
     queryset = Restaurant.objects.all()
@@ -335,9 +344,9 @@ class UploadRestaurantImage(CreateAPIView):
     def perform_create(self, serializer):
         return serializer.save(restaurant=self.restaurant)
 
-class RemoveRestaurantLogo(UpdateAPIView):
-    queryset = Restaurant.objects.all()
-    serializer_class = RestaurantSerializer
+class RemoveRestaurantImage(DestroyAPIView):
+    queryset = ImageModel.objects.all()
+    serializer_class = ImageModel
     permission_classes = [IsAuthenticated, IsRestaurantOwner]
 
     def dispatch(self, request, *args, **kwargs):
@@ -348,10 +357,11 @@ class RemoveRestaurantLogo(UpdateAPIView):
 
         return super().dispatch(request, *args, **kwargs)
 
-    def update(self, request, *args, **kwargs):
-        self.kwargs['pk'] = self.kwargs['restaurant_id']
-        return super().update(request, *args, **kwargs)
-
+    def destroy(self, request, *args, **kwargs):
+        if not ImageModel.objects.filter(id=self.kwargs['image_id'], restaurant=self.restaurant).exists():
+            return JsonResponse({"detail": "Image does not exist"}, status=404)
+        self.kwargs['pk'] = self.kwargs['image_id']
+        return super().destroy(request, *args, **kwargs)
 
 # ==================== Comment Views ========================
 # For comments model, User comments under restaurant, get comments from a restaurant
@@ -425,7 +435,7 @@ class DeleteBlog(DestroyAPIView):
     def finalize_response(self, request, response, *args, **kwargs):
         response = super().finalize_response(request, response, *args, **kwargs)
         if response.status_code not in [401, 403]:
-            return HttpResponseRedirect(reverse('restaurants:restaurant', kwargs={'name': self.restaurant.name}))
+            return HttpResponseRedirect(reverse('restaurants:get-all-blog', kwargs={'name': self.restaurant.name}))
         return response
 
 
