@@ -6,7 +6,7 @@ from accounts.serializers import ModifiedUserSerializer
 
 from accounts.models import ModifiedUser
 from restaurants.permissions import IsRestaurantOwner
-from restaurants.models import Blog, Comment, ImageModel, MenuItem, Restaurant
+from restaurants.models import Blog, Comment, ImageModel, MenuItem, Notification, Restaurant
 from restaurants.serializers import BlogSerializer, CommentSerializer, ImageModelSerializer, \
     MenuItemSerializer, \
     RestaurantSerializer
@@ -220,7 +220,10 @@ class FollowRestaurant(UpdateAPIView):
         return super().update(request, *args, **kwargs)
 
     def perform_update(self, serializer):
-        serializer.validated_data.update({'followers': [ModifiedUser.objects.get(id=self.request.user.id)]})
+        current_user = ModifiedUser.objects.get(id=self.request.user.id)
+        Notification.objects.create(type="FOLLOWED", user=self.restaurant.owner,
+                                    restaurant=self.restaurant, actor_user=current_user)
+        serializer.validated_data.update({'followers': [current_user]})
         return super().perform_update(serializer)
 
 
@@ -284,7 +287,10 @@ class LikeRestaurant(UpdateAPIView):
         return super().update(request, *args, **kwargs)
 
     def perform_update(self, serializer):
-        serializer.validated_data.update({'likes': [ModifiedUser.objects.get(id=self.request.user.id)]})
+        current_user = ModifiedUser.objects.get(id=self.request.user.id)
+        Notification.objects.create(type="LIKEDRES", user=self.restaurant.owner,
+                                    restaurant=self.restaurant, actor_user=current_user)
+        serializer.validated_data.update({'likes': [current_user]})
         return super().perform_update(serializer)
 
 
@@ -488,5 +494,8 @@ class LikeBlog(UpdateAPIView):
         return super().update(request, *args, **kwargs)
 
     def perform_update(self, serializer):
-        serializer.validated_data.update({'likes': [ModifiedUser.objects.get(id=self.request.user.id)]})
+        current_user = ModifiedUser.objects.get(id=self.request.user.id)
+        Notification.objects.create(type="LIKEDBLOG", user=self.restaurant.owner,
+                                    restaurant=self.restaurant, actor_user=current_user)
+        serializer.validated_data.update({'likes': [current_user]})
         return super().perform_update(serializer)
