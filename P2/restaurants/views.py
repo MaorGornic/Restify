@@ -7,7 +7,7 @@ from accounts.serializers import ModifiedUserSerializer
 from accounts.models import ModifiedUser
 from restaurants.permissions import IsRestaurantOwner
 from restaurants.models import Blog, Comment, MenuItem, Restaurant
-from restaurants.serializers import BlogSerializer, CommentSerializer, \
+from restaurants.serializers import BlogSerializer, CommentSerializer, ImageModelSerializer, \
     MenuItemSerializer, \
     RestaurantSerializer
 from rest_framework.permissions import IsAuthenticated, AllowAny
@@ -320,9 +320,9 @@ class UnlikeRestaurant(UpdateAPIView):
         return super().perform_update(serializer)
 
 
-class UploadRestaurantLogo(UpdateAPIView):
+class UploadRestaurantImage(CreateAPIView):
     queryset = Restaurant.objects.all()
-    serializer_class = RestaurantSerializer
+    serializer_class = ImageModelSerializer
     permission_classes = [IsAuthenticated, IsRestaurantOwner]
 
     def dispatch(self, request, *args, **kwargs):
@@ -330,13 +330,10 @@ class UploadRestaurantLogo(UpdateAPIView):
             self.restaurant = get_object_or_404(Restaurant, id=self.kwargs['restaurant_id'])
         except Http404:
             return JsonResponse({"detail": "Restaurant not found"}, status=404)
-
         return super().dispatch(request, *args, **kwargs)
-
-    def update(self, request, *args, **kwargs):
-        self.kwargs['pk'] = self.kwargs['restaurant_id']
-        return super().update(request, *args, **kwargs)
-
+    
+    def perform_create(self, serializer):
+        return serializer.save(restaurant=self.restaurant)
 
 class RemoveRestaurantLogo(UpdateAPIView):
     queryset = Restaurant.objects.all()

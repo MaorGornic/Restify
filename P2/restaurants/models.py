@@ -24,6 +24,13 @@ class Restaurant(models.Model):
     likes = models.ManyToManyField(to=ModifiedUser, related_name="restaurant_likes", blank=True)
     logo = models.ImageField(upload_to='restaurant_logo/', null=True, blank=True)
 
+"""
+ImageModel(referred image, restaurant fk)
+"""
+
+class ImageModel(models.Model):
+    ref_img = models.ImageField(upload_to='restaurant_pics/', null=True, blank=True)
+    restaurant = models.ForeignKey(to=Restaurant, related_name='restaurant_images', on_delete=models.CASCADE)
 
 """
 (user id, date, restaurant id)

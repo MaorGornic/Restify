@@ -1,8 +1,31 @@
 from rest_framework import serializers
 from restaurants.models import Blog, Notification
-from restaurants.models import Restaurant, Comment, MenuItem
+from restaurants.models import Restaurant, Comment, MenuItem, ImageModel
 from accounts.serializers import ModifiedUserSerializer
 
+class ImageModelSerializer(serializers.ModelSerializer):
+    restaurant = serializers.ReadOnlyField()
+    
+    def to_representation(self, instance):
+        rep = super().to_representation(instance)
+        if not hasattr(self, "restaurant"):
+            self.restaurant = rep.get("restaurant", None)
+        rep.pop('restaurant')
+        rep.update({'restaurant_id': self.restaurant.id})
+        return rep
+
+    def create(self, validated_data):
+        if 'ref_img' not in validated_data:
+            raise serializers.ValidationError({"detail": "Image is required"})
+        # self.restaurant = validated_data.get("restaurant", None)
+        # for follower in self.restaurant.followers.all().iterator():
+        #     Notification.objects.create(type="MENUUPDATE", user=follower,
+        #                                 restaurant=self.restaurant)
+        return super().create(validated_data)
+
+    class Meta:
+        model = ImageModel
+        fields = ['id', 'ref_img', 'restaurant']
 
 class RestaurantSerializer(serializers.ModelSerializer):
     owner = serializers.ReadOnlyField()
