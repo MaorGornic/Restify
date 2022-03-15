@@ -304,6 +304,25 @@ class UnlikeRestaurant(UpdateAPIView):
         self.restaurant.likes.remove(ModifiedUser.objects.get(id=self.request.user.id))
         return super().perform_update(serializer)
 
+
+class UploadRestaurantLogo(UpdateAPIView):
+    queryset = Restaurant.objects.all()
+    serializer_class = RestaurantSerializer
+    permission_classes = [IsAuthenticated, IsRestaurantOwner]
+
+    def dispatch(self, request, *args, **kwargs):
+        try:
+            self.restaurant = get_object_or_404(Restaurant, id=self.kwargs['restaurant_id'])
+        except Http404:
+            return JsonResponse({"detail": "Restaurant not found"}, status=404)
+
+        return super().dispatch(request, *args, **kwargs)
+
+    def update(self, request, *args, **kwargs):
+        self.kwargs['pk'] = self.kwargs['restaurant_id']
+        return super().update(request, *args, **kwargs)
+
+
 # ==================== Comment Views ========================
 # For comments model, User comments under restaurant, get comments from a restaurant
 class FetchComments(ListAPIView):
