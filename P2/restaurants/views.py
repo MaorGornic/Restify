@@ -83,7 +83,7 @@ class DeleteMenuItem(DestroyAPIView):
 
     def finalize_response(self, request, response, *args, **kwargs):
         response = super().finalize_response(request, response, *args, **kwargs)
-        if response.status_code not in [401, 403]:
+        if response.status_code not in [401, 403, 404]:
             return HttpResponseRedirect(reverse('restaurants:menuitems', kwargs={'restaurant_id': self.restaurant.id}))
         return response
 
@@ -363,6 +363,13 @@ class RemoveRestaurantImage(DestroyAPIView):
         self.kwargs['pk'] = self.kwargs['image_id']
         return super().destroy(request, *args, **kwargs)
 
+    def finalize_response(self, request, response, *args, **kwargs):
+
+        response = super().finalize_response(request, response, *args, **kwargs)
+        if response.status_code not in [401, 403, 404]:
+            return HttpResponseRedirect(reverse('restaurants:get-restaurant-imgs', kwargs={'restaurant_id': self.restaurant.id}))
+        return response
+
 # ==================== Comment Views ========================
 # For comments model, User comments under restaurant, get comments from a restaurant
 class FetchComments(ListAPIView):
@@ -434,7 +441,7 @@ class DeleteBlog(DestroyAPIView):
     # Redirect to my restaurant after remove a blog?
     def finalize_response(self, request, response, *args, **kwargs):
         response = super().finalize_response(request, response, *args, **kwargs)
-        if response.status_code not in [401, 403]:
+        if response.status_code not in [401, 403, 404]:
             return HttpResponseRedirect(reverse('restaurants:get-all-blog', kwargs={'name': self.restaurant.name}))
         return response
 
