@@ -11,7 +11,6 @@ urlpatterns = [
     path('logout_token/', APILogoutView.as_view(), name='logout_token'),
     path('update/', APIUpdateView.as_view(), name='update'),
     path('view/', APIUserView.as_view(), name='update'),
-    path('notifications/', NotificationView.as_view(), name='view-notification')
     path('notifications/', NotificationView.as_view(), name='view-notification'),
     path('notifications/viewed/<int:notification_id>/', MarkViewedNotification.as_view(), name='view-notification')
 ]
