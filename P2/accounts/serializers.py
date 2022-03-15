@@ -5,7 +5,6 @@ from .models import ModifiedUser
 from restaurants.models import Notification
 
 
-# TODO: Add avatar
 class RegisterSerializer(serializers.ModelSerializer):
     email = serializers.EmailField(
         required=True,
