@@ -334,7 +334,7 @@ class CreateComments(CreateAPIView):
 
 # ==================== Blog Views ========================
 # For Blog model
-class GetBlog(RetrieveAPIView):
+class GetBlogs(RetrieveAPIView):
     serializer_class = BlogSerializer
     permission_classes = [AllowAny]
 
@@ -354,7 +354,7 @@ class GetBlog(RetrieveAPIView):
         return ret
 
 
-class GetAllBlog(ListAPIView):
+class GetAllBlogs(ListAPIView):
     queryset = Blog.objects.all()
     serializer_class = BlogSerializer
     permission_classes = [AllowAny]

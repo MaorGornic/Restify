@@ -1,15 +1,15 @@
-from django.urls import path
+from django.urls import re_path
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 from .views import RegisterView, APILogoutView, APIUpdateView, APIUserView, NotificationView
 
 app_name = 'accounts'
 
 urlpatterns = [
-    path('api/token', TokenObtainPairView.as_view(), name='token_obtain_pair'),
-    path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
-    path('register/', RegisterView.as_view(), name='register'),
-    path('logout_token/', APILogoutView.as_view(), name='logout_token'),
-    path('update/', APIUpdateView.as_view(), name='update'),
-    path('view/', APIUserView.as_view(), name='update'),
-    path('notifications/', NotificationView.as_view(), name='view-notification')
+    re_path(r'api/token/?$', TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    re_path(r'api/token/refresh/?$', TokenRefreshView.as_view(), name='token_refresh'),
+    re_path(r'register/?$', RegisterView.as_view(), name='register'),
+    re_path(r'logout_token/?$', APILogoutView.as_view(), name='logout_token'),
+    re_path(r'update/?$', APIUpdateView.as_view(), name='update'),
+    re_path(r'view/?$', APIUserView.as_view(), name='update'),
+    re_path(r'notifications/?$', NotificationView.as_view(), name='view-notification')
 ]
