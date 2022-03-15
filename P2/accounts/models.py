@@ -11,4 +11,3 @@ avatar, owned restaurant id), following (many to many field to Restaurant)
 class ModifiedUser(User):
     phone_num = PhoneNumberField(null=True, blank=True, unique=False)
     avatar = models.ImageField(upload_to='user_avatar/', null=True, blank=True)
-

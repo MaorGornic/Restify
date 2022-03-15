@@ -33,13 +33,13 @@ class RestaurantSerializer(serializers.ModelSerializer):
 
     def update(self, instance, validated_data):
         if 'followers' in validated_data:
-            # add a follower to the many to many field of followers
+            # add a follower to the many-to-many field of followers
             followers = validated_data.pop('followers')
             for follower in followers:
                 instance.followers.add(follower)
 
         if 'likes' in validated_data:
-            # add a follower to the many to many field of followers
+            # add a follower to the many-to-many field of followers
             likes = validated_data.pop('likes')
             for like in likes:
                 instance.likes.add(like)
@@ -65,7 +65,7 @@ class MenuItemSerializer(serializers.ModelSerializer):
         self.restaurant = validated_data.get("restaurant", None)
         for follower in self.restaurant.followers.all().iterator():
             Notification.objects.create(type="MENUUPDATE", user=follower,
-            restaurant=self.restaurant)
+                                        restaurant=self.restaurant)
         return super().create(validated_data)
 
     class Meta:
@@ -78,7 +78,6 @@ class CommentSerializer(serializers.ModelSerializer):
     restaurant = serializers.ReadOnlyField()
     user = serializers.ReadOnlyField()
     timestamp = serializers.ReadOnlyField(required=False)
-    # curr_user = serializers.SerializerMethodField('_user')
 
     def to_representation(self, instance):
         rep = super().to_representation(instance)
@@ -100,7 +99,8 @@ class CommentSerializer(serializers.ModelSerializer):
             restaurant=validated_data['restaurant'],
         )
         Notification.objects.create(type="COMMENTED", user=self.restaurant.owner,
-                                    actor_user=validated_data['user'], restaurant=validated_data['restaurant']) # Owner gets the notification
+                                    actor_user=validated_data['user'],
+                                    restaurant=validated_data['restaurant'])  # Owner gets the notification
         # return super().create(validated_data)
         return comment
 
@@ -112,9 +112,6 @@ class CommentSerializer(serializers.ModelSerializer):
 # Blog Serializer
 class BlogSerializer(serializers.ModelSerializer):
     restaurant = serializers.ReadOnlyField()
-    # title = serializers.ReadOnlyField()
-    # banner = serializers.ReadOnlyField()
-    # contents = serializers.ReadOnlyField()
     publish_timestamp = serializers.ReadOnlyField(required=False)
     likes = serializers.ReadOnlyField()
 
@@ -145,13 +142,13 @@ class BlogSerializer(serializers.ModelSerializer):
         # Creating a notification for all followers regarding the new blog
         for follower in self.restaurant.followers.all().iterator():
             Notification.objects.create(type="NEWBLOG", user=follower,
-                                        restaurant=self.restaurant) # Followers get the notification
+                                        restaurant=self.restaurant)  # Followers get the notification
         # return super().create(validated_data)
         return blog
 
     def update(self, instance, validated_data):
         if 'likes' in validated_data:
-            # add a follower to the many to many field of followers
+            # add a follower to the many-to-many field of followers
             likes = validated_data.pop('likes')
             for like in likes:
                 instance.likes.add(like)
@@ -160,4 +157,3 @@ class BlogSerializer(serializers.ModelSerializer):
     class Meta:
         model = Blog
         fields = ['id', 'restaurant', 'title', 'banner', 'contents', 'publish_timestamp', 'likes']
-

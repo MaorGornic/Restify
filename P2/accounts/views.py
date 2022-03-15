@@ -1,4 +1,3 @@
-from django.shortcuts import render
 from rest_framework import generics
 from django.contrib.auth.models import User
 from rest_framework.generics import RetrieveAPIView, get_object_or_404
@@ -6,7 +5,6 @@ from rest_framework.pagination import PageNumberPagination
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from django.http import Http404, JsonResponse
 from rest_framework_simplejwt.token_blacklist.models import OutstandingToken, BlacklistedToken
 from rest_framework_simplejwt.tokens import RefreshToken
 
@@ -43,10 +41,12 @@ class APIUserView(RetrieveAPIView):
     def get_object(self):
         return get_object_or_404(ModifiedUser, id=self.request.user.id)
 
+
 class NotificationView(generics.ListAPIView):
     queryset = Notification.objects.all()
     serializer_class = NotificationRecordsSerializer
     pagination_class = PageNumberPagination
+
 
 class APIUpdateView(generics.UpdateAPIView):
     queryset = ModifiedUser.objects.all()

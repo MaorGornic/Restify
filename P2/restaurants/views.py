@@ -1,17 +1,19 @@
 from typing import OrderedDict
 from django.http import Http404, JsonResponse
-from rest_framework.generics import get_object_or_404, CreateAPIView, UpdateAPIView, ListAPIView, DestroyAPIView, RetrieveAPIView
+from rest_framework.generics import get_object_or_404, CreateAPIView, UpdateAPIView, ListAPIView, DestroyAPIView, \
+    RetrieveAPIView
 from accounts.serializers import ModifiedUserSerializer
 
 from accounts.models import ModifiedUser
 from restaurants.permissions import IsRestaurantOwner
-from restaurants.models import Blog, Comment, MenuItem, Notification, Restaurant
+from restaurants.models import Blog, Comment, MenuItem, Restaurant
 from restaurants.serializers import BlogSerializer, CommentSerializer, \
     MenuItemSerializer, \
     RestaurantSerializer
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from django.http import HttpResponseRedirect
 from django.urls import reverse
+
 
 # ==================== MenuItem Views ========================
 class CreateMenuItem(CreateAPIView):
@@ -28,6 +30,7 @@ class CreateMenuItem(CreateAPIView):
 
     def perform_create(self, serializer):
         return serializer.save(restaurant=self.restaurant)
+
 
 class UpdateMenuItem(UpdateAPIView):
     queryset = MenuItem.objects.all()
@@ -47,6 +50,7 @@ class UpdateMenuItem(UpdateAPIView):
 
         return super().dispatch(request, *args, **kwargs)
 
+
 class FetchAllMenuItems(ListAPIView):
     queryset = MenuItem.objects.all()
     serializer_class = MenuItemSerializer
@@ -57,6 +61,7 @@ class FetchAllMenuItems(ListAPIView):
             return JsonResponse({"detail": "Restaurant not found"}, status=404)
 
         return super().dispatch(request, *args, **kwargs)
+
 
 class DeleteMenuItem(DestroyAPIView):
     queryset = MenuItem.objects.all()
@@ -82,6 +87,7 @@ class DeleteMenuItem(DestroyAPIView):
             return HttpResponseRedirect(reverse('restaurants:menuitems', kwargs={'restaurant_id': self.restaurant.id}))
         return response
 
+
 # ==================== Restaurant Views ========================
 class CreateRestaurant(CreateAPIView):
     serializer_class = RestaurantSerializer
@@ -96,10 +102,12 @@ class CreateRestaurant(CreateAPIView):
     def perform_create(self, serializer):
         return serializer.save(owner=self.owner)
 
+
 class FetchAllRestaurants(ListAPIView):
     queryset = Restaurant.objects.all()
     serializer_class = RestaurantSerializer
     permission_classes = [AllowAny]
+
 
 class FetchRestaurantByName(RetrieveAPIView):
     serializer_class = RestaurantSerializer
@@ -121,6 +129,7 @@ class FetchRestaurantByName(RetrieveAPIView):
             return JsonResponse({"detail": "Restaurant with the given name was not found"}, status=404)
         return ret
 
+
 class FetchMyRestaurant(RetrieveAPIView):
     serializer_class = RestaurantSerializer
     permission_classes = [IsAuthenticated]
@@ -141,6 +150,7 @@ class FetchMyRestaurant(RetrieveAPIView):
             return JsonResponse({"detail": "Restaurant with the given name was not found"}, status=404)
         return ret
 
+
 class FetchFollowersRestaurants(RetrieveAPIView):
     serializer_class = RestaurantSerializer
     # [discuss] to we want to allow everyone to see who is following a particular restaurant?
@@ -154,14 +164,15 @@ class FetchFollowersRestaurants(RetrieveAPIView):
         return super().dispatch(request, *args, **kwargs)
 
     def get_object(self):
-       return self.restaurant
+        return self.restaurant
 
     def retrieve(self, request, *args, **kwargs):
-        ret =super().retrieve(request, *args, **kwargs)
+        ret = super().retrieve(request, *args, **kwargs)
         if 'id' not in ret.data:
             return JsonResponse({"detail": "Restaurant with the given id was not found"}, status=404)
         ret.data = OrderedDict({'followers': ret.data['followers']})
         return ret
+
 
 class UpdateRestaurantInfo(UpdateAPIView):
     queryset = Restaurant.objects.all()
@@ -179,6 +190,7 @@ class UpdateRestaurantInfo(UpdateAPIView):
     def update(self, request, *args, **kwargs):
         self.kwargs['pk'] = self.kwargs['restaurant_id']
         return super().update(request, *args, **kwargs)
+
 
 class FollowRestaurant(UpdateAPIView):
     queryset = Restaurant.objects.all()
@@ -211,6 +223,7 @@ class FollowRestaurant(UpdateAPIView):
         serializer.validated_data.update({'followers': [ModifiedUser.objects.get(id=self.request.user.id)]})
         return super().perform_update(serializer)
 
+
 class UnfollowRestaurant(UpdateAPIView):
     queryset = Restaurant.objects.all()
     serializer_class = RestaurantSerializer
@@ -242,6 +255,7 @@ class UnfollowRestaurant(UpdateAPIView):
         self.restaurant.followers.remove(ModifiedUser.objects.get(id=self.request.user.id))
         return super().perform_update(serializer)
 
+
 class LikeRestaurant(UpdateAPIView):
     queryset = Restaurant.objects.all()
     serializer_class = RestaurantSerializer
@@ -272,6 +286,7 @@ class LikeRestaurant(UpdateAPIView):
     def perform_update(self, serializer):
         serializer.validated_data.update({'likes': [ModifiedUser.objects.get(id=self.request.user.id)]})
         return super().perform_update(serializer)
+
 
 class UnlikeRestaurant(UpdateAPIView):
     queryset = Restaurant.objects.all()
@@ -356,7 +371,7 @@ class FetchComments(ListAPIView):
 
 class CreateComments(CreateAPIView):
     serializer_class = CommentSerializer
-    permission_classes = [IsAuthenticated] # Must be authenticated
+    permission_classes = [IsAuthenticated]  # Must be authenticated
 
     def dispatch(self, request, *args, **kwargs):
         try:
@@ -368,6 +383,7 @@ class CreateComments(CreateAPIView):
 
     def perform_create(self, serializer):
         return serializer.save(restaurant=self.restaurant, user=ModifiedUser.objects.get(id=self.request.user.id))
+
 
 # ==================== Blog Views ========================
 # For Blog model
@@ -418,7 +434,7 @@ class DeleteBlog(DestroyAPIView):
 
 class CreateBlog(CreateAPIView):
     serializer_class = BlogSerializer
-    permission_classes = [IsAuthenticated, IsRestaurantOwner] # Must be authenticated
+    permission_classes = [IsAuthenticated, IsRestaurantOwner]  # Must be authenticated
 
     def dispatch(self, request, *args, **kwargs):
         try:
@@ -460,5 +476,3 @@ class LikeBlog(UpdateAPIView):
     def perform_update(self, serializer):
         serializer.validated_data.update({'likes': [ModifiedUser.objects.get(id=self.request.user.id)]})
         return super().perform_update(serializer)
-
-
