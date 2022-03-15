@@ -1,11 +1,9 @@
 from django.urls import path
 
-from restaurants.views import CreateBlog, CreateComments, CreateMenuItem, \
-    DeleteBlog, FollowRestaurant, GetAllBlogs, GetAllBlogs, GetBlogs, LikeBlog, UpdateMenuItem, \
-    CreateRestaurant, FetchMyRestaurant, FetchAllMenuItems, DeleteMenuItem, FetchComments, \
-    UpdateRestaurantInfo, FetchAllRestaurants, FetchRestaurantByName, FetchFollowersRestaurants, \
-    UnfollowRestaurant, LikeRestaurant, UnlikeRestaurant, UploadRestaurantImage, \
-    RemoveRestaurantImage, FetchImagesRestaurant
+from restaurants.views.blog_views import *
+from restaurants.views.comment_views import *
+from restaurants.views.menuitem_views import *
+from restaurants.views.restaurant_views import *
 app_name = 'restaurants'
 
 urlpatterns = [
