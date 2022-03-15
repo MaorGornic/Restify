@@ -90,7 +90,7 @@ class CreateRestaurant(CreateAPIView):
     def create(self, request, *args, **kwargs):
         self.owner = ModifiedUser.objects.get(id=request.user.id)
         if Restaurant.objects.filter(owner=self.owner):
-            return JsonResponse({"detail": "Same user cannot own more than one restaurant"}, status=400)
+            return JsonResponse({"detail": "Same user cannot own more than one restaurant"}, status=409)
         return super().create(request, *args, **kwargs)
 
     def perform_create(self, serializer):
@@ -113,6 +113,26 @@ class FetchRestaurantByName(RetrieveAPIView):
         return super().dispatch(request, *args, **kwargs)
 
     def get_object(self):
+        return self.restaurant
+
+    def retrieve(self, request, *args, **kwargs):
+        ret = super().retrieve(request, *args, **kwargs)
+        if 'id' not in ret.data:
+            return JsonResponse({"detail": "Restaurant with the given name was not found"}, status=404)
+        return ret
+
+class FetchMyRestaurant(RetrieveAPIView):
+    serializer_class = RestaurantSerializer
+    permission_classes = [IsAuthenticated]
+
+    def dispatch(self, request, *args, **kwargs):
+        return super().dispatch(request, *args, **kwargs)
+
+    def get_object(self):
+        try:
+            self.restaurant = Restaurant.objects.get(owner=ModifiedUser.objects.get(id=self.request.user.id))
+        except Restaurant.DoesNotExist:
+            self.restaurant = None
         return self.restaurant
 
     def retrieve(self, request, *args, **kwargs):
@@ -183,7 +203,7 @@ class FollowRestaurant(UpdateAPIView):
     def update(self, request, *args, **kwargs):
         # Check if the current restaurant is already followed by this user
         if self.restaurant.followers.filter(id=self.request.user.id).exists():
-            return JsonResponse({"detail": "User already follows this restaurant"}, status=400)
+            return JsonResponse({"detail": "User already follows this restaurant"}, status=409)
         self.kwargs['pk'] = self.kwargs['restaurant_id']
         return super().update(request, *args, **kwargs)
 
@@ -214,7 +234,7 @@ class UnfollowRestaurant(UpdateAPIView):
     def update(self, request, *args, **kwargs):
         # Check if the current restaurant is followed by this user
         if not self.restaurant.followers.filter(id=self.request.user.id).exists():
-            return JsonResponse({"detail": "User does not follow this restaurant"}, status=400)
+            return JsonResponse({"detail": "User does not follow this restaurant"}, status=409)
         self.kwargs['pk'] = self.kwargs['restaurant_id']
         return super().update(request, *args, **kwargs)
 
@@ -245,7 +265,7 @@ class LikeRestaurant(UpdateAPIView):
     def update(self, request, *args, **kwargs):
         # Check if the current restaurant is already followed by this user
         if self.restaurant.likes.filter(id=self.request.user.id).exists():
-            return JsonResponse({"detail": "User already likes this restaurant"}, status=400)
+            return JsonResponse({"detail": "User already likes this restaurant"}, status=409)
         self.kwargs['pk'] = self.kwargs['restaurant_id']
         return super().update(request, *args, **kwargs)
 
@@ -276,7 +296,7 @@ class UnlikeRestaurant(UpdateAPIView):
     def update(self, request, *args, **kwargs):
         # Check if the current restaurant is followed by this user
         if not self.restaurant.likes.filter(id=self.request.user.id).exists():
-            return JsonResponse({"detail": "User does not like this restaurant"}, status=400)
+            return JsonResponse({"detail": "User does not like this restaurant"}, status=409)
         self.kwargs['pk'] = self.kwargs['restaurant_id']
         return super().update(request, *args, **kwargs)
 
@@ -311,7 +331,6 @@ class CreateComments(CreateAPIView):
 
     def perform_create(self, serializer):
         return serializer.save(restaurant=self.restaurant, user=ModifiedUser.objects.get(id=self.request.user.id))
-
 
 # ==================== Blog Views ========================
 # For Blog model
@@ -397,7 +416,7 @@ class LikeBlog(UpdateAPIView):
     def update(self, request, *args, **kwargs):
         # Check if the current blog is already followed by this user
         if self.blog.likes.filter(id=self.request.user.id).exists():
-            return JsonResponse({"detail": "User already liked this blog"}, status=400)
+            return JsonResponse({"detail": "User already liked this blog"}, status=409)
         self.kwargs['pk'] = self.kwargs['blog_id']
         return super().update(request, *args, **kwargs)
 

@@ -2,7 +2,7 @@ from django.urls import path
 
 from restaurants.views import CreateBlog, CreateComments, CreateMenuItem, \
     DeleteBlog, FollowRestaurant, GetAllBlog, GetBlog, LikeBlog, UpdateMenuItem, \
-    CreateRestaurant, \
+    CreateRestaurant, FetchMyRestaurant, \
     FetchAllMenuItems, DeleteMenuItem, FetchComments, UpdateRestaurantInfo, \
     FetchAllRestaurants, FetchRestaurantByName, FetchFollowersRestaurants, \
     UnfollowRestaurant, LikeRestaurant, UnlikeRestaurant
@@ -18,6 +18,7 @@ urlpatterns = [
     # Restaurant endpoints
     path('new/', CreateRestaurant.as_view(), name='restaurant-create'),
     path('all/', FetchAllRestaurants.as_view(), name='restaurants'),
+    path('owned/', FetchMyRestaurant.as_view(), name='get-owned-restaurant'),
     path('name/<str:name>/', FetchRestaurantByName.as_view(), name='restaurant'),
     path('<int:restaurant_id>/followers/', FetchFollowersRestaurants.as_view(), name='restaurant-followers'),
     path('<int:restaurant_id>/edit/', UpdateRestaurantInfo.as_view(), name='restaurant-edit'),
