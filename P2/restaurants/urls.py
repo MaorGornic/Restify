@@ -33,8 +33,9 @@ urlpatterns = [
 
     # Blog endpoints
     path('blog/<int:blog_id>/get/', GetBlog.as_view(), name='get-blog'),
-    path('blog/<int:blog_id>/delete/', DeleteBlog.as_view(), name='delete-blog'),
+    path('blog/<int:pk>/delete/', DeleteBlog.as_view(), name='delete-blog'),
     path('<int:restaurant_id>/blog/new/', CreateBlog.as_view(), name='create-blog'),
     path('blog/<int:blog_id>/like/', LikeBlog.as_view(), name='like-blog'),
-    path('blog/<int:start_id>-<int:end_id>/get/', GetAllBlog.as_view(), name='get-all-blog'),
+    # ('blog/<int:start_id>-<int:end_id>/get/', GetAllBlog.as_view(), name='get-all-blog'),
+    path('blog/all/', GetAllBlog.as_view(), name='get-all-blog'),
 ]

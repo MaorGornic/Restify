@@ -33,7 +33,7 @@ class Comment(models.Model):
     user = models.ForeignKey(to=ModifiedUser, related_name='comment', on_delete=models.CASCADE)
     timestamp = models.DateTimeField(auto_created=True, auto_now_add=True)
     restaurant = models.ForeignKey(to=Restaurant, related_name='restaurant_comment', on_delete=models.CASCADE)
-
+    contents = models.CharField(max_length=250)
 
 """
 Blog (Title, Image, Contents, publish date, restaurant id foreign key, likes (many to many field to User))
@@ -45,7 +45,7 @@ class Blog(models.Model):
     title = models.CharField(max_length=200)
     banner = models.ImageField(upload_to='blogs/', null=True, blank=True)
     contents = models.CharField(max_length=5000)
-    publish_timestamp = models.DateTimeField(auto_created=True)
+    publish_timestamp = models.DateTimeField(auto_created=True, auto_now_add=True)
     likes = models.ManyToManyField(to=ModifiedUser, related_name="blog_likes")
 
 

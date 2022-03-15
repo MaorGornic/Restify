@@ -95,6 +95,7 @@ class CommentSerializer(serializers.ModelSerializer):
         comment = Comment.objects.create(
             # user=ModifiedUserSerializer(validated_data['user']).data,
             user=validated_data['user'],
+            contents=validated_data['contents'],
             # timestamp=timezone.now(),
             restaurant=validated_data['restaurant'],
         )
@@ -105,15 +106,15 @@ class CommentSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Comment
-        fields = ['id', 'user', 'timestamp', 'restaurant']
+        fields = ['id', 'user', 'timestamp', 'restaurant', 'contents']
 
 
 # Blog Serializer
 class BlogSerializer(serializers.ModelSerializer):
     restaurant = serializers.ReadOnlyField()
-    title = serializers.ReadOnlyField()
-    banner = serializers.ReadOnlyField()
-    contents = serializers.ReadOnlyField()
+    # title = serializers.ReadOnlyField()
+    # banner = serializers.ReadOnlyField()
+    # contents = serializers.ReadOnlyField()
     publish_timestamp = serializers.ReadOnlyField(required=False)
     likes = serializers.ReadOnlyField()
 
@@ -137,11 +138,15 @@ class BlogSerializer(serializers.ModelSerializer):
         self.restaurant = validated_data.get("restaurant", None)
         blog = Blog.objects.create(
             restaurant=validated_data['restaurant'],
+            banner=validated_data['banner'] if 'banner' in validated_data else None,
+            title=validated_data['title'],
+            contents=validated_data['contents'],
         )
         # Creating a notification for all followers regarding the new blog
         for follower in self.restaurant.followers.all().iterator():
             Notification.objects.create(type="NEWBLOG", user=follower,
                                         restaurant=self.restaurant) # Followers get the notification
+        # return super().create(validated_data)
         return blog
 
     def update(self, instance, validated_data):

@@ -336,21 +336,9 @@ class GetBlog(RetrieveAPIView):
 
 
 class GetAllBlog(ListAPIView):
-    # queryset = Blog.objects.all()
+    queryset = Blog.objects.all()
     serializer_class = BlogSerializer
     permission_classes = [AllowAny]
-
-    def dispatch(self, request, *args, **kwargs):
-        if not (Blog.objects.filter(id=self.kwargs['start_id']) and Blog.objects.filter(id=self.kwargs['end_id'])):
-            return JsonResponse({"detail": "Start or End Blog ID not found"}, status=404)
-        return super().dispatch(request, *args, **kwargs)
-
-    # Source: https://stackoverflow.com/questions/52168690/django-filter-queryset-by-multiple-id
-    def get_queryset(self):
-        start_id = self.request.GET.get('start_id')
-        end_id = self.request.GET.get('end_id')
-        ids = [int(id) for id in range(start_id, end_id)]
-        return Blog.objects.filter(id__in=ids)
 
 
 class DeleteBlog(DestroyAPIView):
@@ -359,9 +347,9 @@ class DeleteBlog(DestroyAPIView):
     permission_classes = [IsAuthenticated, IsRestaurantOwner]
 
     def dispatch(self, request, *args, **kwargs):
-        if not Blog.objects.filter(id=self.kwargs['blog_id']):
+        if not Blog.objects.filter(id=self.kwargs['pk']):
             return JsonResponse({"detail": "Blog ID is not found"}, status=404)
-        self.restaurant = get_object_or_404(Blog, id=self.kwargs['blog_id']).restaurant
+        self.restaurant = get_object_or_404(Blog, id=self.kwargs['pk']).restaurant
         return super().dispatch(request, *args, **kwargs)
 
     # Redirect to my restaurant after remove a blog?
