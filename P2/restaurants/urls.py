@@ -4,7 +4,7 @@ from restaurants.views import CreateBlog, CreateComments, CreateMenuItem, \
     DeleteBlog, FollowRestaurant, GetAllBlogs, GetAllBlogs, GetBlogs, LikeBlog, UpdateMenuItem, \
     CreateRestaurant, FetchMyRestaurant, FetchAllMenuItems, DeleteMenuItem, FetchComments, \
     UpdateRestaurantInfo, FetchAllRestaurants, FetchRestaurantByName, FetchFollowersRestaurants, \
-    UnfollowRestaurant, LikeRestaurant, UnlikeRestaurant, UploadRestaurantLogo
+    UnfollowRestaurant, LikeRestaurant, UnlikeRestaurant, UploadRestaurantLogo, RemoveRestaurantLogo
 app_name = 'restaurants'
 
 urlpatterns = [
@@ -27,6 +27,7 @@ urlpatterns = [
     re_path(r'<int:restaurant_id>/unlike/?$', UnlikeRestaurant.as_view(), name='restaurant-unlike'),
 
     re_path(r'<int:restaurant_id>/logo/upload/?$', UploadRestaurantLogo.as_view(), name='upload-restaurant-logo'),
+    re_path(r'<int:restaurant_id>/logo/remove/?$', RemoveRestaurantLogo.as_view(), name='remove-restaurant-logo'),
 
     # Comment endpoints
     re_path(r'<int:restaurant_id>/comments/all/?$', FetchComments.as_view(), name='fetch-comments'),
