@@ -1111,12 +1111,13 @@
             "/restaurants/{restaurant_id}/unfollow/": {
                 "patch": {
                     "operationId": "unfollow_partial_update",
-                    "responses": {"200": {"description": ""}},
+                    "responses": {"200": {"description": "Successfully unfollow the restaurant"}, 
+                    "404": {"description": "Restaurant not found"}, "409": {"description": "User does not followed the restaurant with this ID yet"}},
                     "parameters": [{
                         "name": "restaurant_id",
                         "required": true,
                         "in": "path",
-                        "description": "",
+                        "description": "Unfollow the restaurant providing the restaurant ID.",
                         "type": "string"
                     }],
                     "tags": ["restaurants"]
@@ -1125,12 +1126,13 @@
             "/restaurants/{restaurant_id}/unlike/": {
                 "patch": {
                     "operationId": "unlike_partial_update",
-                    "responses": {"200": {"description": ""}},
+                    "responses": {"200": {"description": "Successfully unliked the restaurant"}, 
+                    "404": {"description": "Restaurant not found"}, "409": {"description": "User does not liked the restaurant with this ID yet"}},
                     "parameters": [{
                         "name": "restaurant_id",
                         "required": true,
                         "in": "path",
-                        "description": "",
+                        "description": "Unlike the restaurant providing the restaurant ID.",
                         "type": "string"
                     }],
                     "tags": ["restaurants"]
