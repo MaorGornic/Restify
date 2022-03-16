@@ -601,6 +601,8 @@
                 "patch": {
                     "operationId": "notifications_viewed_partial_update",
                     "responses": {"200": {"description": "Notification viewed"},
+                                 "401": {"description": "User is not authorized"},
+                                 "403": {"description": "User does not own notification"},
                                  "404": {"description": "Notification not found"}},
                     "parameters": [{
                         "name": "notification_id",
@@ -741,7 +743,9 @@
             "/restaurants/doesfollow/{restaurant_id}/": {
                 "get": {
                     "operationId": "doesfollow_read",
-                    "responses": {"200": {"description": ""}},
+                    "responses": {"200": {"description": "Retrieved successfully"},
+                                  "401": {"description": "User unauthorized"},
+                                  "404": {"description": "Not found"}},
                     "parameters": [{
                         "name": "restaurant_id",
                         "required": true,
@@ -755,7 +759,9 @@
             "/restaurants/doeslike/{restaurant_id}/": {
                 "get": {
                     "operationId": "doeslike_read",
-                    "responses": {"200": {"description": ""}},
+                    "responses": {"200": {"description": "Retrieved successfully"},
+                                  "401": {"description": "User unauthorized"},
+                                  "404": {"description": "Not found"}},
                     "parameters": [{
                         "name": "restaurant_id",
                         "required": true,
@@ -769,7 +775,8 @@
             "/restaurants/info/{restaurant_id}/": {
                 "get": {
                     "operationId": "info_read",
-                    "responses": {"200": {"description": ""}},
+                    "responses": {"200": {"description": "Retrieved successfully"},
+                                  "404": {"description": "restaurant id not found"}},
                     "parameters": [{
                         "name": "restaurant_id",
                         "required": true,
@@ -783,7 +790,9 @@
             "/restaurants/new/": {
                 "post": {
                     "operationId": "new_create",
-                    "responses": {"201": {"description": ""}},
+                    "responses": {"200": {"description": "Retrieved successfully"},
+                                  "401": {"description": "User unauthorized"},
+                                  "409":  {"description": "Restaurant exists"}},
                     "parameters": [{
                         "name": "data",
                         "in": "body",
@@ -807,7 +816,8 @@
             "/restaurants/owned/": {
                 "get": {
                     "operationId": "owned_read",
-                    "responses": {"200": {"description": ""}},
+                    "responses": {"200": {"description": "Success"},
+                                "404": {"description": "Restaurant with the given name was not found"}},
                     "parameters": [],
                     "tags": ["restaurants"]
                 }
