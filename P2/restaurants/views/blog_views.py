@@ -29,12 +29,10 @@ class GetBlogs(RetrieveAPIView):
             return JsonResponse({"detail": "Blog ID is not found"}, status=404)
         return ret
 
-
 class GetAllBlogs(ListAPIView):
     queryset = Blog.objects.all()
     serializer_class = BlogSerializer
     permission_classes = [AllowAny]
-
 
 class GetBlogFeed(ListAPIView):
     serializer_class = BlogSerializer
@@ -42,9 +40,7 @@ class GetBlogFeed(ListAPIView):
 
     def get_queryset(self):
         curr_user = ModifiedUser.objects.get(id=self.request.user.id)
-        print(curr_user)
         return Blog.objects.filter(likes=curr_user)
-
 
 class DeleteBlog(DestroyAPIView):
     queryset = Blog.objects.all()
