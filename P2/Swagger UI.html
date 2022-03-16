@@ -1023,12 +1023,12 @@
             "/restaurants/{restaurant_id}/menu/items/": {
                 "get": {
                     "operationId": "menu_items_list",
-                    "responses": {"200": {"description": ""}},
+                    "responses": {"200": {"description": "Successfully fetched all the menu items"}, "404": {"description": "Restaurant not found"}},
                     "parameters": [{
                         "name": "restaurant_id",
                         "required": true,
                         "in": "path",
-                        "description": "",
+                        "description": "Restaurant Integer ID to uniquely identify this restaurant.",
                         "type": "string"
                     }, {
                         "name": "page",
@@ -1043,16 +1043,17 @@
             "/restaurants/{restaurant_id}/menu/new/": {
                 "post": {
                     "operationId": "menu_new_create",
-                    "responses": {"201": {"description": ""}},
+                    "responses": {"201": {"description": "Successfully created the menu item"}, "404": {"description": "Restaurant not found"}},
                     "parameters": [{
                         "name": "restaurant_id",
                         "required": true,
                         "in": "path",
-                        "description": "",
+                        "description": "Restaurant Integer ID to uniquely identify this restaurant.",
                         "type": "string"
                     }, {
                         "name": "data",
                         "in": "body",
+                        "description": "Below are the fields of the POST Request to create this menu item.",
                         "schema": {
                             "type": "object",
                             "properties": {
@@ -1071,12 +1072,12 @@
             "/restaurants/{restaurant_id}/menu/{id}/edit/": {
                 "patch": {
                     "operationId": "menu_edit_partial_update",
-                    "responses": {"200": {"description": ""}},
+                    "responses": {"200": {"description": "Successfully updated the menu item"}, "404": {"description": "Restaurant not found"}},
                     "parameters": [{
                         "name": "restaurant_id",
                         "required": true,
                         "in": "path",
-                        "description": "",
+                        "description": "Restaurant Integer ID to uniquely identify this restaurant.",
                         "type": "string"
                     }, {
                         "name": "id",
@@ -1087,10 +1088,11 @@
                     }, {
                         "name": "data",
                         "in": "body",
+                        "description": "Below are the fields of the PATCH Request to change this menu item.",
                         "schema": {
                             "type": "object",
                             "properties": {
-                                "name": {"description": "", "type": "string"},
+                                "name": {"description": "Name to change for this menu item.", "type": "string"},
                                 "description": {"description": "", "type": "string"},
                                 "price": {"description": "", "type": "number"},
                                 "picture": {"description": "", "type": "string"}
@@ -1104,12 +1106,13 @@
             "/restaurants/{restaurant_id}/menu/{id}/remove/": {
                 "delete": {
                     "operationId": "menu_remove_delete",
-                    "responses": {"204": {"description": ""}},
+                    "responses": {"204": {"description": "Successfully removed the menu item of the restaurant"}, 
+                    "404": {"description": "Restaurant not found"}},
                     "parameters": [{
                         "name": "restaurant_id",
                         "required": true,
                         "in": "path",
-                        "description": "",
+                        "description": "Restaurant integer to locate the menu item, providing its ID.",
                         "type": "string"
                     }, {
                         "name": "id",
