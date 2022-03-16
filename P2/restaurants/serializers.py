@@ -70,7 +70,7 @@ class RestaurantSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Restaurant
-        fields = ['id', 'owner', 'followers', 'name', 'address', 'email', 'phone_num', 'views', 'likes', 'logo']
+        fields = ['id', 'owner', 'followers', 'name', 'address', 'email', 'phone_num', 'views', 'likes', 'logo', 'postal_code']
 
 
 class MenuItemSerializer(serializers.ModelSerializer):
@@ -93,7 +93,7 @@ class MenuItemSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = MenuItem
-        fields = ['id', 'name', 'description', 'price', 'picture', 'restaurant', 'postal_code']
+        fields = ['id', 'name', 'description', 'price', 'picture', 'restaurant']
 
 
 # Comments Serializer
