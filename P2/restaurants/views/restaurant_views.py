@@ -99,6 +99,7 @@ class UpdateRestaurantInfo(UpdateAPIView):
     queryset = Restaurant.objects.all()
     serializer_class = RestaurantSerializer
     permission_classes = [IsAuthenticated, IsRestaurantOwner]
+    http_method_names = ["patch"]
 
     def dispatch(self, request, *args, **kwargs):
         try:
@@ -117,6 +118,7 @@ class FollowRestaurant(UpdateAPIView):
     queryset = Restaurant.objects.all()
     serializer_class = RestaurantSerializer
     permission_classes = [IsAuthenticated]
+    http_method_names = ["patch"]
 
     def dispatch(self, request, *args, **kwargs):
         try:
@@ -152,6 +154,7 @@ class UnfollowRestaurant(UpdateAPIView):
     queryset = Restaurant.objects.all()
     serializer_class = RestaurantSerializer
     permission_classes = [IsAuthenticated]
+    http_method_names = ["patch"]
 
     def dispatch(self, request, *args, **kwargs):
         try:
@@ -184,6 +187,7 @@ class LikeRestaurant(UpdateAPIView):
     queryset = Restaurant.objects.all()
     serializer_class = RestaurantSerializer
     permission_classes = [IsAuthenticated]
+    http_method_names = ["patch"]
 
     def dispatch(self, request, *args, **kwargs):
         try:
@@ -219,6 +223,7 @@ class UnlikeRestaurant(UpdateAPIView):
     queryset = Restaurant.objects.all()
     serializer_class = RestaurantSerializer
     permission_classes = [IsAuthenticated]
+    http_method_names = ["patch"]
 
     def dispatch(self, request, *args, **kwargs):
         try:

@@ -47,6 +47,7 @@ class MarkViewedNotification(UpdateAPIView):
     queryset = Notification.objects.all()
     serializer_class = NotificationRecordsSerializer
     permission_classes = [IsAuthenticated]
+    http_method_names = ["patch"]
 
     def dispatch(self, request, *args, **kwargs):
         try:
@@ -76,6 +77,7 @@ class APIUpdateView(generics.UpdateAPIView):
     queryset = ModifiedUser.objects.all()
     permission_classes = (IsAuthenticated,)
     serializer_class = ModifiedUserSerializer
+    http_method_names = ["patch"]
 
     def update(self, request, *args, **kwargs):
         self.kwargs["pk"] = self.request.user.id

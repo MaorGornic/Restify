@@ -31,6 +31,7 @@ class UpdateMenuItem(UpdateAPIView):
     queryset = MenuItem.objects.all()
     serializer_class = MenuItemSerializer
     permission_classes = [IsAuthenticated, IsRestaurantOwner]
+    http_method_names = ["patch"]
 
     def dispatch(self, request, *args, **kwargs):
         try:

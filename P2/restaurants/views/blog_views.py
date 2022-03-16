@@ -85,6 +85,7 @@ class LikeBlog(UpdateAPIView):
     queryset = Blog.objects.all()
     serializer_class = BlogSerializer
     permission_classes = [IsAuthenticated]
+    http_method_names = ["patch"]
 
     def dispatch(self, request, *args, **kwargs):
         if not Blog.objects.filter(id=self.kwargs['blog_id']):
