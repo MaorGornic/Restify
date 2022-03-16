@@ -644,7 +644,7 @@
             "/restaurants/blog/all/": {
                 "get": {
                     "operationId": "blog_all_list",
-                    "responses": {"200": {"description": ""}},
+                    "responses": {"200": {"description": "Retrieved successfully"}},
                     "parameters": [{
                         "name": "page",
                         "required": false,
@@ -658,7 +658,10 @@
             "/restaurants/blog/doeslike/{blog_id}/": {
                 "get": {
                     "operationId": "blog_doeslike_read",
-                    "responses": {"200": {"description": ""}},
+                    "responses": {"200": {"description": "Retrieved successfully"},
+                                  "401": {"description": "Unauthorized"},
+                                  "404": {"description": "Blog id not found"},
+                                  "403": {"description": "No permission"}},
                     "parameters": [{
                         "name": "blog_id",
                         "required": true,
@@ -672,7 +675,10 @@
             "/restaurants/blog/feed/": {
                 "get": {
                     "operationId": "blog_feed_list",
-                    "responses": {"200": {"description": ""}},
+                    "responses": {"200": {"description": "Retrieved successfully"},
+                                  "401": {"description": "User unauthorized"},
+                                  "404": {"description": "Invalid Page"}
+                                  },
                     "parameters": [{
                         "name": "page",
                         "required": false,
@@ -686,7 +692,8 @@
             "/restaurants/blog/{blog_id}/": {
                 "get": {
                     "operationId": "blog_read",
-                    "responses": {"200": {"description": ""}},
+                    "responses": {"200": {"description": "Retrieved successfully"},
+                                  "404": {"description": "blog id not found"}},
                     "parameters": [{
                         "name": "blog_id",
                         "required": true,
@@ -700,7 +707,10 @@
             "/restaurants/blog/{blog_id}/like/": {
                 "patch": {
                     "operationId": "blog_like_partial_update",
-                    "responses": {"200": {"description": ""}},
+                    "responses": {"200": {"description": "Like successful"},
+                                  "401": {"description": "User unauthorized"},
+                                  "404": {"description": "blog id does not exist"},
+                                  "409": {"description": "User already liked this blog"}},
                     "parameters": [{
                         "name": "blog_id",
                         "required": true,
@@ -714,7 +724,10 @@
             "/restaurants/blog/{id}/delete/": {
                 "delete": {
                     "operationId": "blog_delete_delete",
-                    "responses": {"204": {"description": ""}},
+                    "responses": {"204": {"description": "Removed successfully"},
+                                  "401": {"description": "User unauthorized"},
+                                  "403": {"description": "No permission"},
+                                  "404": {"description": "Blog ID is not found"}},
                     "parameters": [{
                         "name": "id",
                         "required": true,
