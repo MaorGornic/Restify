@@ -68,6 +68,7 @@ class MarkViewedNotification(UpdateAPIView):
 class NotificationView(generics.ListAPIView):
     queryset = Notification.objects.all()
     serializer_class = NotificationRecordsSerializer
+    permission_classes = [IsAuthenticated]
     pagination_class = PageNumberPagination
 
 

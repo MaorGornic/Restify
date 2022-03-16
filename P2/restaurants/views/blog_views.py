@@ -37,12 +37,11 @@ class GetAllBlogs(ListAPIView):
 
 
 class GetBlogFeed(ListAPIView):
-    # queryset = Blog.objects.all()
     serializer_class = BlogSerializer
     permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
-        return Blog.objects.filter(like=ModifiedUser.objects.get(id=self.request.user.id))
+        return Blog.objects.filter(likes=ModifiedUser.objects.get(id=self.request.user.id))
 
 
 class DeleteBlog(DestroyAPIView):
