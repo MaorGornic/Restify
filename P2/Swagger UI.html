@@ -984,7 +984,8 @@
             "/restaurants/{restaurant_id}/images/{image_id}/remove/": {
                 "delete": {
                     "operationId": "images_remove_delete",
-                    "responses": {"204": {"description": ""}},
+                    "responses": {"204": {"description": "Successfully removed this image of the restaurant"}, 
+                    "404": {"description": "Restaurant not found"}, "403": {"description": "User authorization level is not enough"}},
                     "parameters": [{
                         "name": "restaurant_id",
                         "required": true,
@@ -998,12 +999,13 @@
             "/restaurants/{restaurant_id}/like/": {
                 "patch": {
                     "operationId": "like_partial_update",
-                    "responses": {"200": {"description": ""}},
+                    "responses": {"200": {"description": "Successfully liked this restaurant"}, 
+                    "404": {"description": "Restaurant not found"}, "409": {"description": "User has already liked this restaurant"}},
                     "parameters": [{
                         "name": "restaurant_id",
                         "required": true,
                         "in": "path",
-                        "description": "",
+                        "description": "Restaurant Integer ID to uniquely identify this restaurant.",
                         "type": "string"
                     }],
                     "tags": ["restaurants"]
@@ -1012,7 +1014,8 @@
             "/restaurants/{restaurant_id}/menu/items/": {
                 "get": {
                     "operationId": "menu_items_list",
-                    "responses": {"200": {"description": "Successfully fetched all the menu items"}, "404": {"description": "Restaurant not found"}},
+                    "responses": {"200": {"description": "Successfully fetched all the menu items"}, "404": {"description": "Restaurant not found"}, 
+                    "403": {"description": "User authorization level is not enough"}},
                     "parameters": [{
                         "name": "restaurant_id",
                         "required": true,
@@ -1032,7 +1035,8 @@
             "/restaurants/{restaurant_id}/menu/new/": {
                 "post": {
                     "operationId": "menu_new_create",
-                    "responses": {"201": {"description": "Successfully created the menu item"}, "404": {"description": "Restaurant not found"}},
+                    "responses": {"201": {"description": "Successfully created the menu item"}, 
+                    "404": {"description": "Restaurant not found"}, "403": {"description": "User authorization level is not enough"}},
                     "parameters": [{
                         "name": "restaurant_id",
                         "required": true,
@@ -1061,7 +1065,8 @@
             "/restaurants/{restaurant_id}/menu/{id}/edit/": {
                 "patch": {
                     "operationId": "menu_edit_partial_update",
-                    "responses": {"200": {"description": "Successfully updated the menu item"}, "404": {"description": "Restaurant not found"}},
+                    "responses": {"200": {"description": "Successfully updated the menu item"}, "404": {"description": "Restaurant not found"}, 
+                    "403": {"description": "User authorization level is not enough"}},
                     "parameters": [{
                         "name": "restaurant_id",
                         "required": true,
@@ -1096,7 +1101,7 @@
                 "delete": {
                     "operationId": "menu_remove_delete",
                     "responses": {"204": {"description": "Successfully removed the menu item of the restaurant"}, 
-                    "404": {"description": "Restaurant not found"}},
+                    "404": {"description": "Restaurant not found"}, "403": {"description": "User authorization level is not enough"}},
                     "parameters": [{
                         "name": "restaurant_id",
                         "required": true,
@@ -1116,7 +1121,7 @@
             "/restaurants/{restaurant_id}/unfollow/": {
                 "patch": {
                     "operationId": "unfollow_partial_update",
-                    "responses": {"200": {"description": "Successfully unfollow the restaurant"}, 
+                    "responses": {"200": {"description": "Successfully unfollow the restaurant"}, "403": {"description": "User authorization level is not enough"},
                     "404": {"description": "Restaurant not found"}, "409": {"description": "User does not followed the restaurant with this ID yet"}},
                     "parameters": [{
                         "name": "restaurant_id",
@@ -1131,7 +1136,7 @@
             "/restaurants/{restaurant_id}/unlike/": {
                 "patch": {
                     "operationId": "unlike_partial_update",
-                    "responses": {"200": {"description": "Successfully unliked the restaurant"}, 
+                    "responses": {"200": {"description": "Successfully unliked the restaurant"}, "403": {"description": "User authorization level is not enough"},
                     "404": {"description": "Restaurant not found"}, "409": {"description": "User does not liked the restaurant with this ID yet"}},
                     "parameters": [{
                         "name": "restaurant_id",
