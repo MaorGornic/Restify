@@ -499,7 +499,8 @@
             "/accounts/api/token/": {
                 "post": {
                     "operationId": "api_token_create",
-                    "responses": {"201": {"description": ""}},
+                    "responses": {"201": {"description": "Login Successful"},
+                                  "401": {"description": "Login Unauthorized"}},
                     "parameters": [{
                         "name": "data",
                         "in": "body",
@@ -516,54 +517,11 @@
                     "tags": ["accounts"]
                 }
             },
-            "/accounts/notifications/": {
-                "get": {
-                    "operationId": "notifications_list",
-                    "responses": {"200": {"description": "Login successful"},
-                                  "400": {"description": "Page number invalid"}},
-                    "parameters": [{
-                        "name": "page",
-                        "required": false,
-                        "in": "query",
-                        "description": "A page number within the paginated result set.",
-                        "type": "integer"
-                    }],
-                    "tags": ["accounts"]
-                }
-            },
-            "/accounts/notifications/viewed/{notification_id}/": {
-                "patch": {
-                    "operationId": "notifications_viewed_partial_update",
-                    "responses": {"200": {"description": ""}},
-                    "parameters": [{
-                        "name": "notification_id",
-                        "required": true,
-                        "in": "path",
-                        "description": "",
-                        "type": "string"
-                    }, {
-                        "name": "data",
-                        "in": "body",
-                        "schema": {
-                            "type": "object",
-                            "properties": {
-                                "user": {"description": "", "type": "string"},
-                                "type": {"description": "", "type": "string"},
-                                "viewed": {"description": "", "type": "boolean"},
-                                "blog": {"description": "", "type": "integer"},
-                                "restaurant": {"description": "", "type": "integer"},
-                                "actor_user": {"description": "", "type": "string"}
-                            }
-                        }
-                    }],
-                    "consumes": ["application/json"],
-                    "tags": ["accounts"]
-                }
-            },
             "/accounts/register/": {
                 "post": {
                     "operationId": "register_create",
-                    "responses": {"201": {"description": ""}},
+                    "responses": {"201": {"description": "User created"},
+                                  "400": {"description": "Bad Requests"}},
                     "parameters": [{
                         "name": "data",
                         "in": "body",
@@ -590,7 +548,8 @@
             "/accounts/update/": {
                 "patch": {
                     "operationId": "update_partial_update",
-                    "responses": {"200": {"description": ""}},
+                    "responses": {"200": {"description": "Updated successfully"},
+                                  "401": {"description": "Unauthorized user"}},
                     "parameters": [{
                         "name": "data",
                         "in": "body",
@@ -616,23 +575,62 @@
             "/accounts/view/": {
                 "get": {
                     "operationId": "view_read",
-                    "responses": {"200": {"description": ""}},
+                    "responses": {"200": {"description": "Viewed successfully"},
+                                  "401": {"description": "Unauthorized user"}},
                     "parameters": [],
                     "tags": ["accounts"]
                 }
             },
-            "/api/docs/": {
+            "/accounts/notifications/": {
                 "get": {
-                    "operationId": "docs_list",
-                    "responses": {"200": {"description": ""}},
-                    "parameters": [],
-                    "tags": ["api"]
+                    "operationId": "notifications_list",
+                    "responses": {"200": {"description": "Fetch successful"},
+                                  "404": {"description": "Invalid Page"},
+                                  "401": {"description": "User unauthorized"}},
+                    "parameters": [{
+                        "name": "page",
+                        "required": false,
+                        "in": "query",
+                        "description": "A page number within the paginated result set.",
+                        "type": "integer"
+                    }],
+                    "tags": ["accounts"]
+                }
+            },
+            "/accounts/notifications/viewed/{notification_id}/": {
+                "patch": {
+                    "operationId": "notifications_viewed_partial_update",
+                    "responses": {"200": {"description": "Notification viewed"},
+                                 "404": {"description": "Notification not found"}},
+                    "parameters": [{
+                        "name": "notification_id",
+                        "required": true,
+                        "in": "path",
+                        "description": "",
+                        "type": "string"
+                    }, {
+                        "name": "data",
+                        "in": "body",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "user": {"description": "", "type": "string"},
+                                "type": {"description": "", "type": "string"},
+                                "viewed": {"description": "", "type": "boolean"},
+                                "blog": {"description": "", "type": "integer"},
+                                "restaurant": {"description": "", "type": "integer"},
+                                "actor_user": {"description": "", "type": "string"}
+                            }
+                        }
+                    }],
+                    "consumes": ["application/json"],
+                    "tags": ["accounts"]
                 }
             },
             "/restaurants/all/": {
                 "get": {
                     "operationId": "all_list",
-                    "responses": {"200": {"description": ""}},
+                    "responses": {"200": {"description": "Retrieved successfully"}},
                     "parameters": [{
                         "name": "page",
                         "required": false,
