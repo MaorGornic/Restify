@@ -825,13 +825,21 @@
             "/restaurants/search/": {
                 "get": {
                     "operationId": "search_list",
-                    "responses": {"200": {"description": ""}},
+                    "responses": {"200": {"description": "Success"},
+                                  "404": {"description": "page number not found"}},
                     "parameters": [{
                         "name": "page",
                         "required": false,
                         "in": "query",
                         "description": "A page number within the paginated result set.",
                         "type": "integer"
+                    },
+                    {
+                        "name": "string",
+                        "required": false,
+                        "in": "query",
+                        "description": "A query parameter to filter restaurants by. Options are (name, postal_code, food)",
+                        "type": "string"
                     }],
                     "tags": ["restaurants"]
                 }
