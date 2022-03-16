@@ -847,16 +847,18 @@
             "/restaurants/{restaurant_id}/blog/new/": {
                 "post": {
                     "operationId": "blog_new_create",
-                    "responses": {"201": {"description": ""}},
+                    "responses": {"201": {"description": "Successfully added a blog under ths restaurant"}, 
+                    "404": {"description": "Restaurant not found"}, "403": {"description": "User authorization level is not enough"}},
                     "parameters": [{
                         "name": "restaurant_id",
                         "required": true,
                         "in": "path",
-                        "description": "",
+                        "description": "Restaurant Integer ID to uniquely identify this restaurant.",
                         "type": "string"
                     }, {
                         "name": "data",
                         "in": "body",
+                        "description": "The data field of the POST Request to create the restaurant blog.",
                         "schema": {
                             "type": "object",
                             "properties": {
@@ -874,12 +876,13 @@
             "/restaurants/{restaurant_id}/comments/all/": {
                 "get": {
                     "operationId": "comments_all_list",
-                    "responses": {"200": {"description": ""}},
+                    "responses": {"200": {"description": "Successfully fetched all comments of ths restaurant"}, 
+                    "404": {"description": "Restaurant not found"}},
                     "parameters": [{
                         "name": "restaurant_id",
                         "required": true,
                         "in": "path",
-                        "description": "",
+                        "description": "Restaurant Integer ID to uniquely identify this restaurant.",
                         "type": "string"
                     }, {
                         "name": "page",
@@ -894,16 +897,18 @@
             "/restaurants/{restaurant_id}/comments/new/": {
                 "post": {
                     "operationId": "comments_new_create",
-                    "responses": {"201": {"description": ""}},
+                    "responses": {"201": {"description": "Successfully commented ths restaurant"}, 
+                    "404": {"description": "Restaurant not found"}, "403": {"description": "User authorization level is not enough"}},
                     "parameters": [{
                         "name": "restaurant_id",
                         "required": true,
                         "in": "path",
-                        "description": "",
+                        "description": "Restaurant Integer ID to uniquely identify this restaurant.",
                         "type": "string"
                     }, {
                         "name": "data",
                         "in": "body",
+                        "description": "The data field of the POST Request to create the restaurant comment.",
                         "schema": {
                             "type": "object",
                             "properties": {"contents": {"description": "", "type": "string"}},
@@ -917,16 +922,18 @@
             "/restaurants/{restaurant_id}/edit/": {
                 "patch": {
                     "operationId": "edit_partial_update",
-                    "responses": {"200": {"description": ""}},
+                    "responses": {"200": {"description": "Successfully updated the restaurant information"}, 
+                    "404": {"description": "Restaurant not found"}, "403": {"description": "User authorization level is not enough"}},
                     "parameters": [{
                         "name": "restaurant_id",
                         "required": true,
                         "in": "path",
-                        "description": "",
+                        "description": "Restaurant Integer ID to uniquely identify this restaurant.",
                         "type": "string"
                     }, {
                         "name": "data",
                         "in": "body",
+                        "description": "The data field of the PATCH Request to modify the restaurant information.",
                         "schema": {
                             "type": "object",
                             "properties": {
@@ -946,12 +953,13 @@
             "/restaurants/{restaurant_id}/follow/": {
                 "patch": {
                     "operationId": "follow_partial_update",
-                    "responses": {"200": {"description": ""}},
+                    "responses": {"200": {"description": "Successfully followed the restaurant"}, "409": {"description": "Already followed the restaurant"},
+                    "404": {"description": "Restaurant not found"}, "403": {"description": "User authorization level is not enough"}},
                     "parameters": [{
                         "name": "restaurant_id",
                         "required": true,
                         "in": "path",
-                        "description": "",
+                        "description": "Restaurant Integer ID to uniquely identify this restaurant to follow.",
                         "type": "string"
                     }],
                     "tags": ["restaurants"]
@@ -960,12 +968,13 @@
             "/restaurants/{restaurant_id}/followers/": {
                 "get": {
                     "operationId": "followers_read",
-                    "responses": {"200": {"description": ""}},
+                    "responses": {"200": {"description": "Successfully fetched all followers of the restaurant"}, 
+                    "404": {"description": "Restaurant not found"}, "403": {"description": "User authorization level is not enough"}},
                     "parameters": [{
                         "name": "restaurant_id",
                         "required": true,
                         "in": "path",
-                        "description": "",
+                        "description": "Restaurant Integer ID to uniquely identify this restaurant.",
                         "type": "string"
                     }],
                     "tags": ["restaurants"]
@@ -974,12 +983,13 @@
             "/restaurants/{restaurant_id}/images/": {
                 "get": {
                     "operationId": "images_list",
-                    "responses": {"200": {"description": ""}},
+                    "responses": {"201": {"description": "Successfully fetched all images of the restaurant"}, 
+                    "404": {"description": "Restaurant not found"}},
                     "parameters": [{
                         "name": "restaurant_id",
                         "required": true,
                         "in": "path",
-                        "description": "",
+                        "description": "Restaurant Integer ID to uniquely identify this restaurant.",
                         "type": "string"
                     }, {
                         "name": "page",
@@ -994,16 +1004,18 @@
             "/restaurants/{restaurant_id}/images/upload/": {
                 "post": {
                     "operationId": "images_upload_create",
-                    "responses": {"201": {"description": ""}},
+                    "responses": {"201": {"description": "Successfully uploaded this image to the restaurant"}, 
+                    "404": {"description": "Restaurant not found / Image does not exist"}, "403": {"description": "User authorization level is not enough"}},
                     "parameters": [{
                         "name": "restaurant_id",
                         "required": true,
                         "in": "path",
-                        "description": "",
+                        "description": "Restaurant Integer ID to uniquely identify this restaurant.",
                         "type": "string"
                     }, {
                         "name": "data",
                         "in": "body",
+                        "description": "Post request to upload this image in the request to the restaurant.",
                         "schema": {"type": "object", "properties": {"ref_img": {"description": "", "type": "string"}}}
                     }],
                     "consumes": ["application/json"],
@@ -1019,9 +1031,10 @@
                         "name": "restaurant_id",
                         "required": true,
                         "in": "path",
-                        "description": "",
+                        "description": "Restaurant Integer ID to uniquely identify this restaurant.",
                         "type": "string"
-                    }, {"name": "image_id", "required": true, "in": "path", "description": "", "type": "string"}],
+                    }, {"name": "image_id", "required": true, "in": "path", 
+                    "description": "Integer ID to uniquely identify this image of the restaurant.", "type": "string"}],
                     "tags": ["restaurants"]
                 }
             },
@@ -1043,8 +1056,7 @@
             "/restaurants/{restaurant_id}/menu/items/": {
                 "get": {
                     "operationId": "menu_items_list",
-                    "responses": {"200": {"description": "Successfully fetched all the menu items"}, "404": {"description": "Restaurant not found"}, 
-                    "403": {"description": "User authorization level is not enough"}},
+                    "responses": {"200": {"description": "Successfully fetched all the menu items"}, "404": {"description": "Restaurant not found"}},
                     "parameters": [{
                         "name": "restaurant_id",
                         "required": true,
