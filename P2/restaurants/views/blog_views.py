@@ -114,3 +114,26 @@ class LikeBlog(UpdateAPIView):
                                     restaurant=self.restaurant, actor_user=current_user)
         serializer.validated_data.update({'likes': [current_user]})
         return super().perform_update(serializer)
+
+class FetchIfLikedBlog(RetrieveAPIView):
+    queryset = Blog.objects.all()
+    serializer_class = BlogSerializer
+    permission_classes = [IsAuthenticated]
+
+    def dispatch(self, request, *args, **kwargs):
+        if not Blog.objects.filter(id=self.kwargs['blog_id']):
+            return JsonResponse({"detail": "Blog ID is not found"}, status=404)
+        self.blog = get_object_or_404(Blog, id=self.kwargs['blog_id'])
+        return super().dispatch(request, *args, **kwargs)
+
+    def finalize_response(self, request, response, *args, **kwargs):
+        if response.status_code not in [401, 403, 404]:
+            response.data = {'is_liked': self.blog.likes.filter(id=self.request.user.id).exists()}
+        return super().finalize_response(request, response, *args, **kwargs)
+
+    def retrieve(self, request, *args, **kwargs):
+        self.kwargs['pk'] = self.kwargs['blog_id']
+        ret = super().retrieve(request, *args, **kwargs)
+        if 'id' not in ret.data:
+            return JsonResponse({"detail": "Restaurant with the given name was not found"}, status=404)
+        return ret

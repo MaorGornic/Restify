@@ -17,8 +17,9 @@ urlpatterns = [
     path('new/', CreateRestaurant.as_view(), name='restaurant-create'),
     path('all/', FetchAllRestaurants.as_view(), name='restaurants'),
     path('owned/', FetchMyRestaurant.as_view(), name='get-owned-restaurant'),
+    path('doesfollow/<int:restaurant_id>/', FetchIfFollowsRestaurant.as_view(), name='restaurant-doesfollow'),
+    path('doeslike/<int:restaurant_id>/', FetchIfLikedRestaurant.as_view(), name='restaurant-doeslike'),
     path('info/<int:restaurant_id>/', FetchRestaurantById.as_view(), name='restaurant-byid'),
-    # path('search/<str:param>/', FetchRestaurantByArg.as_view(), name='restaurant-byarg'),
     path('search/', FetchRestaurantByArg.as_view(), name='restaurant-byarg'),
     path('<int:restaurant_id>/followers/', FetchFollowersRestaurants.as_view(), name='restaurant-followers'),
     path('<int:restaurant_id>/edit/', UpdateRestaurantInfo.as_view(), name='restaurant-edit'),
@@ -41,5 +42,5 @@ urlpatterns = [
     path('blog/<int:blog_id>/like/', LikeBlog.as_view(), name='like-blog'),
     path('blog/all/', GetAllBlogs.as_view(), name='get-all-blog'),
     path('blog/feed/', GetBlogFeed.as_view(), name='get-blog-feed'),
-    # path('blog/<int:blog_id>/doeslike/', DoesLikeBlog.as_view(), name='does-like-blog'),
+    path('blog/doeslike/<int:blog_id>/', FetchIfLikedBlog.as_view(), name='doeslike-blog'),
 ]

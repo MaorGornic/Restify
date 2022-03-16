@@ -72,6 +72,54 @@ class FetchMyRestaurant(RetrieveAPIView):
         return ret
 
 
+class FetchIfFollowsRestaurant(RetrieveAPIView):
+    queryset = Restaurant.objects.all()
+    serializer_class = RestaurantSerializer
+    permission_classes = [IsAuthenticated]
+
+    def dispatch(self, request, *args, **kwargs):
+        try:
+            self.restaurant = get_object_or_404(Restaurant, id=self.kwargs['restaurant_id'])
+        except Http404:
+            return JsonResponse({"detail": "Restaurant not found"}, status=404)
+        return super().dispatch(request, *args, **kwargs)
+
+    def finalize_response(self, request, response, *args, **kwargs):
+        if response.status_code not in [401, 403, 404]:
+            response.data = {'is_followed': self.restaurant.followers.filter(id=self.request.user.id).exists()}
+        return super().finalize_response(request, response, *args, **kwargs)
+
+    def retrieve(self, request, *args, **kwargs):
+        self.kwargs['pk'] = self.kwargs['restaurant_id']
+        ret = super().retrieve(request, *args, **kwargs)
+        if 'id' not in ret.data:
+            return JsonResponse({"detail": "Restaurant with the given name was not found"}, status=404)
+        return ret
+
+class FetchIfLikedRestaurant(RetrieveAPIView):
+    queryset = Restaurant.objects.all()
+    serializer_class = RestaurantSerializer
+    permission_classes = [IsAuthenticated]
+
+    def dispatch(self, request, *args, **kwargs):
+        try:
+            self.restaurant = get_object_or_404(Restaurant, id=self.kwargs['restaurant_id'])
+        except Http404:
+            return JsonResponse({"detail": "Restaurant not found"}, status=404)
+        return super().dispatch(request, *args, **kwargs)
+
+    def finalize_response(self, request, response, *args, **kwargs):
+        if response.status_code not in [401, 403, 404]:
+            response.data = {'is_liked': self.restaurant.likes.filter(id=self.request.user.id).exists()}
+        return super().finalize_response(request, response, *args, **kwargs)
+
+    def retrieve(self, request, *args, **kwargs):
+        self.kwargs['pk'] = self.kwargs['restaurant_id']
+        ret = super().retrieve(request, *args, **kwargs)
+        if 'id' not in ret.data:
+            return JsonResponse({"detail": "Restaurant with the given name was not found"}, status=404)
+        return ret
+        
 class FetchFollowersRestaurants(RetrieveAPIView):
     serializer_class = RestaurantSerializer
     # [discuss] to we want to allow everyone to see who is following a particular restaurant?
