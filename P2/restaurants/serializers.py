@@ -93,7 +93,7 @@ class MenuItemSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = MenuItem
-        fields = ['id', 'name', 'description', 'price', 'picture', 'restaurant']
+        fields = ['id', 'name', 'description', 'price', 'picture', 'restaurant', 'postal_code']
 
 
 # Comments Serializer

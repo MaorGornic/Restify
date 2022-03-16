@@ -17,6 +17,7 @@ class Restaurant(models.Model):
     followers = models.ManyToManyField(to=ModifiedUser, related_name="restaurant_followers", blank=True)
 
     name = models.CharField(max_length=200)
+    postal_code = models.CharField(max_length=10)
     address = models.CharField(max_length=200)
     email = models.CharField(max_length=100)
     phone_num = PhoneNumberField(null=False, blank=False, unique=False)
