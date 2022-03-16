@@ -41,7 +41,9 @@ class GetBlogFeed(ListAPIView):
     permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
-        return Blog.objects.filter(likes=ModifiedUser.objects.get(id=self.request.user.id))
+        curr_user = ModifiedUser.objects.get(id=self.request.user.id)
+        print(curr_user)
+        return Blog.objects.filter(likes=curr_user)
 
 
 class DeleteBlog(DestroyAPIView):
@@ -105,6 +107,7 @@ class LikeBlog(UpdateAPIView):
         return super().update(request, *args, **kwargs)
 
     def perform_update(self, serializer):
+        self.restaurant = self.blog.restaurant
         current_user = ModifiedUser.objects.get(id=self.request.user.id)
         Notification.objects.create(type="LIKEDBLOG", user=self.restaurant.owner,
                                     restaurant=self.restaurant, actor_user=current_user)
