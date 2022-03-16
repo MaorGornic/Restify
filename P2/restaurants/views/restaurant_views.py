@@ -4,7 +4,7 @@ from rest_framework.generics import get_object_or_404, CreateAPIView, UpdateAPIV
     DestroyAPIView, RetrieveAPIView
 from accounts.models import ModifiedUser
 from restaurants.permissions import IsRestaurantOwner
-from restaurants.models import ImageModel, Notification, Restaurant
+from restaurants.models import ImageModel, MenuItem, Notification, Restaurant
 from restaurants.serializers import ImageModelSerializer, RestaurantSerializer
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from django.http import HttpResponseRedirect
@@ -30,13 +30,13 @@ class FetchAllRestaurants(ListAPIView):
     permission_classes = [AllowAny]
 
 
-class FetchRestaurantByName(RetrieveAPIView):
+class FetchRestaurantById(RetrieveAPIView):
     serializer_class = RestaurantSerializer
     permission_classes = [AllowAny]
 
     def dispatch(self, request, *args, **kwargs):
         try:
-            self.restaurant = get_object_or_404(Restaurant, name=self.kwargs['name'])
+            self.restaurant = get_object_or_404(Restaurant, id=self.kwargs['restaurant_id'])
         except Http404:
             return JsonResponse({"detail": "Restaurant not found"}, status=404)
         return super().dispatch(request, *args, **kwargs)
@@ -255,6 +255,38 @@ class FetchImagesRestaurant(ListAPIView):
         if not Restaurant.objects.filter(id=self.kwargs['restaurant_id']):
             return JsonResponse({"detail": "Specified restaurant was not found"}, status=404)
         return super().dispatch(request, *args, **kwargs)
+
+class FetchRestaurantByArg(ListAPIView):
+    serializer_class = RestaurantSerializer
+    permission_classes = [AllowAny]
+
+    def get_queryset(self):
+        queryset = Restaurant.objects.all()
+        res_name = self.request.GET.get('name', None)
+        res_food = self.request.GET.get('food', None)
+        res_postal_code = self.request.GET.get('postal_code', None)
+        if res_name:
+            if res_postal_code:
+                queryset = queryset.filter(name=res_name, postal_code=res_postal_code)
+            else:
+                queryset = queryset.filter(name=res_name)
+        elif res_food:
+            desired_restaurants = set()
+            for menu_item in MenuItem.objects.all().iterator():
+                if res_food in menu_item.name:
+                    desired_restaurants.add(menu_item.restaurant.id)
+            if res_postal_code and res_name:
+                queryset = queryset.filter(id__in=desired_restaurants, name=res_name, postal_code=res_postal_code)
+            elif res_name:
+                queryset = queryset.filter(id__in=desired_restaurants, name=res_name)
+            elif res_postal_code:
+                queryset = queryset.filter(id__in=desired_restaurants, postal_code=res_postal_code)
+            else:
+                queryset = queryset.filter(id__in=desired_restaurants)
+
+        elif res_postal_code:
+            queryset = queryset.filter(postal_code=res_postal_code)
+        return queryset
 
 class UploadRestaurantImage(CreateAPIView):
     queryset = Restaurant.objects.all()
