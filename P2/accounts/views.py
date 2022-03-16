@@ -58,6 +58,10 @@ class MarkViewedNotification(UpdateAPIView):
         return super().dispatch(request, *args, **kwargs)
 
     def update(self, request, *args, **kwargs):
+        # check if owner of notification
+        if self.notification.user.id != self.request.user.id:
+            return JsonResponse({"detail": "Not allowed to view this notification"}, status=403)
+        self.kwargs['pk'] = self.kwargs['notification_id']
         self.kwargs['pk'] = self.kwargs['notification_id']
         return super().update(request, *args, **kwargs)
 
