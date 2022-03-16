@@ -57,7 +57,7 @@ class DeleteBlog(DestroyAPIView):
     def finalize_response(self, request, response, *args, **kwargs):
         response = super().finalize_response(request, response, *args, **kwargs)
         if response.status_code not in [401, 403, 404]:
-            return HttpResponseRedirect(reverse('restaurants:get-all-blog', kwargs={'name': self.restaurant.name}))
+            return HttpResponseRedirect(reverse('restaurants:get-all-blog'))
         return response
 
 
