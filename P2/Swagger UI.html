@@ -1,0 +1,1150 @@
+<!DOCTYPE html>
+<!-- saved from url=(0031)http://127.0.0.1:8000/api/docs/ -->
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    <title>Swagger UI</title>
+    <link href="./Swagger UI_files/css" rel="stylesheet">
+    <link href="./Swagger UI_files/vendors.bundle.css" rel="stylesheet" type="text/css">
+    <link href="./Swagger UI_files/app.bundle.css" rel="stylesheet" type="text/css">
+
+
+</head>
+
+<body>
+<div class="swagger-ui">
+    <div class="topbar">
+        <div class="wrapper">
+            <div class="topbar-wrapper">
+                <a href="http://127.0.0.1:8000/api/docs/#" class="link">
+                    <img src="./Swagger UI_files/logo_small.png" alt="Swagger Logo">
+                    <span>swagger</span>
+                </a>
+                <div class="download-url-wrapper">
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div id="rest-swagger-ui">
+    <div data-reactroot="" class="swagger-ui">
+        <div>
+            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                 style="position: absolute; width: 0px; height: 0px;">
+                <defs>
+                    <symbol viewBox="0 0 20 20" id="unlocked">
+                        <path d="M15.8 8H14V5.6C14 2.703 12.665 1 10 1 7.334 1 6 2.703 6 5.6V6h2v-.801C8 3.754 8.797 3 10 3c1.203 0 2 .754 2 2.199V8H4c-.553 0-1 .646-1 1.199V17c0 .549.428 1.139.951 1.307l1.197.387C5.672 18.861 6.55 19 7.1 19h5.8c.549 0 1.428-.139 1.951-.307l1.196-.387c.524-.167.953-.757.953-1.306V9.199C17 8.646 16.352 8 15.8 8z"></path>
+                    </symbol>
+                    <symbol viewBox="0 0 20 20" id="locked">
+                        <path d="M15.8 8H14V5.6C14 2.703 12.665 1 10 1 7.334 1 6 2.703 6 5.6V8H4c-.553 0-1 .646-1 1.199V17c0 .549.428 1.139.951 1.307l1.197.387C5.672 18.861 6.55 19 7.1 19h5.8c.549 0 1.428-.139 1.951-.307l1.196-.387c.524-.167.953-.757.953-1.306V9.199C17 8.646 16.352 8 15.8 8zM12 8H8V5.199C8 3.754 8.797 3 10 3c1.203 0 2 .754 2 2.199V8z"></path>
+                    </symbol>
+                    <symbol viewBox="0 0 20 20" id="close">
+                        <path d="M14.348 14.849c-.469.469-1.229.469-1.697 0L10 11.819l-2.651 3.029c-.469.469-1.229.469-1.697 0-.469-.469-.469-1.229 0-1.697l2.758-3.15-2.759-3.152c-.469-.469-.469-1.228 0-1.697.469-.469 1.228-.469 1.697 0L10 8.183l2.651-3.031c.469-.469 1.228-.469 1.697 0 .469.469.469 1.229 0 1.697l-2.758 3.152 2.758 3.15c.469.469.469 1.229 0 1.698z"></path>
+                    </symbol>
+                    <symbol viewBox="0 0 20 20" id="large-arrow">
+                        <path d="M13.25 10L6.109 2.58c-.268-.27-.268-.707 0-.979.268-.27.701-.27.969 0l7.83 7.908c.268.271.268.709 0 .979l-7.83 7.908c-.268.271-.701.27-.969 0-.268-.269-.268-.707 0-.979L13.25 10z"></path>
+                    </symbol>
+                    <symbol viewBox="0 0 20 20" id="large-arrow-down">
+                        <path d="M17.418 6.109c.272-.268.709-.268.979 0s.271.701 0 .969l-7.908 7.83c-.27.268-.707.268-.979 0l-7.908-7.83c-.27-.268-.27-.701 0-.969.271-.268.709-.268.979 0L10 13.25l7.418-7.141z"></path>
+                    </symbol>
+                    <symbol viewBox="0 0 24 24" id="jump-to">
+                        <path d="M19 7v4H5.83l3.58-3.59L8 6l-6 6 6 6 1.41-1.41L5.83 13H21V7z"></path>
+                    </symbol>
+                    <symbol viewBox="0 0 24 24" id="expand">
+                        <path d="M10 18h4v-2h-4v2zM3 6v2h18V6H3zm3 7h12v-2H6v2z"></path>
+                    </symbol>
+                </defs>
+            </svg>
+        </div>
+        <div><!-- react-empty: 20 -->
+            <div class="information-container wrapper">
+                <section class="block col-12">
+                    <div class="info">
+                        <hgroup class="main"><h2 class="title"><!-- react-text: 26 -->Restify API Documentation
+                            <!-- /react-text --><!-- react-text: 27 --><!-- /react-text --></h2>
+                            <pre class="base-url"><!-- react-text: 29 -->[ Base URL: <!-- /react-text -->
+                                <!-- react-text: 30 -->127.0.0.1:8000<!-- /react-text --><!-- react-text: 31 --> ]
+                                <!-- /react-text --></pre><!-- react-text: 32 --><!-- /react-text --></hgroup>
+                        <div class="description"><!-- react-empty: 34 --></div>
+                    </div>
+                </section>
+            </div>
+            <div class="scheme-container">
+                <section class="schemes wrapper block col-12"><label for="schemes"><span
+                        class="schemes-title">Schemes</span><select>
+                    <option value="http">http</option>
+                </select></label>
+                    <div class="auth-wrapper">
+                        <button class="btn authorize unlocked"><span>Authorize</span>
+                            <svg width="20" height="20">
+                                <use href="#unlocked" xlink:href="#unlocked"></use>
+                            </svg>
+                        </button>
+                    </div>
+                </section>
+            </div>
+            <div class="wrapper">
+                <section class="block col-12 block-desktop col-12-desktop">
+                    <div>
+                        <div class="opblock-tag-section is-open">
+                            <h4 class="opblock-tag no-desc" id="operations-tag-accounts"><a class="nostyle"><span>accounts</span></a><small></small>
+                                <div></div>
+                                <button class="expand-operation" title="Collapse operation">
+                                    <svg class="arrow" width="20" height="20">
+                                        <use href="#large-arrow-down" xlink:href="#large-arrow-down"></use>
+                                    </svg>
+                                </button>
+                            </h4>
+                            <div style="height: auto; border: none; margin: 0px; padding: 0px;"><!-- react-text: 83 -->
+                                <!-- /react-text -->
+                                <div class="opblock opblock-post" id="operations-accounts-api_token_create">
+                                    <div class="opblock-summary opblock-summary-post"><span
+                                            class="opblock-summary-method">POST</span><span
+                                            class="opblock-summary-path"><a
+                                            class="nostyle"><span>/accounts/api/token/</span></a>
+                                        <!-- react-empty: 90 --><!-- react-text: 91 --> <!-- /react-text --></span>
+                                    </div>
+                                    <noscript></noscript>
+                                </div>
+                                <div class="opblock opblock-post" id="operations-accounts-api_token_refresh_create">
+                                    <div class="opblock-summary opblock-summary-post"><span
+                                            class="opblock-summary-method">POST</span><span
+                                            class="opblock-summary-path"><a class="nostyle"><span>/accounts/api/token/refresh/</span></a>
+                                        <!-- react-empty: 100 --><!-- react-text: 101 --> <!-- /react-text --></span>
+                                    </div>
+                                    <noscript></noscript>
+                                </div>
+                                <div class="opblock opblock-post" id="operations-accounts-logout_token_create">
+                                    <div class="opblock-summary opblock-summary-post"><span
+                                            class="opblock-summary-method">POST</span><span
+                                            class="opblock-summary-path"><a class="nostyle"><span>/accounts/logout_token/</span></a>
+                                        <!-- react-empty: 110 --><!-- react-text: 111 --> <!-- /react-text --></span>
+                                        <div class="opblock-summary-description"></div>
+                                    </div>
+                                    <noscript></noscript>
+                                </div>
+                                <div class="opblock opblock-get" id="operations-accounts-notifications_list">
+                                    <div class="opblock-summary opblock-summary-get"><span
+                                            class="opblock-summary-method">GET</span><span class="opblock-summary-path"><a
+                                            class="nostyle"><span>/accounts/notifications/</span></a>
+                                        <!-- react-empty: 120 --><!-- react-text: 121 --> <!-- /react-text --></span>
+                                        <div class="opblock-summary-description"></div>
+                                    </div>
+                                    <noscript></noscript>
+                                </div>
+                                <div class="opblock opblock-patch"
+                                     id="operations-accounts-notifications_viewed_partial_update">
+                                    <div class="opblock-summary opblock-summary-patch"><span
+                                            class="opblock-summary-method">PATCH</span><span
+                                            class="opblock-summary-path"><a class="nostyle"><span>/accounts/notifications/viewed/{notification_id}/</span></a>
+                                        <!-- react-empty: 130 --><!-- react-text: 131 --> <!-- /react-text --></span>
+                                        <div class="opblock-summary-description"></div>
+                                    </div>
+                                    <noscript></noscript>
+                                </div>
+                                <div class="opblock opblock-post" id="operations-accounts-register_create">
+                                    <div class="opblock-summary opblock-summary-post"><span
+                                            class="opblock-summary-method">POST</span><span
+                                            class="opblock-summary-path"><a
+                                            class="nostyle"><span>/accounts/register/</span></a>
+                                        <!-- react-empty: 140 --><!-- react-text: 141 --> <!-- /react-text --></span>
+                                        <div class="opblock-summary-description"></div>
+                                    </div>
+                                    <noscript></noscript>
+                                </div>
+                                <div class="opblock opblock-patch" id="operations-accounts-update_partial_update">
+                                    <div class="opblock-summary opblock-summary-patch"><span
+                                            class="opblock-summary-method">PATCH</span><span
+                                            class="opblock-summary-path"><a
+                                            class="nostyle"><span>/accounts/update/</span></a><!-- react-empty: 150 -->
+                                        <!-- react-text: 151 --> <!-- /react-text --></span>
+                                        <div class="opblock-summary-description"></div>
+                                    </div>
+                                    <noscript></noscript>
+                                </div>
+                                <div class="opblock opblock-get" id="operations-accounts-view_read">
+                                    <div class="opblock-summary opblock-summary-get"><span
+                                            class="opblock-summary-method">GET</span><span class="opblock-summary-path"><a
+                                            class="nostyle"><span>/accounts/view/</span></a><!-- react-empty: 160 -->
+                                        <!-- react-text: 161 --> <!-- /react-text --></span>
+                                        <div class="opblock-summary-description"></div>
+                                    </div>
+                                    <noscript></noscript>
+                                </div><!-- react-text: 164 --> <!-- /react-text --></div>
+                        </div>
+                        <div class="opblock-tag-section">
+                            <h4 class="opblock-tag no-desc" id="operations-tag-api"><a class="nostyle"><span>api</span></a><small></small>
+                                <div></div>
+                                <button class="expand-operation" title="Expand operation">
+                                    <svg class="arrow" width="20" height="20">
+                                        <use href="#large-arrow" xlink:href="#large-arrow"></use>
+                                    </svg>
+                                </button>
+                            </h4>
+                            <noscript></noscript>
+                        </div>
+                        <div class="opblock-tag-section is-open">
+                            <h4 class="opblock-tag no-desc" id="operations-tag-restaurants"><a class="nostyle"><span>restaurants</span></a><small></small>
+                                <div></div>
+                                <button class="expand-operation" title="Collapse operation">
+                                    <svg class="arrow" width="20" height="20">
+                                        <use href="#large-arrow-down" xlink:href="#large-arrow-down"></use>
+                                    </svg>
+                                </button>
+                            </h4>
+                            <div style="height: auto; border: none; margin: 0px; padding: 0px;"><!-- react-text: 166 -->
+                                <!-- /react-text -->
+                                <div class="opblock opblock-get" id="operations-restaurants-all_list">
+                                    <div class="opblock-summary opblock-summary-get"><span
+                                            class="opblock-summary-method">GET</span><span class="opblock-summary-path"><a
+                                            class="nostyle"><span>/restaurants/all/</span></a><!-- react-empty: 173 -->
+                                        <!-- react-text: 174 --> <!-- /react-text --></span>
+                                        <div class="opblock-summary-description"></div>
+                                    </div>
+                                    <noscript></noscript>
+                                </div>
+                                <div class="opblock opblock-get" id="operations-restaurants-blog_all_list">
+                                    <div class="opblock-summary opblock-summary-get"><span
+                                            class="opblock-summary-method">GET</span><span class="opblock-summary-path"><a
+                                            class="nostyle"><span>/restaurants/blog/all/</span></a>
+                                        <!-- react-empty: 183 --><!-- react-text: 184 --> <!-- /react-text --></span>
+                                        <div class="opblock-summary-description"></div>
+                                    </div>
+                                    <noscript></noscript>
+                                </div>
+                                <div class="opblock opblock-get" id="operations-restaurants-blog_doeslike_read">
+                                    <div class="opblock-summary opblock-summary-get"><span
+                                            class="opblock-summary-method">GET</span><span class="opblock-summary-path"><a
+                                            class="nostyle"><span>/restaurants/blog/doeslike/{blog_id}/</span></a>
+                                        <!-- react-empty: 193 --><!-- react-text: 194 --> <!-- /react-text --></span>
+                                        <div class="opblock-summary-description"></div>
+                                    </div>
+                                    <noscript></noscript>
+                                </div>
+                                <div class="opblock opblock-get" id="operations-restaurants-blog_feed_list">
+                                    <div class="opblock-summary opblock-summary-get"><span
+                                            class="opblock-summary-method">GET</span><span class="opblock-summary-path"><a
+                                            class="nostyle"><span>/restaurants/blog/feed/</span></a>
+                                        <!-- react-empty: 203 --><!-- react-text: 204 --> <!-- /react-text --></span>
+                                        <div class="opblock-summary-description"></div>
+                                    </div>
+                                    <noscript></noscript>
+                                </div>
+                                <div class="opblock opblock-get" id="operations-restaurants-blog_read">
+                                    <div class="opblock-summary opblock-summary-get"><span
+                                            class="opblock-summary-method">GET</span><span class="opblock-summary-path"><a
+                                            class="nostyle"><span>/restaurants/blog/{blog_id}/</span></a>
+                                        <!-- react-empty: 213 --><!-- react-text: 214 --> <!-- /react-text --></span>
+                                        <div class="opblock-summary-description"></div>
+                                    </div>
+                                    <noscript></noscript>
+                                </div>
+                                <div class="opblock opblock-patch" id="operations-restaurants-blog_like_partial_update">
+                                    <div class="opblock-summary opblock-summary-patch"><span
+                                            class="opblock-summary-method">PATCH</span><span
+                                            class="opblock-summary-path"><a class="nostyle"><span>/restaurants/blog/{blog_id}/like/</span></a>
+                                        <!-- react-empty: 223 --><!-- react-text: 224 --> <!-- /react-text --></span>
+                                        <div class="opblock-summary-description"></div>
+                                    </div>
+                                    <noscript></noscript>
+                                </div>
+                                <div class="opblock opblock-delete" id="operations-restaurants-blog_delete_delete">
+                                    <div class="opblock-summary opblock-summary-delete"><span
+                                            class="opblock-summary-method">DELETE</span><span
+                                            class="opblock-summary-path"><a class="nostyle"><span>/restaurants/blog/{id}/delete/</span></a>
+                                        <!-- react-empty: 233 --><!-- react-text: 234 --> <!-- /react-text --></span>
+                                        <div class="opblock-summary-description"></div>
+                                    </div>
+                                    <noscript></noscript>
+                                </div>
+                                <div class="opblock opblock-get" id="operations-restaurants-doesfollow_read">
+                                    <div class="opblock-summary opblock-summary-get"><span
+                                            class="opblock-summary-method">GET</span><span class="opblock-summary-path"><a
+                                            class="nostyle"><span>/restaurants/doesfollow/{restaurant_id}/</span></a>
+                                        <!-- react-empty: 243 --><!-- react-text: 244 --> <!-- /react-text --></span>
+                                        <div class="opblock-summary-description"></div>
+                                    </div>
+                                    <noscript></noscript>
+                                </div>
+                                <div class="opblock opblock-get" id="operations-restaurants-doeslike_read">
+                                    <div class="opblock-summary opblock-summary-get"><span
+                                            class="opblock-summary-method">GET</span><span class="opblock-summary-path"><a
+                                            class="nostyle"><span>/restaurants/doeslike/{restaurant_id}/</span></a>
+                                        <!-- react-empty: 253 --><!-- react-text: 254 --> <!-- /react-text --></span>
+                                        <div class="opblock-summary-description"></div>
+                                    </div>
+                                    <noscript></noscript>
+                                </div>
+                                <div class="opblock opblock-get" id="operations-restaurants-info_read">
+                                    <div class="opblock-summary opblock-summary-get"><span
+                                            class="opblock-summary-method">GET</span><span class="opblock-summary-path"><a
+                                            class="nostyle"><span>/restaurants/info/{restaurant_id}/</span></a>
+                                        <!-- react-empty: 263 --><!-- react-text: 264 --> <!-- /react-text --></span>
+                                        <div class="opblock-summary-description"></div>
+                                    </div>
+                                    <noscript></noscript>
+                                </div>
+                                <div class="opblock opblock-post" id="operations-restaurants-new_create">
+                                    <div class="opblock-summary opblock-summary-post"><span
+                                            class="opblock-summary-method">POST</span><span
+                                            class="opblock-summary-path"><a
+                                            class="nostyle"><span>/restaurants/new/</span></a><!-- react-empty: 273 -->
+                                        <!-- react-text: 274 --> <!-- /react-text --></span>
+                                        <div class="opblock-summary-description"></div>
+                                    </div>
+                                    <noscript></noscript>
+                                </div>
+                                <div class="opblock opblock-get" id="operations-restaurants-owned_read">
+                                    <div class="opblock-summary opblock-summary-get"><span
+                                            class="opblock-summary-method">GET</span><span class="opblock-summary-path"><a
+                                            class="nostyle"><span>/restaurants/owned/</span></a>
+                                        <!-- react-empty: 283 --><!-- react-text: 284 --> <!-- /react-text --></span>
+                                        <div class="opblock-summary-description"></div>
+                                    </div>
+                                    <noscript></noscript>
+                                </div>
+                                <div class="opblock opblock-get" id="operations-restaurants-search_list">
+                                    <div class="opblock-summary opblock-summary-get"><span
+                                            class="opblock-summary-method">GET</span><span class="opblock-summary-path"><a
+                                            class="nostyle"><span>/restaurants/search/</span></a>
+                                        <!-- react-empty: 293 --><!-- react-text: 294 --> <!-- /react-text --></span>
+                                        <div class="opblock-summary-description"></div>
+                                    </div>
+                                    <noscript></noscript>
+                                </div>
+                                <div class="opblock opblock-post" id="operations-restaurants-blog_new_create">
+                                    <div class="opblock-summary opblock-summary-post"><span
+                                            class="opblock-summary-method">POST</span><span
+                                            class="opblock-summary-path"><a class="nostyle"><span>/restaurants/{restaurant_id}/blog/new/</span></a>
+                                        <!-- react-empty: 303 --><!-- react-text: 304 --> <!-- /react-text --></span>
+                                        <div class="opblock-summary-description"></div>
+                                    </div>
+                                    <noscript></noscript>
+                                </div>
+                                <div class="opblock opblock-get" id="operations-restaurants-comments_all_list">
+                                    <div class="opblock-summary opblock-summary-get"><span
+                                            class="opblock-summary-method">GET</span><span class="opblock-summary-path"><a
+                                            class="nostyle"><span>/restaurants/{restaurant_id}/comments/all/</span></a>
+                                        <!-- react-empty: 313 --><!-- react-text: 314 --> <!-- /react-text --></span>
+                                        <div class="opblock-summary-description"></div>
+                                    </div>
+                                    <noscript></noscript>
+                                </div>
+                                <div class="opblock opblock-post" id="operations-restaurants-comments_new_create">
+                                    <div class="opblock-summary opblock-summary-post"><span
+                                            class="opblock-summary-method">POST</span><span
+                                            class="opblock-summary-path"><a class="nostyle"><span>/restaurants/{restaurant_id}/comments/new/</span></a>
+                                        <!-- react-empty: 323 --><!-- react-text: 324 --> <!-- /react-text --></span>
+                                        <div class="opblock-summary-description"></div>
+                                    </div>
+                                    <noscript></noscript>
+                                </div>
+                                <div class="opblock opblock-patch" id="operations-restaurants-edit_partial_update">
+                                    <div class="opblock-summary opblock-summary-patch"><span
+                                            class="opblock-summary-method">PATCH</span><span
+                                            class="opblock-summary-path"><a class="nostyle"><span>/restaurants/{restaurant_id}/edit/</span></a>
+                                        <!-- react-empty: 333 --><!-- react-text: 334 --> <!-- /react-text --></span>
+                                        <div class="opblock-summary-description"></div>
+                                    </div>
+                                    <noscript></noscript>
+                                </div>
+                                <div class="opblock opblock-patch" id="operations-restaurants-follow_partial_update">
+                                    <div class="opblock-summary opblock-summary-patch"><span
+                                            class="opblock-summary-method">PATCH</span><span
+                                            class="opblock-summary-path"><a class="nostyle"><span>/restaurants/{restaurant_id}/follow/</span></a>
+                                        <!-- react-empty: 343 --><!-- react-text: 344 --> <!-- /react-text --></span>
+                                        <div class="opblock-summary-description"></div>
+                                    </div>
+                                    <noscript></noscript>
+                                </div>
+                                <div class="opblock opblock-get" id="operations-restaurants-followers_read">
+                                    <div class="opblock-summary opblock-summary-get"><span
+                                            class="opblock-summary-method">GET</span><span class="opblock-summary-path"><a
+                                            class="nostyle"><span>/restaurants/{restaurant_id}/followers/</span></a>
+                                        <!-- react-empty: 353 --><!-- react-text: 354 --> <!-- /react-text --></span>
+                                        <div class="opblock-summary-description"></div>
+                                    </div>
+                                    <noscript></noscript>
+                                </div>
+                                <div class="opblock opblock-get" id="operations-restaurants-images_list">
+                                    <div class="opblock-summary opblock-summary-get"><span
+                                            class="opblock-summary-method">GET</span><span class="opblock-summary-path"><a
+                                            class="nostyle"><span>/restaurants/{restaurant_id}/images/</span></a>
+                                        <!-- react-empty: 363 --><!-- react-text: 364 --> <!-- /react-text --></span>
+                                        <div class="opblock-summary-description"></div>
+                                    </div>
+                                    <noscript></noscript>
+                                </div>
+                                <div class="opblock opblock-post" id="operations-restaurants-images_upload_create">
+                                    <div class="opblock-summary opblock-summary-post"><span
+                                            class="opblock-summary-method">POST</span><span
+                                            class="opblock-summary-path"><a class="nostyle"><span>/restaurants/{restaurant_id}/images/upload/</span></a>
+                                        <!-- react-empty: 373 --><!-- react-text: 374 --> <!-- /react-text --></span>
+                                        <div class="opblock-summary-description"></div>
+                                    </div>
+                                    <noscript></noscript>
+                                </div>
+                                <div class="opblock opblock-delete" id="operations-restaurants-images_remove_delete">
+                                    <div class="opblock-summary opblock-summary-delete"><span
+                                            class="opblock-summary-method">DELETE</span><span
+                                            class="opblock-summary-path"><a class="nostyle"><span>/restaurants/{restaurant_id}/images/{image_id}/remove/</span></a>
+                                        <!-- react-empty: 383 --><!-- react-text: 384 --> <!-- /react-text --></span>
+                                        <div class="opblock-summary-description"></div>
+                                    </div>
+                                    <noscript></noscript>
+                                </div>
+                                <div class="opblock opblock-patch" id="operations-restaurants-like_partial_update">
+                                    <div class="opblock-summary opblock-summary-patch"><span
+                                            class="opblock-summary-method">PATCH</span><span
+                                            class="opblock-summary-path"><a class="nostyle"><span>/restaurants/{restaurant_id}/like/</span></a>
+                                        <!-- react-empty: 393 --><!-- react-text: 394 --> <!-- /react-text --></span>
+                                        <div class="opblock-summary-description"></div>
+                                    </div>
+                                    <noscript></noscript>
+                                </div>
+                                <div class="opblock opblock-get" id="operations-restaurants-menu_items_list">
+                                    <div class="opblock-summary opblock-summary-get"><span
+                                            class="opblock-summary-method">GET</span><span class="opblock-summary-path"><a
+                                            class="nostyle"><span>/restaurants/{restaurant_id}/menu/items/</span></a>
+                                        <!-- react-empty: 403 --><!-- react-text: 404 --> <!-- /react-text --></span>
+                                        <div class="opblock-summary-description"></div>
+                                    </div>
+                                    <noscript></noscript>
+                                </div>
+                                <div class="opblock opblock-post" id="operations-restaurants-menu_new_create">
+                                    <div class="opblock-summary opblock-summary-post"><span
+                                            class="opblock-summary-method">POST</span><span
+                                            class="opblock-summary-path"><a class="nostyle"><span>/restaurants/{restaurant_id}/menu/new/</span></a>
+                                        <!-- react-empty: 413 --><!-- react-text: 414 --> <!-- /react-text --></span>
+                                        <div class="opblock-summary-description"></div>
+                                    </div>
+                                    <noscript></noscript>
+                                </div>
+                                <div class="opblock opblock-patch" id="operations-restaurants-menu_edit_partial_update">
+                                    <div class="opblock-summary opblock-summary-patch"><span
+                                            class="opblock-summary-method">PATCH</span><span
+                                            class="opblock-summary-path"><a class="nostyle"><span>/restaurants/{restaurant_id}/menu/{id}/edit/</span></a>
+                                        <!-- react-empty: 423 --><!-- react-text: 424 --> <!-- /react-text --></span>
+                                        <div class="opblock-summary-description"></div>
+                                    </div>
+                                    <noscript></noscript>
+                                </div>
+                                <div class="opblock opblock-delete" id="operations-restaurants-menu_remove_delete">
+                                    <div class="opblock-summary opblock-summary-delete"><span
+                                            class="opblock-summary-method">DELETE</span><span
+                                            class="opblock-summary-path"><a class="nostyle"><span>/restaurants/{restaurant_id}/menu/{id}/remove/</span></a>
+                                        <!-- react-empty: 433 --><!-- react-text: 434 --> <!-- /react-text --></span>
+                                        <div class="opblock-summary-description"></div>
+                                    </div>
+                                    <noscript></noscript>
+                                </div>
+                                <div class="opblock opblock-patch" id="operations-restaurants-unfollow_partial_update">
+                                    <div class="opblock-summary opblock-summary-patch"><span
+                                            class="opblock-summary-method">PATCH</span><span
+                                            class="opblock-summary-path"><a class="nostyle"><span>/restaurants/{restaurant_id}/unfollow/</span></a>
+                                        <!-- react-empty: 443 --><!-- react-text: 444 --> <!-- /react-text --></span>
+                                        <div class="opblock-summary-description"></div>
+                                    </div>
+                                    <noscript></noscript>
+                                </div>
+                                <div class="opblock opblock-patch" id="operations-restaurants-unlike_partial_update">
+                                    <div class="opblock-summary opblock-summary-patch"><span
+                                            class="opblock-summary-method">PATCH</span><span
+                                            class="opblock-summary-path"><a class="nostyle"><span>/restaurants/{restaurant_id}/unlike/</span></a>
+                                        <!-- react-empty: 453 --><!-- react-text: 454 --> <!-- /react-text --></span>
+                                        <div class="opblock-summary-description"></div>
+                                    </div>
+                                    <noscript></noscript>
+                                </div><!-- react-text: 457 --> <!-- /react-text --></div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+            <div class="wrapper">
+                <section class="block col-12 block-desktop col-12-desktop"><!-- react-empty: 81 --></section>
+            </div>
+        </div>
+    </div>
+</div>
+<input type="hidden" name="csrfmiddlewaretoken"
+       value="EnKKumBD94wnxIypEKb4JTzE65rb4sbMJUtiAnfntLsxVxfJHcpR9yaRPXJGJeLb">
+
+<footer class="swagger-ui">
+    <div class="wrapper">
+        Powered by <a href="https://github.com/marcgibbons/django-rest-swagger" target="_new">Django REST Swagger</a>
+    </div>
+</footer>
+
+<script>
+    window.drsSettings = {
+        "apisSorter": null,
+        "docExpansion": null,
+        "jsonEditor": false,
+        "operationsSorter": null,
+        "showRequestHeaders": false,
+        "supportedSubmitMethods": ["get", "post", "put", "delete", "patch"],
+        "acceptHeaderVersion": null,
+        "customHeaders": {}
+    };
+    window.drsSpec = {
+        "swagger": "2.0",
+        "info": {"title": "Restify API Documentation", "description": "", "version": ""},
+        "host": "127.0.0.1:8000",
+        "schemes": ["http"],
+        "paths": {
+            "/accounts/api/token/": {
+                "post": {
+                    "operationId": "api_token_create",
+                    "responses": {"201": {"description": ""}},
+                    "parameters": [{
+                        "name": "data",
+                        "in": "body",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "username": {"description": "", "type": "string"},
+                                "password": {"description": "", "type": "string"}
+                            },
+                            "required": ["username", "password"]
+                        }
+                    }],
+                    "consumes": ["application/json"],
+                    "tags": ["accounts"]
+                }
+            },
+            "/accounts/notifications/": {
+                "get": {
+                    "operationId": "notifications_list",
+                    "responses": {"200": {"description": "Login successful"},
+                                  "400": {"description": "Page number invalid"}},
+                    "parameters": [{
+                        "name": "page",
+                        "required": false,
+                        "in": "query",
+                        "description": "A page number within the paginated result set.",
+                        "type": "integer"
+                    }],
+                    "tags": ["accounts"]
+                }
+            },
+            "/accounts/notifications/viewed/{notification_id}/": {
+                "patch": {
+                    "operationId": "notifications_viewed_partial_update",
+                    "responses": {"200": {"description": ""}},
+                    "parameters": [{
+                        "name": "notification_id",
+                        "required": true,
+                        "in": "path",
+                        "description": "",
+                        "type": "string"
+                    }, {
+                        "name": "data",
+                        "in": "body",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "user": {"description": "", "type": "string"},
+                                "type": {"description": "", "type": "string"},
+                                "viewed": {"description": "", "type": "boolean"},
+                                "blog": {"description": "", "type": "integer"},
+                                "restaurant": {"description": "", "type": "integer"},
+                                "actor_user": {"description": "", "type": "string"}
+                            }
+                        }
+                    }],
+                    "consumes": ["application/json"],
+                    "tags": ["accounts"]
+                }
+            },
+            "/accounts/register/": {
+                "post": {
+                    "operationId": "register_create",
+                    "responses": {"201": {"description": ""}},
+                    "parameters": [{
+                        "name": "data",
+                        "in": "body",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "username": {
+                                    "description": "Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.",
+                                    "type": "string"
+                                },
+                                "password": {"description": "", "type": "string"},
+                                "password2": {"description": "", "type": "string"},
+                                "email": {"description": "", "type": "string"},
+                                "first_name": {"description": "", "type": "string"},
+                                "last_name": {"description": "", "type": "string"}
+                            },
+                            "required": ["username", "password", "password2", "email", "first_name", "last_name"]
+                        }
+                    }],
+                    "consumes": ["application/json"],
+                    "tags": ["accounts"]
+                }
+            },
+            "/accounts/update/": {
+                "patch": {
+                    "operationId": "update_partial_update",
+                    "responses": {"200": {"description": ""}},
+                    "parameters": [{
+                        "name": "data",
+                        "in": "body",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "username": {
+                                    "description": "Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.",
+                                    "type": "string"
+                                },
+                                "first_name": {"description": "", "type": "string"},
+                                "last_name": {"description": "", "type": "string"},
+                                "email": {"description": "", "type": "string"},
+                                "avatar": {"description": "", "type": "string"},
+                                "phone_num": {"description": "", "type": "string"}
+                            }
+                        }
+                    }],
+                    "consumes": ["application/json"],
+                    "tags": ["accounts"]
+                }
+            },
+            "/accounts/view/": {
+                "get": {
+                    "operationId": "view_read",
+                    "responses": {"200": {"description": ""}},
+                    "parameters": [],
+                    "tags": ["accounts"]
+                }
+            },
+            "/api/docs/": {
+                "get": {
+                    "operationId": "docs_list",
+                    "responses": {"200": {"description": ""}},
+                    "parameters": [],
+                    "tags": ["api"]
+                }
+            },
+            "/restaurants/all/": {
+                "get": {
+                    "operationId": "all_list",
+                    "responses": {"200": {"description": ""}},
+                    "parameters": [{
+                        "name": "page",
+                        "required": false,
+                        "in": "query",
+                        "description": "A page number within the paginated result set.",
+                        "type": "integer"
+                    }],
+                    "tags": ["restaurants"]
+                }
+            },
+            "/restaurants/blog/all/": {
+                "get": {
+                    "operationId": "blog_all_list",
+                    "responses": {"200": {"description": ""}},
+                    "parameters": [{
+                        "name": "page",
+                        "required": false,
+                        "in": "query",
+                        "description": "A page number within the paginated result set.",
+                        "type": "integer"
+                    }],
+                    "tags": ["restaurants"]
+                }
+            },
+            "/restaurants/blog/doeslike/{blog_id}/": {
+                "get": {
+                    "operationId": "blog_doeslike_read",
+                    "responses": {"200": {"description": ""}},
+                    "parameters": [{
+                        "name": "blog_id",
+                        "required": true,
+                        "in": "path",
+                        "description": "",
+                        "type": "string"
+                    }],
+                    "tags": ["restaurants"]
+                }
+            },
+            "/restaurants/blog/feed/": {
+                "get": {
+                    "operationId": "blog_feed_list",
+                    "responses": {"200": {"description": ""}},
+                    "parameters": [{
+                        "name": "page",
+                        "required": false,
+                        "in": "query",
+                        "description": "A page number within the paginated result set.",
+                        "type": "integer"
+                    }],
+                    "tags": ["restaurants"]
+                }
+            },
+            "/restaurants/blog/{blog_id}/": {
+                "get": {
+                    "operationId": "blog_read",
+                    "responses": {"200": {"description": ""}},
+                    "parameters": [{
+                        "name": "blog_id",
+                        "required": true,
+                        "in": "path",
+                        "description": "",
+                        "type": "string"
+                    }],
+                    "tags": ["restaurants"]
+                }
+            },
+            "/restaurants/blog/{blog_id}/like/": {
+                "patch": {
+                    "operationId": "blog_like_partial_update",
+                    "responses": {"200": {"description": ""}},
+                    "parameters": [{
+                        "name": "blog_id",
+                        "required": true,
+                        "in": "path",
+                        "description": "",
+                        "type": "string"
+                    }],
+                    "tags": ["restaurants"]
+                }
+            },
+            "/restaurants/blog/{id}/delete/": {
+                "delete": {
+                    "operationId": "blog_delete_delete",
+                    "responses": {"204": {"description": ""}},
+                    "parameters": [{
+                        "name": "id",
+                        "required": true,
+                        "in": "path",
+                        "description": "A unique integer value identifying this blog.",
+                        "type": "integer"
+                    }],
+                    "tags": ["restaurants"]
+                }
+            },
+            "/restaurants/doesfollow/{restaurant_id}/": {
+                "get": {
+                    "operationId": "doesfollow_read",
+                    "responses": {"200": {"description": ""}},
+                    "parameters": [{
+                        "name": "restaurant_id",
+                        "required": true,
+                        "in": "path",
+                        "description": "",
+                        "type": "string"
+                    }],
+                    "tags": ["restaurants"]
+                }
+            },
+            "/restaurants/doeslike/{restaurant_id}/": {
+                "get": {
+                    "operationId": "doeslike_read",
+                    "responses": {"200": {"description": ""}},
+                    "parameters": [{
+                        "name": "restaurant_id",
+                        "required": true,
+                        "in": "path",
+                        "description": "",
+                        "type": "string"
+                    }],
+                    "tags": ["restaurants"]
+                }
+            },
+            "/restaurants/info/{restaurant_id}/": {
+                "get": {
+                    "operationId": "info_read",
+                    "responses": {"200": {"description": ""}},
+                    "parameters": [{
+                        "name": "restaurant_id",
+                        "required": true,
+                        "in": "path",
+                        "description": "",
+                        "type": "string"
+                    }],
+                    "tags": ["restaurants"]
+                }
+            },
+            "/restaurants/new/": {
+                "post": {
+                    "operationId": "new_create",
+                    "responses": {"201": {"description": ""}},
+                    "parameters": [{
+                        "name": "data",
+                        "in": "body",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "name": {"description": "", "type": "string"},
+                                "address": {"description": "", "type": "string"},
+                                "email": {"description": "", "type": "string"},
+                                "phone_num": {"description": "", "type": "string"},
+                                "logo": {"description": "", "type": "string"},
+                                "postal_code": {"description": "", "type": "string"}
+                            },
+                            "required": ["name", "address", "email", "phone_num", "postal_code"]
+                        }
+                    }],
+                    "consumes": ["application/json"],
+                    "tags": ["restaurants"]
+                }
+            },
+            "/restaurants/owned/": {
+                "get": {
+                    "operationId": "owned_read",
+                    "responses": {"200": {"description": ""}},
+                    "parameters": [],
+                    "tags": ["restaurants"]
+                }
+            },
+            "/restaurants/search/": {
+                "get": {
+                    "operationId": "search_list",
+                    "responses": {"200": {"description": ""}},
+                    "parameters": [{
+                        "name": "page",
+                        "required": false,
+                        "in": "query",
+                        "description": "A page number within the paginated result set.",
+                        "type": "integer"
+                    }],
+                    "tags": ["restaurants"]
+                }
+            },
+            "/restaurants/{restaurant_id}/blog/new/": {
+                "post": {
+                    "operationId": "blog_new_create",
+                    "responses": {"201": {"description": ""}},
+                    "parameters": [{
+                        "name": "restaurant_id",
+                        "required": true,
+                        "in": "path",
+                        "description": "",
+                        "type": "string"
+                    }, {
+                        "name": "data",
+                        "in": "body",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "title": {"description": "", "type": "string"},
+                                "banner": {"description": "", "type": "string"},
+                                "contents": {"description": "", "type": "string"}
+                            },
+                            "required": ["title", "contents"]
+                        }
+                    }],
+                    "consumes": ["application/json"],
+                    "tags": ["restaurants"]
+                }
+            },
+            "/restaurants/{restaurant_id}/comments/all/": {
+                "get": {
+                    "operationId": "comments_all_list",
+                    "responses": {"200": {"description": ""}},
+                    "parameters": [{
+                        "name": "restaurant_id",
+                        "required": true,
+                        "in": "path",
+                        "description": "",
+                        "type": "string"
+                    }, {
+                        "name": "page",
+                        "required": false,
+                        "in": "query",
+                        "description": "A page number within the paginated result set.",
+                        "type": "integer"
+                    }],
+                    "tags": ["restaurants"]
+                }
+            },
+            "/restaurants/{restaurant_id}/comments/new/": {
+                "post": {
+                    "operationId": "comments_new_create",
+                    "responses": {"201": {"description": ""}},
+                    "parameters": [{
+                        "name": "restaurant_id",
+                        "required": true,
+                        "in": "path",
+                        "description": "",
+                        "type": "string"
+                    }, {
+                        "name": "data",
+                        "in": "body",
+                        "schema": {
+                            "type": "object",
+                            "properties": {"contents": {"description": "", "type": "string"}},
+                            "required": ["contents"]
+                        }
+                    }],
+                    "consumes": ["application/json"],
+                    "tags": ["restaurants"]
+                }
+            },
+            "/restaurants/{restaurant_id}/edit/": {
+                "patch": {
+                    "operationId": "edit_partial_update",
+                    "responses": {"200": {"description": ""}},
+                    "parameters": [{
+                        "name": "restaurant_id",
+                        "required": true,
+                        "in": "path",
+                        "description": "",
+                        "type": "string"
+                    }, {
+                        "name": "data",
+                        "in": "body",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "name": {"description": "", "type": "string"},
+                                "address": {"description": "", "type": "string"},
+                                "email": {"description": "", "type": "string"},
+                                "phone_num": {"description": "", "type": "string"},
+                                "logo": {"description": "", "type": "string"},
+                                "postal_code": {"description": "", "type": "string"}
+                            }
+                        }
+                    }],
+                    "consumes": ["application/json"],
+                    "tags": ["restaurants"]
+                }
+            },
+            "/restaurants/{restaurant_id}/follow/": {
+                "patch": {
+                    "operationId": "follow_partial_update",
+                    "responses": {"200": {"description": ""}},
+                    "parameters": [{
+                        "name": "restaurant_id",
+                        "required": true,
+                        "in": "path",
+                        "description": "",
+                        "type": "string"
+                    }],
+                    "tags": ["restaurants"]
+                }
+            },
+            "/restaurants/{restaurant_id}/followers/": {
+                "get": {
+                    "operationId": "followers_read",
+                    "responses": {"200": {"description": ""}},
+                    "parameters": [{
+                        "name": "restaurant_id",
+                        "required": true,
+                        "in": "path",
+                        "description": "",
+                        "type": "string"
+                    }],
+                    "tags": ["restaurants"]
+                }
+            },
+            "/restaurants/{restaurant_id}/images/": {
+                "get": {
+                    "operationId": "images_list",
+                    "responses": {"200": {"description": ""}},
+                    "parameters": [{
+                        "name": "restaurant_id",
+                        "required": true,
+                        "in": "path",
+                        "description": "",
+                        "type": "string"
+                    }, {
+                        "name": "page",
+                        "required": false,
+                        "in": "query",
+                        "description": "A page number within the paginated result set.",
+                        "type": "integer"
+                    }],
+                    "tags": ["restaurants"]
+                }
+            },
+            "/restaurants/{restaurant_id}/images/upload/": {
+                "post": {
+                    "operationId": "images_upload_create",
+                    "responses": {"201": {"description": ""}},
+                    "parameters": [{
+                        "name": "restaurant_id",
+                        "required": true,
+                        "in": "path",
+                        "description": "",
+                        "type": "string"
+                    }, {
+                        "name": "data",
+                        "in": "body",
+                        "schema": {"type": "object", "properties": {"ref_img": {"description": "", "type": "string"}}}
+                    }],
+                    "consumes": ["application/json"],
+                    "tags": ["restaurants"]
+                }
+            },
+            "/restaurants/{restaurant_id}/images/{image_id}/remove/": {
+                "delete": {
+                    "operationId": "images_remove_delete",
+                    "responses": {"204": {"description": ""}},
+                    "parameters": [{
+                        "name": "restaurant_id",
+                        "required": true,
+                        "in": "path",
+                        "description": "",
+                        "type": "string"
+                    }, {"name": "image_id", "required": true, "in": "path", "description": "", "type": "string"}],
+                    "tags": ["restaurants"]
+                }
+            },
+            "/restaurants/{restaurant_id}/like/": {
+                "patch": {
+                    "operationId": "like_partial_update",
+                    "responses": {"200": {"description": ""}},
+                    "parameters": [{
+                        "name": "restaurant_id",
+                        "required": true,
+                        "in": "path",
+                        "description": "",
+                        "type": "string"
+                    }],
+                    "tags": ["restaurants"]
+                }
+            },
+            "/restaurants/{restaurant_id}/menu/items/": {
+                "get": {
+                    "operationId": "menu_items_list",
+                    "responses": {"200": {"description": ""}},
+                    "parameters": [{
+                        "name": "restaurant_id",
+                        "required": true,
+                        "in": "path",
+                        "description": "",
+                        "type": "string"
+                    }, {
+                        "name": "page",
+                        "required": false,
+                        "in": "query",
+                        "description": "A page number within the paginated result set.",
+                        "type": "integer"
+                    }],
+                    "tags": ["restaurants"]
+                }
+            },
+            "/restaurants/{restaurant_id}/menu/new/": {
+                "post": {
+                    "operationId": "menu_new_create",
+                    "responses": {"201": {"description": ""}},
+                    "parameters": [{
+                        "name": "restaurant_id",
+                        "required": true,
+                        "in": "path",
+                        "description": "",
+                        "type": "string"
+                    }, {
+                        "name": "data",
+                        "in": "body",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "name": {"description": "", "type": "string"},
+                                "description": {"description": "", "type": "string"},
+                                "price": {"description": "", "type": "number"},
+                                "picture": {"description": "", "type": "string"}
+                            },
+                            "required": ["name", "description", "price"]
+                        }
+                    }],
+                    "consumes": ["application/json"],
+                    "tags": ["restaurants"]
+                }
+            },
+            "/restaurants/{restaurant_id}/menu/{id}/edit/": {
+                "patch": {
+                    "operationId": "menu_edit_partial_update",
+                    "responses": {"200": {"description": ""}},
+                    "parameters": [{
+                        "name": "restaurant_id",
+                        "required": true,
+                        "in": "path",
+                        "description": "",
+                        "type": "string"
+                    }, {
+                        "name": "id",
+                        "required": true,
+                        "in": "path",
+                        "description": "A unique integer value identifying this menu item.",
+                        "type": "integer"
+                    }, {
+                        "name": "data",
+                        "in": "body",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "name": {"description": "", "type": "string"},
+                                "description": {"description": "", "type": "string"},
+                                "price": {"description": "", "type": "number"},
+                                "picture": {"description": "", "type": "string"}
+                            }
+                        }
+                    }],
+                    "consumes": ["application/json"],
+                    "tags": ["restaurants"]
+                }
+            },
+            "/restaurants/{restaurant_id}/menu/{id}/remove/": {
+                "delete": {
+                    "operationId": "menu_remove_delete",
+                    "responses": {"204": {"description": ""}},
+                    "parameters": [{
+                        "name": "restaurant_id",
+                        "required": true,
+                        "in": "path",
+                        "description": "",
+                        "type": "string"
+                    }, {
+                        "name": "id",
+                        "required": true,
+                        "in": "path",
+                        "description": "A unique integer value identifying this menu item.",
+                        "type": "integer"
+                    }],
+                    "tags": ["restaurants"]
+                }
+            },
+            "/restaurants/{restaurant_id}/unfollow/": {
+                "patch": {
+                    "operationId": "unfollow_partial_update",
+                    "responses": {"200": {"description": ""}},
+                    "parameters": [{
+                        "name": "restaurant_id",
+                        "required": true,
+                        "in": "path",
+                        "description": "",
+                        "type": "string"
+                    }],
+                    "tags": ["restaurants"]
+                }
+            },
+            "/restaurants/{restaurant_id}/unlike/": {
+                "patch": {
+                    "operationId": "unlike_partial_update",
+                    "responses": {"200": {"description": ""}},
+                    "parameters": [{
+                        "name": "restaurant_id",
+                        "required": true,
+                        "in": "path",
+                        "description": "",
+                        "type": "string"
+                    }],
+                    "tags": ["restaurants"]
+                }
+            }
+        },
+        "securityDefinitions": {"basic": {"type": "basic"}}
+    };
+</script>
+<script src="./Swagger UI_files/vendors.bundle.js"></script>
+<script src="./Swagger UI_files/app.bundle.js"></script>
+
+
+</body>
+</html>
