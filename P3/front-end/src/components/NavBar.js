@@ -11,10 +11,6 @@ import {
   MenuButton,
   MenuList,
   MenuItem,
-  MenuItemOption,
-  MenuGroup,
-  MenuOptionGroup,
-  MenuDivider,
 } from "@chakra-ui/react";
 import logo from "../assets/images/logo.png";
 import * as colors from "../utils/colors";
@@ -129,7 +125,7 @@ function NavBar() {
           <Menu>
             <MenuButton
               style={{
-                marginLeft: "2rem",
+                marginLeft: "1.5rem",
                 color: "white",
                 textDecoration: "none",
               }}
