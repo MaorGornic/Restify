@@ -20,7 +20,13 @@ import logo from "../assets/images/logo.png";
 import * as colors from "../utils/colors";
 import { useNavigate } from "react-router-dom";
 import React from "react";
-import { FaHome, FaNewspaper, FaUtensils } from "react-icons/fa";
+import {
+  FaHome,
+  FaNewspaper,
+  FaUtensils,
+  FaCaretDown,
+  FaUserCircle,
+} from "react-icons/fa";
 import Notification from "./Notification";
 
 function NavBar() {
@@ -81,6 +87,7 @@ function NavBar() {
             spacing={6}
           >
             <Button
+              style={{ textDecoration: "none" }}
               leftIcon={
                 <FaHome
                   style={{ color: "white", width: "20px", height: "20px" }}
@@ -92,6 +99,7 @@ function NavBar() {
               Home
             </Button>
             <Button
+              style={{ textDecoration: "none" }}
               leftIcon={
                 <FaNewspaper
                   style={{ color: "white", width: "20px", height: "20px" }}
@@ -103,6 +111,7 @@ function NavBar() {
               Feed
             </Button>
             <Button
+              style={{ textDecoration: "none" }}
               leftIcon={
                 <FaUtensils
                   style={{ color: "white", width: "20px", height: "20px" }}
@@ -115,22 +124,30 @@ function NavBar() {
             </Button>
           </ButtonGroup>
         </HStack>
-        <Box style={{ marginTop: "1.5rem", marginRight: "5rem" }}>
-          <Notification />
+        <Box style={{ marginTop: "1.5rem", marginRight: "4rem" }}>
+          <Notification style={{ textDecoration: "none" }} />
           <Menu>
             <MenuButton
-              style={{ marginLeft: "2rem" }}
+              style={{
+                marginLeft: "2rem",
+                color: "white",
+                textDecoration: "none",
+              }}
+              variant="link"
               as={Button}
-              rightIcon={<FaHome />}
+              rightIcon={<FaCaretDown />}
+              leftIcon={
+                <FaUserCircle
+                  style={{ color: "white", width: "20px", height: "20px" }}
+                />
+              }
             >
-              Actions
+              Todd
             </MenuButton>
             <MenuList>
-              <MenuItem>Download</MenuItem>
-              <MenuItem>Create a Copy</MenuItem>
-              <MenuItem>Mark as Draft</MenuItem>
-              <MenuItem>Delete</MenuItem>
-              <MenuItem>Attend a Workshop</MenuItem>
+              <MenuItem>Profile</MenuItem>
+              <MenuItem>Edit Profile</MenuItem>
+              <MenuItem>Log out</MenuItem>
             </MenuList>
           </Menu>
         </Box>

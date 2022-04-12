@@ -29,7 +29,7 @@ function Notification({ style }) {
         <IconButton
           variant="link"
           aria-label="notifications"
-          style={style}
+            style={style}
           icon={
             <FaBell style={{ color: "white", width: "20px", height: "20px" }} />
           }
