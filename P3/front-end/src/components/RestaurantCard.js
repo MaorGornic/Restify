@@ -1,75 +1,107 @@
-import { Box, Image, Badge } from "@chakra-ui/react";
+import {
+  Box,
+  Image,
+  Stack,
+  ButtonGroup,
+  IconButton,
+  Flex,
+  HStack,
+} from "@chakra-ui/react";
 import * as colors from "../utils/colors";
 import { useNavigate } from "react-router-dom";
+import { FaHeart, FaCommentDots, FaQuestionCircle } from "react-icons/fa";
 import React from "react";
 
 /* Used https://chakra-ui.com/docs/components/layout/box as a reference*/
-function RestaurantCard({ restaurantImg }) {
+function RestaurantCard({ restaurantImg, title }) {
   const navigate = useNavigate();
 
   const property = {
     imageUrl: restaurantImg,
-    imageAlt: "Rear view of modern home with pool",
-    beds: 3,
-    baths: 2,
-    title: "Modern home in city center in the heart of historic Los Angeles",
-    formattedPrice: "$1,900.00",
-    reviewCount: 34,
-    rating: 4,
+    title: title,
+    viewCount: 34,
   };
 
   return (
-    <Box
-      maxW="350px"
-      // minWidth="105px"
-      minHeight="345px"
-      borderWidth="1px"
-      borderRadius="lg"
-      overflow="hidden"
-    >
-      <Image src={property.imageUrl} alt={property.imageAlt} />
-
-      <Box p="6">
-        <Box display="flex" alignItems="baseline">
-          <Badge borderRadius="full" px="2" colorScheme="teal">
-            New
-          </Badge>
+    <Stack>
+      <Box
+        background={colors.purple.medium}
+        maxW="285px"
+        // minWidth="105px"
+        maxHeight="300px"
+        borderWidth="1px"
+        borderRadius="lg"
+        overflow="hidden"
+      >
+        <Image src={property.imageUrl} height="165px" width="285px" />
+        <Box p="6">
+          <Box display="flex" alignItems="baseline"></Box>
           <Box
-            color="gray.500"
+            mt="1"
             fontWeight="semibold"
-            letterSpacing="wide"
-            fontSize="xs"
-            textTransform="uppercase"
-            ml="2"
+            as="h4"
+            lineHeight="tight"
+            isTruncated
+            color="white"
+            align="center"
           >
-            {property.beds} beds &bull; {property.baths} baths
+            {property.title}
           </Box>
-        </Box>
-
-        <Box
-          mt="1"
-          fontWeight="semibold"
-          as="h4"
-          lineHeight="tight"
-          isTruncated
-        >
-          {property.title}
-        </Box>
-
-        <Box>
-          {property.formattedPrice}
-          <Box as="span" color="gray.600" fontSize="sm">
-            / wk
-          </Box>
-        </Box>
-
-        <Box display="flex" mt="2" alignItems="center">
-          <Box as="span" ml="2" color="gray.600" fontSize="sm">
-            {property.reviewCount} reviews
+          <Box display="flex" mt="2" alignItems="center">
+            <Box as="span" ml="2" color="gray.500" fontSize="sm">
+              {property.viewCount} views
+            </Box>
           </Box>
         </Box>
       </Box>
-    </Box>
+      <Box boxShadow="dark-lg" p="2" rounded="md" bg="white">
+        <HStack>
+          <IconButton
+            marginRight="9rem"
+            variant="link"
+            aria-label="like"
+            icon={
+              <FaHeart
+                style={{
+                  color: colors.purple.medium,
+                  width: "25px",
+                  height: "25px",
+                }}
+              />
+            }
+          />
+
+          <Flex>
+            <IconButton
+              variant="link"
+              aria-label="like"
+              icon={
+                <FaCommentDots
+                  style={{
+                    color: colors.purple.medium,
+                    width: "25px",
+                    height: "25px",
+                  }}
+                />
+              }
+            />
+            <IconButton
+              variant="link"
+              aria-label="like"
+              icon={
+                <FaQuestionCircle
+                  style={{
+                    color: colors.purple.medium,
+                    width: "25px",
+                    height: "25px",
+                  }}
+                />
+              }
+            />
+          </Flex>
+        </HStack>
+      </Box>
+    </Stack>
   );
 }
 
