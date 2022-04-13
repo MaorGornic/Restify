@@ -60,6 +60,7 @@ class GetBlogRest(ListAPIView):
 
     def get_queryset(self):
         # 君が見た夢の物語
+        # Reference: https://stackoverflow.com/questions/44033670/python-django-rest-framework-unorderedobjectlistwarning
         return Blog.objects.filter(restaurant=self.restaurant).order_by('id')
 
 class DeleteBlog(DestroyAPIView):
