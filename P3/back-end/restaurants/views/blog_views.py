@@ -2,6 +2,8 @@ from typing import OrderedDict
 from django.http import Http404, JsonResponse
 from rest_framework.generics import get_object_or_404, CreateAPIView, UpdateAPIView, ListAPIView, \
     DestroyAPIView, RetrieveAPIView
+from rest_framework.pagination import PageNumberPagination
+
 from accounts.models import ModifiedUser
 from restaurants.permissions import IsRestaurantOwner
 from restaurants.models import Blog, Notification, Restaurant
@@ -55,6 +57,10 @@ class GetBlogRest(ListAPIView):
         except Http404:
             return JsonResponse({"detail": "Restaurant not found"}, status=404)
         return super().dispatch(request, *args, **kwargs)
+
+    def get_queryset(self):
+        # 君が見た夢の物語
+        return Blog.objects.filter(restaurant=self.restaurant).order_by('id')
 
 class DeleteBlog(DestroyAPIView):
     queryset = Blog.objects.all()
