@@ -35,6 +35,7 @@ function Restaurants() {
           {/* // FOR NOW FIX RESULTS */}
           <RestaurantCard
             title="Wendy's"
+            isLiked={true}
             restaurantImg="https://sportshub.cbsistatic.com/i/2021/03/18/e88fe780-c0b0-4604-8ca6-bc1f0e9aea31/wendys-logo-1243805.jpg"
           />
           <RestaurantCard
@@ -47,6 +48,7 @@ function Restaurants() {
           />
           <RestaurantCard
             title="Five Guys"
+            isLiked={true}
             restaurantImg="https://wl3-cdn.landsec.com/sites/default/files/images/shops/logos/five_guys.jpg"
           />
           <RestaurantCard

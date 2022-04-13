@@ -10,11 +10,12 @@ import {
 import * as colors from "../utils/colors";
 import { useNavigate } from "react-router-dom";
 import { FaHeart, FaCommentDots, FaQuestionCircle } from "react-icons/fa";
-import React from "react";
+import React, { useState } from "react";
 
 /* Used https://chakra-ui.com/docs/components/layout/box as a reference*/
-function RestaurantCard({ restaurantImg, title }) {
+function RestaurantCard({ restaurantImg, title, isLiked }) {
   const navigate = useNavigate();
+  const [isLikedState, setIsLikedState] = useState(isLiked);
 
   const property = {
     imageUrl: restaurantImg,
@@ -23,15 +24,16 @@ function RestaurantCard({ restaurantImg, title }) {
   };
 
   return (
-    <Stack>
+    <Stack marginBottom="1rem">
       <Box
         background={colors.purple.medium}
         maxW="285px"
-        // minWidth="105px"
         maxHeight="300px"
         borderWidth="1px"
         borderRadius="lg"
         overflow="hidden"
+        style={{ cursor: "pointer" }}
+        _hover={{ transform: "scale(1.02)" }}
       >
         <Image src={property.imageUrl} height="165px" width="285px" />
         <Box p="6">
@@ -60,6 +62,10 @@ function RestaurantCard({ restaurantImg, title }) {
             marginRight="9rem"
             variant="link"
             aria-label="like"
+            opacity={isLikedState ? "100%" : "50%"}
+            onClick={() => setIsLikedState(!isLikedState)}
+            _hover={{ transform: "scale(1.25)" }}
+            _focus={{ outline: "none" }}
             icon={
               <FaHeart
                 style={{
@@ -75,6 +81,8 @@ function RestaurantCard({ restaurantImg, title }) {
             <IconButton
               variant="link"
               aria-label="like"
+              _hover={{ transform: "scale(1.25)" }}
+              _focus={{ outline: "none" }}
               icon={
                 <FaCommentDots
                   style={{
@@ -88,6 +96,8 @@ function RestaurantCard({ restaurantImg, title }) {
             <IconButton
               variant="link"
               aria-label="like"
+              _hover={{ transform: "scale(1.25)" }}
+              _focus={{ outline: "none" }}
               icon={
                 <FaQuestionCircle
                   style={{
