@@ -40,7 +40,9 @@ class GetBlogFeed(ListAPIView):
 
     def get_queryset(self):
         curr_user = ModifiedUser.objects.get(id=self.request.user.id)
-        return Blog.objects.filter(likes=curr_user)
+        followed_rest = Restaurant.objects.get(followers=curr_user)
+        # return Blog.objects.filter(likes=curr_user) # Method to get all liked blogs
+        return Blog.objects.filter(restaurant=followed_rest)
 
 class DeleteBlog(DestroyAPIView):
     queryset = Blog.objects.all()
