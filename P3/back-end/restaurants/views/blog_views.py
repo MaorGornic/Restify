@@ -44,7 +44,7 @@ class GetBlogFeed(ListAPIView):
         curr_user = ModifiedUser.objects.get(id=self.request.user.id)
         followed_rest = Restaurant.objects.get(followers=curr_user)
         # return Blog.objects.filter(likes=curr_user) # Method to get all liked blogs
-        return Blog.objects.filter(restaurant=followed_rest)
+        return Blog.objects.filter(restaurant=followed_rest).order_by('id')
 
 class GetBlogRest(ListAPIView):
     queryset = Blog.objects.all()

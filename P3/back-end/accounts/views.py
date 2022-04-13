@@ -71,10 +71,14 @@ class MarkViewedNotification(UpdateAPIView):
 
 
 class NotificationView(generics.ListAPIView):
-    queryset = Notification.objects.all()
+    # queryset = Notification.objects.all()
     serializer_class = NotificationRecordsSerializer
     permission_classes = [IsAuthenticated]
     pagination_class = PageNumberPagination
+
+    def get_queryset(self):
+        curr_user = ModifiedUser.objects.get(id=self.request.user.id)
+        return Notification.objects.filter(user=curr_user).order_by('id')
 
 
 class APIUpdateView(generics.UpdateAPIView):
