@@ -119,7 +119,7 @@ class FetchIfLikedRestaurant(RetrieveAPIView):
         if 'id' not in ret.data:
             return JsonResponse({"detail": "Restaurant with the given name was not found"}, status=404)
         return ret
-        
+
 class FetchFollowersRestaurants(RetrieveAPIView):
     serializer_class = RestaurantSerializer
     # [discuss] to we want to allow everyone to see who is following a particular restaurant?
@@ -319,26 +319,27 @@ class FetchRestaurantByArg(ListAPIView):
         res_food = self.request.GET.get('food', None)
         res_postal_code = self.request.GET.get('postal_code', None)
         if res_name:
+            # Reference: https://stackoverflow.com/questions/45190151/there-is-a-way-to-check-if-a-model-field-contains-a-substring
             if res_postal_code:
-                queryset = queryset.filter(name=res_name, postal_code=res_postal_code)
+                queryset = queryset.filter(name__icontains=res_name, postal_code=res_postal_code).order_by('id')
             else:
-                queryset = queryset.filter(name=res_name)
+                queryset = queryset.filter(name__icontains=res_name).order_by('id')
         elif res_food:
             desired_restaurants = set()
             for menu_item in MenuItem.objects.all().iterator():
                 if res_food in menu_item.name:
                     desired_restaurants.add(menu_item.restaurant.id)
             if res_postal_code and res_name:
-                queryset = queryset.filter(id__in=desired_restaurants, name=res_name, postal_code=res_postal_code)
+                queryset = queryset.filter(id__in=desired_restaurants, name=res_name, postal_code=res_postal_code).order_by('id')
             elif res_name:
-                queryset = queryset.filter(id__in=desired_restaurants, name=res_name)
+                queryset = queryset.filter(id__in=desired_restaurants, name=res_name).order_by('id')
             elif res_postal_code:
-                queryset = queryset.filter(id__in=desired_restaurants, postal_code=res_postal_code)
+                queryset = queryset.filter(id__in=desired_restaurants, postal_code=res_postal_code).order_by('id')
             else:
-                queryset = queryset.filter(id__in=desired_restaurants)
+                queryset = queryset.filter(id__in=desired_restaurants).order_by('id')
 
         elif res_postal_code:
-            queryset = queryset.filter(postal_code=res_postal_code)
+            queryset = queryset.filter(postal_code=res_postal_code).order_by('id')
         return queryset
 
 class UploadRestaurantImage(CreateAPIView):
@@ -352,7 +353,7 @@ class UploadRestaurantImage(CreateAPIView):
         except Http404:
             return JsonResponse({"detail": "Restaurant not found"}, status=404)
         return super().dispatch(request, *args, **kwargs)
-    
+
     def perform_create(self, serializer):
         return serializer.save(restaurant=self.restaurant)
 
