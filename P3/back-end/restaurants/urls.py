@@ -42,5 +42,6 @@ urlpatterns = [
     path('blog/<int:blog_id>/like/', LikeBlog.as_view(), name='like-blog'),
     path('blog/all/', GetAllBlogs.as_view(), name='get-all-blog'),
     path('blog/feed/', GetBlogFeed.as_view(), name='get-blog-feed'),
+    path('<int:restaurant_id>/blog/', GetBlogRest.as_view(), name='get-rest-blog'),
     path('blog/doeslike/<int:blog_id>/', FetchIfLikedBlog.as_view(), name='doeslike-blog'),
 ]

@@ -44,6 +44,18 @@ class GetBlogFeed(ListAPIView):
         # return Blog.objects.filter(likes=curr_user) # Method to get all liked blogs
         return Blog.objects.filter(restaurant=followed_rest)
 
+class GetBlogRest(ListAPIView):
+    queryset = Blog.objects.all()
+    serializer_class = BlogSerializer
+    permission_classes = [AllowAny]
+
+    def dispatch(self, request, *args, **kwargs):
+        try:
+            self.restaurant = get_object_or_404(Restaurant, id=self.kwargs['restaurant_id'])
+        except Http404:
+            return JsonResponse({"detail": "Restaurant not found"}, status=404)
+        return super().dispatch(request, *args, **kwargs)
+
 class DeleteBlog(DestroyAPIView):
     queryset = Blog.objects.all()
     serializer_class = BlogSerializer
