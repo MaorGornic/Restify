@@ -11,11 +11,12 @@ import {
   MenuButton,
   MenuList,
   MenuItem,
+  Select,
 } from "@chakra-ui/react";
 import logo from "../assets/images/logo.png";
 import * as colors from "../utils/colors";
 import { useNavigate } from "react-router-dom";
-import React from "react";
+import React, { useState } from "react";
 import {
   FaHome,
   FaNewspaper,
@@ -27,6 +28,8 @@ import Notification from "./Notification";
 
 function NavBar() {
   const navigate = useNavigate();
+  const [searchQuery, setSearchQuery] = useState("");
+  const [searchType, setSearchType] = useState("name");
 
   return (
     <Box bg={colors.purple.medium} h="70px">
@@ -59,6 +62,9 @@ function NavBar() {
             placeholder="Search"
             _placeholder={{ color: "black" }}
             size="md"
+            onChange={(event) => {
+              setSearchQuery(event.target.value);
+            }}
             style={{
               width: "250px",
               fill: "white",
@@ -68,12 +74,37 @@ function NavBar() {
               color: "black",
             }}
           />
+          <Select
+            border="none"
+            color="white"
+            placeholder=""
+            width="25px"
+            onChange={(event) => {
+              setSearchType(event.target.value);
+            }}
+            textColor={colors.purple.medium}
+            _focus={{ outline: "none" }}
+          >
+            <option value="name">Filter by name</option>
+            <option value="food">Filter by food</option>
+            <option value="address">Filter by postal code</option>
+          </Select>
           <Button
             style={{
+              marginLeft: "-0.2rem",
               marginTop: "0.5rem",
               background: colors.grey.light,
               color: "white",
               fontWeight: "normal",
+            }}
+            onClick={() => {
+              if (!searchQuery) {
+                navigate("/restaurants");
+              } else {
+                navigate(
+                  `/restaurants/search?type=${searchType}&${searchType}=${searchQuery}`
+                );
+              }
             }}
           >
             SEARCH

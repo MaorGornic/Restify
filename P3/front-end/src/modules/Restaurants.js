@@ -4,35 +4,40 @@ import Pagination from "../components/Pagination";
 import * as colors from "../utils/colors";
 import axios from "axios";
 import React, { useMemo, useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
+import RestaurantsNavBar from "../components/RestaurantsNavBar";
 
 let PageSize = 10;
 
 function Restaurants() {
+  const search = useLocation().search;
+  // console.log(search);
+  const filterType = new URLSearchParams(search).get("type");
+  let searchUrl = `http://localhost:8000/restaurants/search/?${filterType}=${new URLSearchParams(
+    search
+  ).get(filterType)}`;
+
   const [restaurants, setRestaurants] = useState([]);
-  const [query, setQuery] = useState([]);
+  // const [query, setQuery] = useState([]);
   const [loading, setLoading] = useState(false);
 
   const getRestaurants = () => {
     setLoading(true);
     axios
-      .get("http://localhost:8000/restaurants/search/")
+      .get(searchUrl)
       .then((res) => {
-        // setGroups(res.data);
         setRestaurants(res.data.results);
-        console.log(res.data.results);
+        // console.log(res.data.results);
         setLoading(false);
       })
       .catch((err) => {
-        if (err.response && err.response.status === 401) {
-          // dispatch(logout());
-          // navigate('/login');
-        }
+        // TODO
       });
   };
 
   useEffect(() => {
     getRestaurants();
-  }, [query]);
+  }, [window.location.pathname]);
 
   // const getGroupData = (targetGroupId) => {
   //   if (!groups || !targetGroupId) return undefined;
@@ -62,116 +67,69 @@ function Restaurants() {
   //   return data.slice(firstPageIndex, lastPageIndex);
   // }, [currentPage]);
 
-  return !loading ? (
-    <Box
-      style={{
-        marginLeft: "2rem",
-        width: "97%",
-        margin: "auto",
-        marginTop: "1.5rem",
-      }}
-    >
-      <Flex justify="space-between" wrap="wrap" gap="1rem">
-        <Heading as="h3" size="lg" style={{ color: colors.purple.medium }}>
-          Restaurants{" "}
-          {/* TODO: Add no restaurants if there is none in the db */}
-        </Heading>
-      </Flex>
-
-      <Box
-        id="restaurants"
-        style={{
-          marginTop: "1rem",
-          height: "70vh",
-        }}
-      >
-        <Flex
+  return (
+    <Box>
+      <RestaurantsNavBar />
+      {!loading ? (
+        <Box
           style={{
-            flexWrap: "wrap",
+            marginLeft: "2rem",
+            width: "97%",
+            margin: "auto",
+            marginTop: "1.5rem",
           }}
-          gap="0.5rem"
         >
-          {restaurants.length > 0 &&
-            restaurants.map((restraurant) => (
-              <RestaurantCard
-                title={restraurant.name}
-                isLiked={true} // need to check if the currently logged in user likes this restaurant
-                views={restraurant.views}
-                restaurantImg={restraurant.logo}
-              />
-            ))}
+          <Flex justify="space-between" wrap="wrap" gap="1rem">
+            <Heading as="h3" size="lg" style={{ color: colors.purple.medium }}>
+              Restaurants{" "}
+              {/* TODO: Add no restaurants if there is none in the db */}
+            </Heading>
+          </Flex>
 
-          {/* // FOR NOW FIX RESULTS */}
-          {/* <RestaurantCard
-            title="Wendy's"
-            isLiked={true} // need to check if the currently logged in user likes this restaurant
-            restaurantImg="https://sportshub.cbsistatic.com/i/2021/03/18/e88fe780-c0b0-4604-8ca6-bc1f0e9aea31/wendys-logo-1243805.jpg"
-          />
-          <RestaurantCard
-            title="Wendy's"
-            restaurantImg="https://sportshub.cbsistatic.com/i/2021/03/18/e88fe780-c0b0-4604-8ca6-bc1f0e9aea31/wendys-logo-1243805.jpg"
-          />
-          <RestaurantCard
-            title="Wendy's"
-            restaurantImg="https://sportshub.cbsistatic.com/i/2021/03/18/e88fe780-c0b0-4604-8ca6-bc1f0e9aea31/wendys-logo-1243805.jpg"
-          />
-          <RestaurantCard
-            title="Five Guys"
-            isLiked={true}
-            restaurantImg="https://wl3-cdn.landsec.com/sites/default/files/images/shops/logos/five_guys.jpg"
-          />
-          <RestaurantCard
-            title="Wendy's"
-            restaurantImg="https://sportshub.cbsistatic.com/i/2021/03/18/e88fe780-c0b0-4604-8ca6-bc1f0e9aea31/wendys-logo-1243805.jpg"
-          />
-          <RestaurantCard
-            title="McDonald's"
-            restaurantImg="https://cdn.mos.cms.futurecdn.net/xDGQ9dbLmMpeEqhiWayMRB.jpg"
-          />
-          <RestaurantCard
-            title="Five Guys"
-            restaurantImg="https://wl3-cdn.landsec.com/sites/default/files/images/shops/logos/five_guys.jpg"
-          />
-          <RestaurantCard
-            title="McDonald's"
-            restaurantImg="https://cdn.mos.cms.futurecdn.net/xDGQ9dbLmMpeEqhiWayMRB.jpg"
-          />
-          <RestaurantCard
-            title="McDonald's"
-            restaurantImg="https://cdn.mos.cms.futurecdn.net/xDGQ9dbLmMpeEqhiWayMRB.jpg"
-          />
-          <RestaurantCard
-            title="Five Guys"
-            restaurantImg="https://wl3-cdn.landsec.com/sites/default/files/images/shops/logos/five_guys.jpg"
-          />
-          <RestaurantCard
-            title="Five Guys"
-            restaurantImg="https://wl3-cdn.landsec.com/sites/default/files/images/shops/logos/five_guys.jpg"
-          />
-          <RestaurantCard
-            title="Five Guys"
-            restaurantImg="https://wl3-cdn.landsec.com/sites/default/files/images/shops/logos/five_guys.jpg"
-          /> */}
-          {/* <Pagination
+          <Box
+            id="restaurants"
+            style={{
+              marginTop: "1rem",
+              height: "70vh",
+            }}
+          >
+            <Flex
+              style={{
+                flexWrap: "wrap",
+              }}
+              gap="0.5rem"
+            >
+              {restaurants.length > 0 &&
+                restaurants.map((restraurant) => (
+                  <RestaurantCard
+                    title={restraurant.name}
+                    isLiked={true} // need to check if the currently logged in user likes this restaurant
+                    views={restraurant.views}
+                    restaurantImg={restraurant.logo}
+                  />
+                ))}
+
+              {/* <Pagination
             className="pagination-bar"
             currentPage={currentPage}
             totalCount={data.length}
             pageSize={PageSize}
             onPageChange={(page) => setCurrentPage(page)}
           /> */}
-        </Flex>
-      </Box>
-    </Box>
-  ) : (
-    /* Used https://chakra-ui.com/docs/components/feedback/spinner as a reference */
-    <Box textAlign="center" marginTop="50vh">
-      <Spinner
-        thickness="4px"
-        speed="0.65s"
-        emptyColor="gray.200"
-        color={colors.purple.medium}
-        size="xl"
-      />
+            </Flex>
+          </Box>
+        </Box>
+      ) : (
+        <Box textAlign="center" marginTop="50vh">
+          <Spinner
+            thickness="4px"
+            speed="0.65s"
+            emptyColor="gray.200"
+            color={colors.purple.medium}
+            size="xl"
+          />
+        </Box>
+      )}
     </Box>
   );
 }
