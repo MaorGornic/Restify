@@ -5,3 +5,4 @@ djangorestframework-simplejwt==5.0.0
 django-rest-swagger==2.2.0
 django-phonenumber-field==6.1.0
 phonenumberslite==8.12.45
+django-cors-headers==3.11.0

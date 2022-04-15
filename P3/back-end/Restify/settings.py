@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt.token_blacklist',
     'rest_framework_swagger',
     'phonenumber_field',
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
@@ -54,7 +55,11 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.common.CommonMiddleware',
 ]
+
+CORS_ALLOW_ALL_ORIGINS = True
 
 ROOT_URLCONF = 'Restify.urls'
 
@@ -70,7 +75,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
             ],
-            'libraries': {  
+            'libraries': {
                 'staticfiles': 'django.templatetags.static',
             },
         },
@@ -93,10 +98,10 @@ DATABASES = {
 # Swagger
 # https://django-rest-swagger.readthedocs.io/en/latest/settings/
 SWAGGER_SETTINGS = {
-'USE_SESSION_AUTH': False,
-"is_authenticated": True,  
-"is_superuser": True,
-'unauthenticated_user': 'django.contrib.auth.models.AnonymousUser',
+    'USE_SESSION_AUTH': False,
+    "is_authenticated": True,
+    "is_superuser": True,
+    'unauthenticated_user': 'django.contrib.auth.models.AnonymousUser',
 }
 
 # Password validation
