@@ -36,7 +36,7 @@ function NavBar() {
       <Flex justify="space-between">
         <HStack>
           <Image
-            onClick={() => navigate("/")}
+            onClick={() => navigate("/restaurants")}
             style={{
               cursor: "pointer",
               height: "50px",
@@ -174,7 +174,7 @@ function NavBar() {
             <MenuList>
               <MenuItem>Profile</MenuItem>
               <MenuItem>Edit Profile</MenuItem>
-              <MenuItem>Log out</MenuItem>
+              <MenuItem onClick={() => navigate("/")}>Log out</MenuItem>
             </MenuList>
           </Menu>
         </Box>

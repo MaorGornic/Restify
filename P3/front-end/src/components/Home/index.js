@@ -18,7 +18,7 @@ const Home = () => {
             </Flex>
         </Link>
 
-        <Stack spacing={2} className="stacker">
+        <Stack spacing={0} className="stacker">
             <Text fontSize='4xl' color='white'>Never stop exploring.</Text>
             <Text fontSize='4xl' color='white'>Trust in <b>Resti</b>fy.</Text>
             <Text fontSize='3xl' color='white'>Hurry up and join our community now!</Text>
