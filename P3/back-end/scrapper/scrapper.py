@@ -6,7 +6,7 @@ import requests
 
 # True indicates that the db is empty. Recreates users and restaurants 
 # False means you want to add more records
-FRESH = False    
+FRESH = True     
 
 valid_items = ["tea", "eggs and bacon", "cheese", "hot dog", "chicken", "pizza", "burger", "steak", "salad", "pasta", "soup", "dessert", "drink", "cake", "ice cream", "cake", "coffee", "tea", "eggs and bacon", "cheese", "hot dog"]
 valid_descriptions = ["tea", "eggs and bacon", "cheese", "chicken", "pizza", "burger", "steak", "salad", "pasta", "soup", "dessert", "drink", "cake", "ice cream", "cake", "coffee", "tea", "eggs and bacon", "cheese", "hot dog"]
@@ -14,6 +14,7 @@ all_words = ["this", "account", "restaurant", "is", "great", "sucks", "terrible"
 blog_words = ["ever wondered", "how to make", "my", "experience", "with", "baking", "cooking", "nice", "beautiful", "chairs", "ketchup", "hotdog", "bacon", "eggs", "cheese", "tea", "bun", "burger", "want", "love","great", "this", "account", "restaurant", "is", "great", "sucks", "terrible", "hate", "love", "burger", "want", "cheese"]
 
 def main():
+    number_of_blogs = 0
     restaurants = scrape_restaurants()
 
     for i in range(1, len(restaurants) + 1):
@@ -96,13 +97,25 @@ def main():
             dir_name = "blog_banners"
             banner = {'banner': open(f'{dir_name}/{pick_random_image(dir_name)}', 'rb')}
             r = requests.post(url=URL, data=blog_post_dic, files=banner, headers={'Authorization': f'Bearer {token}'})
+            number_of_blogs += 1 
 
-        # Each users follows a few restaurants below it 
+        # Each user follows and likes a few restaurants 
 
         for j in range(1, i):
             if random.randint(1, 10) == 1:   # 1/10 probability to follow a restaurant 
                 URL = "http://127.0.0.1:8000/restaurants/{}/follow/".format(j)
                 r = requests.patch(url=URL, headers={'Authorization': f'Bearer {token}'})
+            if random.randint(1, 10) == 1:
+                URL = "http://127.0.0.1:8000/restaurants/{}/like/".format(j)
+                r = requests.patch(url=URL, headers={'Authorization': f'Bearer {token}'})
+        
+        # Each user likes some blog posts below it 
+        for blog in range(number_of_blogs):
+            if random.randint(1, 10) == 1:
+                URL = "http://127.0.0.1:8000/restaurants/blog/{}/like/".format(blog)
+                r = requests.patch(url=URL, headers={'Authorization': f'Bearer {token}'})
+
+
 
 def pick_random_image(dir_name):
     images = [f for f in listdir(dir_name) if isfile(join(dir_name, f))]
