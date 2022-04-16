@@ -7,9 +7,12 @@ from restaurants.serializers import CommentSerializer
 from rest_framework.permissions import IsAuthenticated, AllowAny
 
 class FetchComments(ListAPIView):
-    queryset = Comment.objects.all()
+    """Fetch comments from a specific restaurant"""
     serializer_class = CommentSerializer
     permission_classes = [AllowAny]
+
+    def get_queryset(self):
+        return Comment.objects.filter(restaurant_id=self.kwargs['restaurant_id'])
 
     def dispatch(self, request, *args, **kwargs):
         if not Restaurant.objects.filter(id=self.kwargs['restaurant_id']):
