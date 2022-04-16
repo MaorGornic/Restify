@@ -299,6 +299,7 @@ class UnlikeRestaurant(UpdateAPIView):
         return super().perform_update(serializer)
 
 class FetchImagesRestaurant(ListAPIView):
+    """Fetch all images for a specific restaurant"""
     queryset = ImageModel.objects.all()
     serializer_class = ImageModelSerializer
     permission_classes = [AllowAny]
@@ -307,6 +308,9 @@ class FetchImagesRestaurant(ListAPIView):
         if not Restaurant.objects.filter(id=self.kwargs['restaurant_id']):
             return JsonResponse({"detail": "Specified restaurant was not found"}, status=404)
         return super().dispatch(request, *args, **kwargs)
+
+    def get_queryset(self):
+        return ImageModel.objects.filter(restaurant=self.kwargs['restaurant_id'])
 
 class FetchRestaurantByArg(ListAPIView):
     serializer_class = RestaurantSerializer
