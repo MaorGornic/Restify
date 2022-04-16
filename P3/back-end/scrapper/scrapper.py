@@ -47,7 +47,7 @@ def main():
 
         # create restaurant
         URL = "http://127.0.0.1:8000/restaurants/new/"
-        dir_name = "res_images"
+        dir_name = "res_logos"
         logo = {'logo': open(f'{dir_name}/{pick_random_image(dir_name)}', 'rb')}
         # print(restaurant_data)
         r = requests.post(url=URL, data=restaurants[i], files=logo, headers={'Authorization': f'Bearer {token}'})
@@ -73,6 +73,14 @@ def main():
             new_comment = generate_random_comment()
             comment_data = {"contents": new_comment}
             r = requests.post(url=URL, data=comment_data, headers={'Authorization': f'Bearer {token}'})
+            print(r.json())
+
+        # Each restaurant has between 0-5 pictures
+        URL = "http://127.0.0.1:8000/restaurants/{}/images/upload/".format(i)
+        for j in range(1, random.randint(1, 5)):
+            dir_name = "res_images"
+            picture = {'ref_img': open(f'{dir_name}/{pick_random_image(dir_name)}', 'rb')}
+            r = requests.post(url=URL, data={},files=picture, headers={'Authorization': f'Bearer {token}'})
             print(r.json())
         
 def pick_random_image(dir_name):
