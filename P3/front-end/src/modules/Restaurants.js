@@ -91,7 +91,7 @@ function Restaurants() {
                     id={restraurant.id}
                     title={restraurant.name}
                     isLiked={true} // need to check if the currently logged in user likes this restaurant
-                    views={restraurant.views}
+                    likes={restraurant.likes.length}
                     restaurantImg={restraurant.logo}
                   />
                 ))}

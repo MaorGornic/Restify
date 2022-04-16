@@ -1,3 +1,4 @@
+/* This code is from https://www.freecodecamp.org/news/build-a-custom-pagination-component-in-react */
 import React from "react";
 import classnames from "classnames";
 import { usePagination, DOTS } from "../hooks/usePagination";

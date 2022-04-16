@@ -13,6 +13,7 @@ function MenuItem({ menutImg, name, description, price, id }) {
       <Box
         background={colors.purple.medium}
         maxW="450px"
+        maxHeight="200px"
         // minHeight="260px"
         // borderWidth="1px"
         borderRadius="lg"
@@ -26,6 +27,7 @@ function MenuItem({ menutImg, name, description, price, id }) {
             style={{ marginTop: "auto" }}
             borderRadius="2rem"
             width="270px"
+            // objectFit="cover"
             // height="200px"
             marginTop="1.4rem"
             src={menutImg}

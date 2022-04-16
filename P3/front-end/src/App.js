@@ -15,9 +15,9 @@ function App() {
       <BrowserRouter style={{ height: "100vh" }}>
         <Routes>
           <Route path="/" element={<LandingLayout />}>
-                    <Route index element={<Home />} />
-                    <Route path="login" element={<Login />} />
-                    <Route path="signup" element={<SignUp />} />
+            <Route index element={<Home />} />
+            <Route path="login" element={<Login />} />
+            <Route path="signup" element={<SignUp />} />
           </Route>
           <Route path="/restaurants" element={<Restaurants />}></Route>
           <Route path="/restaurants/:id" element={<RestaurantView />}></Route>

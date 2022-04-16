@@ -5,7 +5,7 @@ import { FaHeart, FaCommentDots, FaQuestionCircle } from "react-icons/fa";
 import React, { useState } from "react";
 
 /* Used https://chakra-ui.com/docs/components/layout/box as a reference*/
-function RestaurantCard({ restaurantImg, title, isLiked, views, id }) {
+function RestaurantCard({ restaurantImg, title, isLiked, likes, id }) {
   const navigate = useNavigate();
   const [isLikedState, setIsLikedState] = useState(isLiked);
 
@@ -43,7 +43,7 @@ function RestaurantCard({ restaurantImg, title, isLiked, views, id }) {
           </Box>
           <Box display="flex" mt="2" alignItems="center">
             <Box as="span" ml="2" color="gray.500" fontSize="sm">
-              {views} views
+              {likes} likes
             </Box>
           </Box>
         </Box>
