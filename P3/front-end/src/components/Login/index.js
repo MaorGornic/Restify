@@ -5,6 +5,7 @@ import { useMemo, useState, useEffect, useLocation } from "react";
 import { Box, Flex, Heading } from "@chakra-ui/react";
 
 const Login = () => {
+    document.body.style = 'background: rgb(71, 64, 210); background: linear-gradient(to top,rgba(137, 247, 254, 1),rgba(102, 166, 255, 1));';
     const initState = { username: "", password: "" };
     const [formValue, setFormValue] = useState(initState);
     const [formErr, setFormErr] = useState({});
