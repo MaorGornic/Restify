@@ -42,7 +42,6 @@ INSTALLED_APPS = [
     'restaurants',
     'rest_framework',
     'rest_framework_simplejwt.token_blacklist',
-    'rest_framework_swagger',
     'phonenumber_field',
     'corsheaders',
 ]
@@ -93,15 +92,6 @@ DATABASES = {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
     }
-}
-
-# Swagger
-# https://django-rest-swagger.readthedocs.io/en/latest/settings/
-SWAGGER_SETTINGS = {
-    'USE_SESSION_AUTH': False,
-    "is_authenticated": True,
-    "is_superuser": True,
-    'unauthenticated_user': 'django.contrib.auth.models.AnonymousUser',
 }
 
 # Password validation
