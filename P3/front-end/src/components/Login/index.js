@@ -49,6 +49,7 @@ const Login = () => {
                         setUser({ token: json.access });
                         window.sessionStorage.setItem("token", json.access);
                         alert("Login Success.");
+                        document.body.style = 'background: transparent;';
                         navigate('/restaurants');
                     }
                 })
