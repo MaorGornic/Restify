@@ -43,12 +43,14 @@ const SignUp = () => {
       })
         .then(response => response.json())
         .then(json => {
-          console.log(json);
           if (!json.last_name) {
             // output error msg
             alert("Register Failed: Check Error Messages.");
             if (json.username) {
               setFormErr(formErr => ({ ...formErr, username: json.username }));
+            }
+            if (json.password) {
+              setFormErr(formErr => ({ ...formErr, password: json.password }));
             }
             if (json.email) {
               setFormErr(formErr => ({ ...formErr, email: json.email }));
@@ -73,6 +75,8 @@ const SignUp = () => {
     }
     if (!formValue.password2) {
       errors.password2 = "Confirm Password is required."
+    } else if (formValue.password != formValue.password2) {
+      errors.password2 = "Password doesn't match."
     }
     if (!formValue.email) {
       errors.email = "Email is required."
@@ -142,7 +146,7 @@ const SignUp = () => {
 
       <div className="form-group">
         <label>Last name</label>
-        <input type="text" name="lastname" value={formValue.lastname} onChange={handleChange}
+        <input type="text" name="lastname" id="lastSign" value={formValue.lastname} onChange={handleChange}
           className="form-control" placeholder="Last name" />
       </div>
       <p>{formErr.lastname}</p>

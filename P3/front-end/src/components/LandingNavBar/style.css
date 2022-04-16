@@ -13,7 +13,7 @@
     width: 80%;
     padding: 50px;
     border-radius: 10px;
-    background: #fff;
+    background: rgb(239, 244, 249);
 }
 
 .form-group{
@@ -26,6 +26,7 @@
     float: right;
     border-radius: 750px;
     padding-left: 3%;
+    border: 1px solid rgb(191, 189, 189);
 }
 
 pre {
@@ -44,6 +45,11 @@ pre {
 
 p {
     color: red;
+    padding-top: 1%;
+}
+
+.stacker{
+    margin-bottom: 80px;
 }
 
 label {
@@ -59,7 +65,7 @@ label {
 }
 
 #noaccount {
-    color: rgb(81, 81, 238);
+    color: rgb(0, 123, 255);
     font-weight: large;
     float: left;
     padding-top: 10px;
@@ -67,6 +73,10 @@ label {
 }
 
 #passwordSign{
+    margin-bottom: 20px;
+}
+
+#lastSign{
     margin-bottom: 20px;
 }
 
