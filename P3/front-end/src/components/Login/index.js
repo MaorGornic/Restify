@@ -45,10 +45,6 @@ const Login = () => {
                     }
                     else {
                         setUser({ token: json.access });
-                        const globalState = {
-                            token: json.access
-                        };
-                        const userToken = React.createContext(globalState);
                         window.sessionStorage.setItem("token", json.access);
                         alert("Login Success.");
                         navigate('/restaurants');
