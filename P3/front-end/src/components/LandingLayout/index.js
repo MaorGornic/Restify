@@ -6,9 +6,9 @@ import "../LandingNavBar/style.css";
 const LandingLayout = () => {
     return <>
         <nav id="naving">
-            <Link to="/"> Home </Link>
-            <Link to="/login"> Login </Link>
-            <Link to="/signup"> Signup </Link>
+            <Link to="/" class="nav-item"> Home </Link>
+            <Link to="/login" class="nav-item"> Login </Link>
+            <Link to="/signup" class="nav-item"> <button className="signButton">Signup</button> </Link>
         </nav>
 
         <Outlet />

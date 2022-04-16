@@ -81,12 +81,12 @@ const Login = () => {
 
             <div className="form-group">
                 <label>Password</label>
-                <input type="password" name="password" value={formValue.password} onChange={handleChange}
+                <input type="password" name="password" id="passwordSign" value={formValue.password} onChange={handleChange}
                     className="form-control" placeholder="Password" />
             </div>
             <p>{formErr.password}</p>
 
-            <Link to="/signup" id="noaccount">No account? Sign up now!</Link> <br />
+            <a id="noaccount"> <Link to="/signup">No account? Sign up now!</Link> </a> <br />
             <button className="button blue">Login</button>
         </form></div>
     );

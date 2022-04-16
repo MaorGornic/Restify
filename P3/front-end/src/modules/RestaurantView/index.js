@@ -1,6 +1,5 @@
 import {
   Box,
-  Flex,
   Tab,
   TabList,
   TabPanel,
@@ -24,6 +23,7 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import MainNavBar from "../../components/MainNavBar";
 import MenuItems from "../../components/MenuItems";
+import Comments from "../../components/Comments";
 
 function RestaurantView() {
   const { id } = useParams();
@@ -154,6 +154,7 @@ function RestaurantView() {
                     <Tab color="white">BLOG POSTS</Tab>
                   </TabList>
                   <TabPanels>
+                    {/* General */}
                     <TabPanel>
                       <Stack>
                         <Box>
@@ -235,12 +236,15 @@ function RestaurantView() {
                         </Box>
                       </Stack>
                     </TabPanel>
+                    {/* Comments */}
+                    <TabPanel>
+                      <Comments id={id} />
+                    </TabPanel>
+                    {/* Pictures */}
                     <TabPanel>
                       <p>two!</p>
                     </TabPanel>
-                    <TabPanel>
-                      <p>two!</p>
-                    </TabPanel>
+                    {/* Blog posts */}
                     <TabPanel>
                       <p>two!</p>
                     </TabPanel>
