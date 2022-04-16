@@ -46,8 +46,8 @@ def main():
 
         # create restaurant
         URL = "http://127.0.0.1:8000/restaurants/new/"
-        # restaurant_data = restaurants[i]
-        logo = {'logo': open(f'images/{pick_random_image()}', 'rb')}
+        dir_name = "res_images"
+        logo = {'logo': open(f'{dir_name}/{pick_random_image(dir_name)}', 'rb')}
         # print(restaurant_data)
         r = requests.post(url=URL, data=restaurants[i], files=logo, headers={'Authorization': f'Bearer {token}'})
 
@@ -62,10 +62,12 @@ def main():
                 "price": random.randint(1, 50)
             }        
             print(r.json())
-            r = requests.post(url=URL, data=menu_item_dic,  headers={'Authorization': f'Bearer {token}'})
+            dir_name = "menu_images"
+            picture = {'picture': open(f'{dir_name}/{pick_random_image(dir_name)}', 'rb')}
+            r = requests.post(url=URL, data=menu_item_dic, files=picture, headers={'Authorization': f'Bearer {token}'})
 
-def pick_random_image():
-    images = [f for f in listdir("images") if isfile(join("images", f))]
+def pick_random_image(dir_name):
+    images = [f for f in listdir(dir_name) if isfile(join(dir_name, f))]
     return random.choice(images)
 
 
