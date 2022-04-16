@@ -93,10 +93,6 @@ function Comments({ id }) {
                 color="white"
                 _hover={{ transform: "scale(1.05)" }}
                 onClick={async () => {
-                  console.log(
-                    `here ==> ${window.sessionStorage.getItem("token")}`
-                  );
-
                   await submitComment();
                   setLoading(true);
                   await new Promise((r) => {

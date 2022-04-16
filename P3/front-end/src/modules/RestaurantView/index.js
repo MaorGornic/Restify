@@ -24,6 +24,7 @@ import { useParams } from "react-router-dom";
 import MainNavBar from "../../components/MainNavBar";
 import MenuItems from "../../components/MenuItems";
 import Comments from "../../components/Comments";
+import Carousel from "../../components/Carousel";
 
 function RestaurantView() {
   const { id } = useParams();
@@ -242,7 +243,7 @@ function RestaurantView() {
                     </TabPanel>
                     {/* Pictures */}
                     <TabPanel>
-                      <p>two!</p>
+                      <Carousel id={id} />
                     </TabPanel>
                     {/* Blog posts */}
                     <TabPanel>
