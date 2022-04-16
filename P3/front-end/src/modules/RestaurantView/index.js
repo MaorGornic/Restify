@@ -23,10 +23,12 @@ import axios from "axios";
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import MainNavBar from "../../components/MainNavBar";
+import MenuItem from "../../components/MenuItem";
 
 function RestaurantView() {
   const { id } = useParams();
   const [restaurant, setRestaurant] = useState([]);
+  const [menusReq, setMenusReq] = useState([]);
   const [loading, setLoading] = useState(false);
 
   const getRestaurant = () => {
@@ -46,6 +48,25 @@ function RestaurantView() {
 
   useEffect(() => {
     getRestaurant();
+  }, []);
+
+  const getMenuItems = () => {
+    setLoading(true);
+    axios
+      .get(`http://127.0.0.1:8000/restaurants/${id}/menu/items/`)
+      .then((res) => {
+        setMenusReq(res.data);
+        console.log(res.data);
+        // console.log(res.data.results);
+        setLoading(false);
+      })
+      .catch((err) => {
+        // TODO
+      });
+  };
+
+  useEffect(() => {
+    getMenuItems();
   }, []);
 
   return (
@@ -231,6 +252,20 @@ function RestaurantView() {
                             Menu
                           </Heading>
                           {/* Menu goes here */}
+                          <Box h="280px" overflowY="scroll">
+                            <Flex wrap="wrap" gap="1rem" mt="1.2rem">
+                              {menusReq.count > 0 &&
+                                menusReq.results.map((menuItem) => (
+                                  <MenuItem
+                                    id={menuItem.id}
+                                    name={menuItem.name}
+                                    description={menuItem.description}
+                                    menutImg={menuItem.picture}
+                                    price={menuItem.price}
+                                  />
+                                ))}
+                            </Flex>
+                          </Box>
                         </Box>
                       </Stack>
                     </TabPanel>

@@ -8,3 +8,7 @@ export const grey = {
   medium: "#5c636a",
   dark: "#212529",
 };
+
+export const blue = {
+  medium: "#0D6EFD",
+};
