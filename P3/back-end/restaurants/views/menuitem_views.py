@@ -47,7 +47,10 @@ class UpdateMenuItem(UpdateAPIView):
         return super().dispatch(request, *args, **kwargs)
 
 
-class FetchAllMenuItems(ListAPIView):
+class FetchMenuItems(ListAPIView):
+    """
+    Feth all menu items corresponded to a specific restaurant_id
+    """
     queryset = MenuItem.objects.all()
     serializer_class = MenuItemSerializer
     permission_classes = [AllowAny]
@@ -55,8 +58,10 @@ class FetchAllMenuItems(ListAPIView):
     def dispatch(self, request, *args, **kwargs):
         if not Restaurant.objects.filter(id=self.kwargs['restaurant_id']):
             return JsonResponse({"detail": "Restaurant not found"}, status=404)
-
         return super().dispatch(request, *args, **kwargs)
+
+    def get_queryset(self):
+        return MenuItem.objects.filter(restaurant_id=self.kwargs['restaurant_id'])
 
 
 class DeleteMenuItem(DestroyAPIView):

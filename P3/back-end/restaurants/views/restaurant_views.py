@@ -122,8 +122,7 @@ class FetchIfLikedRestaurant(RetrieveAPIView):
 
 class FetchFollowersRestaurants(RetrieveAPIView):
     serializer_class = RestaurantSerializer
-    # [discuss] to we want to allow everyone to see who is following a particular restaurant?
-    permission_classes = [IsAuthenticated, IsRestaurantOwner]
+    permission_classes = [IsAuthenticated]
 
     def dispatch(self, request, *args, **kwargs):
         try:
