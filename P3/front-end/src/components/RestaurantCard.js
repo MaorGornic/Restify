@@ -1,12 +1,4 @@
-import {
-  Box,
-  Image,
-  Stack,
-  ButtonGroup,
-  IconButton,
-  Flex,
-  HStack,
-} from "@chakra-ui/react";
+import { Box, Image, Stack, IconButton, Flex, HStack } from "@chakra-ui/react";
 import * as colors from "../utils/colors";
 import { useNavigate } from "react-router-dom";
 import { FaHeart, FaCommentDots, FaQuestionCircle } from "react-icons/fa";
