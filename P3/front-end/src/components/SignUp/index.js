@@ -1,7 +1,7 @@
 import React from "react";
 import axios from "axios";
 import { useMemo, useState, useEffect } from "react";
-import { Box, Flex, Heading } from "@chakra-ui/react";
+import { Box, Flex, Heading, Spacer, Text, Center, Square } from "@chakra-ui/react";
 import { Link, useNavigate } from 'react-router-dom'
 
 const SignUp = () => {
@@ -47,10 +47,10 @@ const SignUp = () => {
           if (!json.last_name) {
             // output error msg
             alert("Register Failed: Check Error Messages.");
-            if (json.username){
+            if (json.username) {
               setFormErr(formErr => ({ ...formErr, username: json.username }));
             }
-            if (json.email){
+            if (json.email) {
               setFormErr(formErr => ({ ...formErr, email: json.email }));
             }
           }
@@ -90,6 +90,18 @@ const SignUp = () => {
 
   // <pre>{JSON.stringify(formValue, undefined, 2)}</pre>
   return (<div className="Landing">
+    <Link to="/">
+      <Flex>
+        <Center w='100px'>
+          <img className="imageLogo" src={require('../../assets/images/logo.png')}
+            width="124" height="120" alt="logo"></img>
+        </Center>
+        <Square size='150px' >
+          <Text fontSize='4xl' color='white'><h1><b>Resti</b>fy</h1></Text>
+        </Square>
+      </Flex>
+    </Link>
+
     <form onSubmit={handleSubmit}>
       <h3 class="landTitle">Sign Up</h3>
 
