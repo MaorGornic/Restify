@@ -3,24 +3,22 @@ import { Box, Flex, Heading, Spinner, Center } from "@chakra-ui/react";
 import * as colors from "../utils/colors";
 import axios from "axios";
 import React, { useState, useEffect } from "react";
-import { useLocation } from "react-router-dom";
 import MenuItem from "../components/MenuItem";
+import Pagination from "../components/Pagination";
 
 let PageSize = 10;
 
 function MenuItems({ id }) {
-  const search = useLocation().search;
+  const [currentPage, setCurrentPage] = useState(1);
   const [menusReq, setMenusReq] = useState([]);
   const [loading, setLoading] = useState(false);
 
-  const getMenuItems = () => {
+  const getMenuItems = (searchUrl) => {
     setLoading(true);
     axios
-      .get(`http://127.0.0.1:8000/restaurants/${id}/menu/items/`)
+      .get(searchUrl)
       .then((res) => {
         setMenusReq(res.data);
-        console.log(res.data);
-        // console.log(res.data.results);
         setLoading(false);
       })
       .catch((err) => {
@@ -29,46 +27,14 @@ function MenuItems({ id }) {
   };
 
   useEffect(() => {
-    getMenuItems();
-  }, []);
-
-  //   const getMenuItems = (searchUrl) => {
-  //     setLoading(true);
-  //     axios
-  //       .get(searchUrl)
-  //       .then((res) => {
-  //         setRestaurantsReq(res.data);
-  //         // console.log(res.data.results);
-  //         setLoading(false);
-  //       })
-  //       .catch((err) => {
-  //         // TODO
-  //       });
-  //   };
-
-  //   const [currentPage, setCurrentPage] = useState(1);
-
-  //   useEffect(() => {
-  //     // console.log(search);
-  //     const filterType = new URLSearchParams(search).get("type");
-  //     let searchUrl;
-
-  //     if (filterType) {
-  //       searchUrl = `http://localhost:8000/restaurants/search/?${filterType}=${new URLSearchParams(
-  //         search
-  //       ).get(filterType)}`;
-  //       if (currentPage > 1) {
-  //         searchUrl = searchUrl.concat(`&?page=${currentPage}`);
-  //       }
-  //     } else {
-  //       searchUrl = "http://localhost:8000/restaurants/search/";
-  //       if (currentPage > 1) {
-  //         searchUrl = searchUrl.concat(`?page=${currentPage}`);
-  //       }
-  //     }
-
-  //     getMenuItems(searchUrl);
-  //   }, [currentPage, search]);
+    if (currentPage) {
+      getMenuItems(
+        `http://127.0.0.1:8000/restaurants/${id}/menu/items/?page=${currentPage}`
+      );
+    } else {
+      getMenuItems(`http://127.0.0.1:8000/restaurants/${id}/menu/items/`);
+    }
+  }, [currentPage]);
 
   return (
     <Box>
@@ -86,6 +52,17 @@ function MenuItems({ id }) {
                 />
               ))}
           </Flex>
+          <Center marginBottom="0.5rem" marginTop="0.5rem" marginRight="30%">
+            {menusReq.count > 0 && (
+              <Pagination
+                className="pagination-bar"
+                currentPage={currentPage}
+                totalCount={menusReq.count}
+                pageSize={PageSize}
+                onPageChange={(page) => setCurrentPage(page)}
+              />
+            )}
+          </Center>
         </Box>
       ) : (
         <Box textAlign="center" marginTop="50vh">
