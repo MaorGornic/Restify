@@ -8,6 +8,8 @@ import Home from "./components/Home";
 import Login from "./components/Login";
 import SignUp from "./components/SignUp";
 import LandingLayout from "./components/LandingLayout";
+import Profile from "./components/Profile";
+import ProfileEdit from "./components/ProfileEdit";
 
 function App() {
   return (
@@ -21,6 +23,8 @@ function App() {
           </Route>
           <Route path="/restaurants" element={<Restaurants />}></Route>
           <Route path="/restaurants/:id" element={<RestaurantView />}></Route>
+          <Route path="/profile" element={<Profile />}></Route>
+          <Route path="/profile/edit" element={<ProfileEdit />}></Route>
         </Routes>
       </BrowserRouter>
     </ChakraProvider>

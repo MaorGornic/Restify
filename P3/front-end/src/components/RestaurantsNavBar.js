@@ -122,6 +122,7 @@ function NavBar() {
               }
               variantColor="teal"
               variant="link"
+              onClick={() => navigate("/restaurants")}
             >
               Home
             </Button>
@@ -172,8 +173,8 @@ function NavBar() {
               Todd
             </MenuButton>
             <MenuList>
-              <MenuItem>Profile</MenuItem>
-              <MenuItem>Edit Profile</MenuItem>
+              <MenuItem onClick={() => navigate("/profile")}>Profile</MenuItem>
+              <MenuItem onClick={() => navigate("/profile/edit")}>Edit Profile</MenuItem>
               <MenuItem onClick={() => navigate("/login")}>Log out</MenuItem>
             </MenuList>
           </Menu>
