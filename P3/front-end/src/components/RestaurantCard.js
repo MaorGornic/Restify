@@ -5,7 +5,7 @@ import { FaHeart, FaCommentDots, FaQuestionCircle } from "react-icons/fa";
 import React, { useState } from "react";
 
 /* Used https://chakra-ui.com/docs/components/layout/box as a reference*/
-function RestaurantCard({ restaurantImg, title, isLiked, views }) {
+function RestaurantCard({ restaurantImg, title, isLiked, views, id }) {
   const navigate = useNavigate();
   const [isLikedState, setIsLikedState] = useState(isLiked);
 
@@ -25,6 +25,7 @@ function RestaurantCard({ restaurantImg, title, isLiked, views }) {
         overflow="hidden"
         style={{ cursor: "pointer" }}
         _hover={{ transform: "scale(1.02)" }}
+        onClick={() => navigate(`/restaurants/${id}`)}
       >
         <Image src={property.imageUrl} height="165px" width="285px" />
         <Box p="6">

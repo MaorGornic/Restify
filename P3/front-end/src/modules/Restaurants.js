@@ -88,6 +88,7 @@ function Restaurants() {
               {restaurantsReq.count > 0 &&
                 restaurantsReq.results.map((restraurant) => (
                   <RestaurantCard
+                    id={restraurant.id}
                     title={restraurant.name}
                     isLiked={true} // need to check if the currently logged in user likes this restaurant
                     views={restraurant.views}
