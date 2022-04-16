@@ -1,11 +1,3 @@
-body {
-    background: rgb(71, 64, 210);
-    background: radial-gradient(circle,
-            rgb(59, 51, 204) 0%,
-            rgb(29, 167, 194) 0%,
-            rgb(42, 42, 209) 100%);
-}
-
 .Landing {
     display: flex;
     flex-direction: column;
@@ -58,5 +50,8 @@ label {
 }
 
 #naving{
+    position: absolute;
+    width: 100%;
+    background: transparent;
     text-align: center;
 }
