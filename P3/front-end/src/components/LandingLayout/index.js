@@ -8,7 +8,7 @@ const LandingLayout = () => {
         <nav id="naving">
             <Link to="/" class="nav-item"> Home </Link>
             <Link to="/login" class="nav-item"> Login </Link>
-            <Link to="/signup" class="nav-item"> <button className="signButton">Signup</button> </Link>
+            <Link to="/signup" class="nav-item"> <button className="signButton">Sign Up</button> </Link>
         </nav>
 
         <Outlet />
