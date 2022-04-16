@@ -174,7 +174,7 @@ function NavBar() {
             <MenuList>
               <MenuItem>Profile</MenuItem>
               <MenuItem>Edit Profile</MenuItem>
-              <MenuItem onClick={() => navigate("/")}>Log out</MenuItem>
+              <MenuItem onClick={() => navigate("/login")}>Log out</MenuItem>
             </MenuList>
           </Menu>
         </Box>
