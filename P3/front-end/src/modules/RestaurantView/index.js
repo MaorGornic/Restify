@@ -1,6 +1,11 @@
 import {
   Box,
   Flex,
+  Tab,
+  TabList,
+  TabPanel,
+  TabPanels,
+  Tabs,
   Button,
   Heading,
   Spinner,
@@ -138,7 +143,110 @@ function RestaurantView() {
                 </Center>
               </Stack>
             </GridItem>
-            <GridItem rowSpan={8} colSpan={4} bg="tomato" />
+            <GridItem rowSpan={8} colSpan={4}>
+              <Box marginLeft="2rem">
+                <Tabs variant="soft-rounded" marginTop="2rem">
+                  <TabList color="white">
+                    <Tab color="white">GENERAL</Tab>
+                    <Tab color="white">COMMENTS</Tab>
+                    <Tab color="white">PICTURES</Tab>
+                    <Tab color="white">BLOG POSTS</Tab>
+                  </TabList>
+                  <TabPanels>
+                    <TabPanel>
+                      <Stack>
+                        <Box>
+                          <Heading
+                            marginTop="0.5rem"
+                            as="h3"
+                            size="md"
+                            style={{ color: "white" }}
+                          >
+                            Restaurant Name
+                          </Heading>
+                          <Heading
+                            marginTop="0.5rem"
+                            as="h3"
+                            size="sm"
+                            style={{
+                              color: "white",
+                              opacity: "0.6",
+                              marginLeft: "1.5rem",
+                            }}
+                          >
+                            {restaurant.name && restaurant.name}
+                          </Heading>
+                        </Box>
+                        <Box>
+                          <Heading
+                            marginTop="0.5rem"
+                            as="h3"
+                            size="md"
+                            style={{ color: "white" }}
+                          >
+                            Restaurant Address
+                          </Heading>
+                          <Heading
+                            marginTop="0.5rem"
+                            as="h3"
+                            size="sm"
+                            style={{
+                              color: "white",
+                              opacity: "0.6",
+                              marginLeft: "1.5rem",
+                            }}
+                          >
+                            {restaurant.address && restaurant.address}
+                          </Heading>
+                        </Box>
+                        <Box>
+                          <Heading
+                            marginTop="0.5rem"
+                            as="h3"
+                            size="md"
+                            style={{ color: "white" }}
+                          >
+                            Restaurant Phone Number
+                          </Heading>
+                          <Heading
+                            marginTop="0.5rem"
+                            as="h3"
+                            size="sm"
+                            style={{
+                              color: "white",
+                              opacity: "0.6",
+                              marginLeft: "1.5rem",
+                            }}
+                          >
+                            {restaurant.phone_num && restaurant.phone_num}
+                          </Heading>
+                        </Box>
+                        <Box>
+                          <Heading
+                            marginTop="0.5rem"
+                            as="h3"
+                            size="md"
+                            style={{ color: "white" }}
+                          >
+                            Menu
+                          </Heading>
+                          {/* Menu goes here */}
+                        </Box>
+                      </Stack>
+                    </TabPanel>
+                    <TabPanel>
+                      <p>two!</p>
+                    </TabPanel>
+                    <TabPanel>
+                      <p>two!</p>
+                    </TabPanel>
+                    <TabPanel>
+                      <p>two!</p>
+                    </TabPanel>
+                  </TabPanels>
+                </Tabs>
+              </Box>
+            </GridItem>
           </Grid>
         </Box>
       ) : (
