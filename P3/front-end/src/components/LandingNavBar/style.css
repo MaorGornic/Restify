@@ -1,0 +1,62 @@
+body {
+    background: rgb(71, 64, 210);
+    background: radial-gradient(circle,
+            rgb(59, 51, 204) 0%,
+            rgb(29, 167, 194) 0%,
+            rgb(42, 42, 209) 100%);
+}
+
+.Landing {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    max-width: 750px;
+    width: 100%;
+    margin: auto;
+}
+
+.Landing>form {
+    width: 80%;
+    padding: 25px;
+    border-radius: 10px;
+    background: #fff;
+}
+
+pre {
+    width: 70%;
+    color: rgb(167, 28, 28);
+    font-size: larger;
+}
+
+.button {
+    width: 100%;
+    background: #0563b4;
+}
+
+p {
+    color: red;
+}
+
+label {
+    color: rgb(81, 81, 238);
+}
+
+.landTitle {
+    color: blue;
+    text-align: center;
+    font-size: 30px;
+}
+
+#noaccount {
+    color: blue;
+}
+
+#join {
+    color: blue;
+}
+
+#naving{
+    text-align: center;
+}
