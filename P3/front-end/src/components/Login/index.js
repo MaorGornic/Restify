@@ -44,6 +44,7 @@ const Login = () => {
                         alert("Login Failed. Please Recheck Login Information.");
                     }
                     else {
+                        // Source: https://stackoverflow.com/questions/40399873/initializing-and-using-sessionstorage-in-react
                         setUser({ token: json.access });
                         window.sessionStorage.setItem("token", json.access);
                         alert("Login Success.");
