@@ -4,6 +4,10 @@ from os.path import isfile, join
 import random
 import requests
 
+# True indicates that the db is empty. Recreates users and restaurants 
+# False means you want to add more records
+FRESH = False    
+
 valid_items = ["tea", "eggs and bacon", "cheese", "hot dog", "chicken", "pizza", "burger", "steak", "salad", "pasta", "soup", "dessert", "drink", "cake", "ice cream", "cake", "coffee", "tea", "eggs and bacon", "cheese", "hot dog"]
 valid_descriptions = ["tea", "eggs and bacon", "cheese", "chicken", "pizza", "burger", "steak", "salad", "pasta", "soup", "dessert", "drink", "cake", "ice cream", "cake", "coffee", "tea", "eggs and bacon", "cheese", "hot dog"]
 all_words = ["this", "account", "restaurant", "is", "great", "sucks", "terrible", "hate", "love", "burger", "want", "cheese"]
@@ -30,7 +34,8 @@ def main():
         }
 
         # sending get request and saving the response as response object
-        r = requests.post(url=URL, data=PARAMS)
+        if FRESH:
+            r = requests.post(url=URL, data=PARAMS)
 
         # logging in
         URL = "http://127.0.0.1:8000/accounts/api/token/"
@@ -49,7 +54,8 @@ def main():
         dir_name = "res_logos"
         logo = {'logo': open(f'{dir_name}/{pick_random_image(dir_name)}', 'rb')}
         # print(restaurant_data)
-        r = requests.post(url=URL, data=restaurants[i], files=logo, headers={'Authorization': f'Bearer {token}'})
+        if FRESH:
+            r = requests.post(url=URL, data=restaurants[i], files=logo, headers={'Authorization': f'Bearer {token}'})
 
         # Add menu items to restaurant 
         URL = "http://127.0.0.1:8000/restaurants/{}/menu/new/".format(i)
@@ -61,7 +67,6 @@ def main():
                 "description": random.choice(valid_descriptions),
                 "price": random.randint(1, 50)
             }        
-            print(r.json())
             dir_name = "menu_images"
             picture = {'picture': open(f'{dir_name}/{pick_random_image(dir_name)}', 'rb')}
             r = requests.post(url=URL, data=menu_item_dic, files=picture, headers={'Authorization': f'Bearer {token}'})
@@ -72,7 +77,6 @@ def main():
             new_comment = generate_random_comment()
             comment_data = {"contents": new_comment}
             r = requests.post(url=URL, data=comment_data, headers={'Authorization': f'Bearer {token}'})
-            print(r.json())
 
         # Each restaurant has between 0-5 pictures
         URL = "http://127.0.0.1:8000/restaurants/{}/images/upload/".format(i)
@@ -92,8 +96,13 @@ def main():
             dir_name = "blog_banners"
             banner = {'banner': open(f'{dir_name}/{pick_random_image(dir_name)}', 'rb')}
             r = requests.post(url=URL, data=blog_post_dic, files=banner, headers={'Authorization': f'Bearer {token}'})
-            print(r.json())
-        
+
+        # Each users follows a few restaurants below it 
+
+        for j in range(1, i):
+            if random.randint(1, 10) == 1:   # 1/10 probability to follow a restaurant 
+                URL = "http://127.0.0.1:8000/restaurants/{}/follow/".format(j)
+                r = requests.patch(url=URL, headers={'Authorization': f'Bearer {token}'})
 
 def pick_random_image(dir_name):
     images = [f for f in listdir(dir_name) if isfile(join(dir_name, f))]
