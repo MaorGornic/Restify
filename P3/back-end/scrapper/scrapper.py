@@ -12,7 +12,6 @@ def main():
     restaurants = scrape_restaurants()
 
     for i in range(1, len(restaurants) + 1):
-    # for i in range(1):
         URL = "http://127.0.0.1:8000/accounts/register/"
         username = f"naruto{i}"
         password = "Cp98WbZYVmJM7Cj"
