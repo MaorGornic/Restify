@@ -31,8 +31,6 @@ function Notification({ style }) {
 
   const navigate = useNavigate();
 
-  
-
   const getNotifications = (searchUrl) => {
     const config = {
       headers: {
@@ -87,8 +85,7 @@ function Notification({ style }) {
                 // create PopoverBody element with notification details
                 <PopoverBody>
                   <VStack>
-                    <Text fontSize="sm">{notif.type}</Text>
-                    <Text fontSize="sm">{notif.created_at}</Text>
+                    <Text fontSize="sm">{notif.actor_user} {notif.type}</Text>
                   </VStack>
                 </PopoverBody>
               ))}
