@@ -2,7 +2,7 @@ import React from "react";
 import { Link, useNavigate } from 'react-router-dom'
 import axios from "axios";
 import { useMemo, useState, useEffect, useLocation } from "react";
-import { Box, Flex, Heading } from "@chakra-ui/react";
+import { Box, Flex, Heading, Spacer, Text, Center, Square } from "@chakra-ui/react";
 
 const Login = () => {
     document.body.style = 'background: rgb(71, 64, 210); background: linear-gradient(to top,rgba(137, 247, 254, 1),rgba(102, 166, 255, 1));';
@@ -69,6 +69,18 @@ const Login = () => {
 
     // <pre>{JSON.stringify(formValue, undefined, 2)}</pre>
     return (<div className="Landing">
+        <Link to="/">
+            <Flex>
+                <Center w='100px'>
+                    <img className="imageLogo" src={require('../../assets/images/logo.png')}
+                        width="124" height="120" alt="logo"></img>
+                </Center>
+                <Square size='150px' >
+                    <Text fontSize='4xl' color='white'><h1><b>Resti</b>fy</h1></Text>
+                </Square>
+            </Flex>
+        </Link>
+
         <form onSubmit={handleSubmit}>
             <h3 class="landTitle">Login</h3>
 
