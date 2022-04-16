@@ -49,6 +49,7 @@ const Login = () => {
                             token: json.access
                         };
                         const userToken = React.createContext(globalState);
+                        window.sessionStorage.setItem("token", json.access);
                         alert("Login Success.");
                         navigate('/restaurants');
                     }
