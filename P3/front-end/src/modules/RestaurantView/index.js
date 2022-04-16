@@ -25,6 +25,7 @@ import MainNavBar from "../../components/MainNavBar";
 import MenuItems from "../../components/MenuItems";
 import Comments from "../../components/Comments";
 import Carousel from "../../components/Carousel";
+import BlogsSmall from "../../components/BlogsSmall";
 
 function RestaurantView() {
   const { id } = useParams();
@@ -247,7 +248,7 @@ function RestaurantView() {
                     </TabPanel>
                     {/* Blog posts */}
                     <TabPanel>
-                      <p>two!</p>
+                      <BlogsSmall id={id} />
                     </TabPanel>
                   </TabPanels>
                 </Tabs>
