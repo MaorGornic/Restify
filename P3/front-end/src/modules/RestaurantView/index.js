@@ -1,17 +1,18 @@
 import {
   Box,
   Flex,
-  Badge,
   Button,
   Heading,
   Spinner,
   Center,
+  Tag,
+  TagLabel,
   Image,
   Grid,
   GridItem,
   Stack,
 } from "@chakra-ui/react";
-import { FaHeart } from "react-icons/fa";
+import { FaHeart, FaUserFriends } from "react-icons/fa";
 import * as colors from "../../utils/colors";
 import axios from "axios";
 import React, { useState, useEffect } from "react";
@@ -53,9 +54,10 @@ function RestaurantView() {
             margin: "auto",
             marginTop: "1rem",
             background: colors.purple.medium,
+            height: "100%",
           }}
         >
-          <Grid h="100%" templateColumns="repeat(5, 1fr)" gap={5}>
+          <Grid templateColumns="repeat(5, 1fr)" gap={5}>
             <GridItem rowSpan={2} colSpan={1}>
               <Stack marginLeft="1rem">
                 <Heading
@@ -117,15 +119,26 @@ function RestaurantView() {
                   Like
                 </Button>
                 <Center>
-                  <Stack marginTop="2rem">
-                    <Badge variant="solid" background={colors.grey.dark}>
-                      {`Followers: ${restaurant.followers.length}`}
-                    </Badge>
+                  <Stack marginTop="2rem" marginBottom="1rem">
+                    <Tag size="md" background={colors.grey.dark}>
+                      <FaUserFriends color="white" />
+                      <TagLabel marginLeft="0.5rem" color="white">
+                        {restaurant.followers &&
+                          `Followers: ${restaurant.followers.length}`}
+                      </TagLabel>
+                    </Tag>
+                    <Tag size="md" background={colors.grey.dark}>
+                      <FaHeart color="white" />
+                      <TagLabel marginLeft="0.5rem" color="white">
+                        {restaurant.likes &&
+                          `Likes: ${restaurant.likes.length}`}
+                      </TagLabel>
+                    </Tag>
                   </Stack>
                 </Center>
               </Stack>
             </GridItem>
-            <GridItem rowSpan={2} colSpan={4} bg="tomato" />
+            <GridItem rowSpan={8} colSpan={4} bg="tomato" />
           </Grid>
         </Box>
       ) : (
