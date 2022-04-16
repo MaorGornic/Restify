@@ -6,6 +6,7 @@ import requests
 
 valid_items = ["tea", "eggs and bacon", "cheese", "hot dog"]
 valid_descriptions = ["tea", "eggs and bacon", "cheese", "hot dog"]
+all_words = ["this", "account", "restaurant", "is", "great", "sucks", "terrible", "hate", "love", "burger", "want", "cheese"]
 
 def main():
     restaurants = scrape_restaurants()
@@ -66,10 +67,25 @@ def main():
             picture = {'picture': open(f'{dir_name}/{pick_random_image(dir_name)}', 'rb')}
             r = requests.post(url=URL, data=menu_item_dic, files=picture, headers={'Authorization': f'Bearer {token}'})
 
+        # Each restaurant has between 0-9 comments
+        URL = "http://127.0.0.1:8000/restaurants/{}/comments/new/".format(i)
+        for j in range(1, random.randint(1, 10)):
+            new_comment = generate_random_comment()
+            comment_data = {"contents": new_comment}
+            r = requests.post(url=URL, data=comment_data, headers={'Authorization': f'Bearer {token}'})
+            print(r.json())
+        
 def pick_random_image(dir_name):
     images = [f for f in listdir(dir_name) if isfile(join(dir_name, f))]
     return random.choice(images)
 
+
+def generate_random_comment():
+    words = random.randint(1, 30)
+    comment = ""
+    for _ in range(words):
+        comment += random.choice(all_words) + " "
+    return comment.strip()
 
 if __name__ == '__main__':
     main()
