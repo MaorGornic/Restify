@@ -8,7 +8,7 @@ import Pagination from "../components/Pagination";
 
 let PageSize = 10;
 
-function MenuItems({ id }) {
+function MenuItems({ res_id, isOwner }) {
   const [currentPage, setCurrentPage] = useState(1);
   const [menusReq, setMenusReq] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -29,10 +29,10 @@ function MenuItems({ id }) {
   useEffect(() => {
     if (currentPage) {
       getMenuItems(
-        `http://127.0.0.1:8000/restaurants/${id}/menu/items/?page=${currentPage}`
+        `http://127.0.0.1:8000/restaurants/${res_id}/menu/items/?page=${currentPage}`
       );
     } else {
-      getMenuItems(`http://127.0.0.1:8000/restaurants/${id}/menu/items/`);
+      getMenuItems(`http://127.0.0.1:8000/restaurants/${res_id}/menu/items/`);
     }
   }, [currentPage]);
 
@@ -44,6 +44,8 @@ function MenuItems({ id }) {
             {menusReq.count > 0 &&
               menusReq.results.map((menuItem) => (
                 <MenuItem
+                  key={menuItem.id}
+                  isOwner={isOwner}
                   id={menuItem.id}
                   name={menuItem.name}
                   description={menuItem.description}

@@ -367,7 +367,7 @@ function RestaurantView() {
                           >
                             Menu
                           </Heading>
-                          <MenuItems id={id} />
+                          <MenuItems res_id={id} />
                         </Box>
                       </Stack>
                     </TabPanel>

@@ -1,12 +1,13 @@
-import { Box, Image, Stack, Text, Badge, Flex, HStack } from "@chakra-ui/react";
+import { Box, Image, Stack, Text, Badge, Flex } from "@chakra-ui/react";
 import * as colors from "../utils/colors";
 import { useNavigate } from "react-router-dom";
 import { FaHeart, FaCommentDots, FaQuestionCircle } from "react-icons/fa";
 import React, { useState } from "react";
 
 /* Used https://chakra-ui.com/docs/components/layout/box as a reference*/
-function MenuItem({ menutImg, name, description, price, id }) {
+function MenuItem({ menutImg, name, description, price, id, isOwner }) {
   const navigate = useNavigate();
+  const [isHovering, setIsHovering] = useState(false);
 
   return (
     <Stack>
@@ -18,22 +19,28 @@ function MenuItem({ menutImg, name, description, price, id }) {
         // borderWidth="1px"
         borderRadius="lg"
         overflow="hidden"
-        // style={{ cursor: "pointer" }}
         _hover={{ transform: "scale(1.01)" }}
-        // onClick={() => navigate(`/restaurants/${id}`)}
+        cursor={isOwner ? "pointer" : "default"}
+        onMouseEnter={() => setIsHovering(true)}
+        onMouseLeave={() => setIsHovering(false)}
+        onClick={() => {
+          if (isOwner) {
+            alert("hey owner");
+          }
+        }}
       >
         <Flex>
           <Image
             style={{ marginTop: "auto" }}
             borderRadius="2rem"
             width="270px"
-            // objectFit="cover"
             // height="200px"
             marginTop="1.4rem"
             src={menutImg}
             ml="3"
             mb="3"
           />
+
           <Box ml="3">
             <Badge
               mt="4"
@@ -61,6 +68,13 @@ function MenuItem({ menutImg, name, description, price, id }) {
           </Box>
         </Flex>
       </Box>
+      {isOwner && isHovering && (
+        <Box bg="grey" opacity="0.6">
+          <Text color="white" marginLeft="40%">
+            EDIT
+          </Text>
+        </Box>
+      )}
     </Stack>
   );
 }
