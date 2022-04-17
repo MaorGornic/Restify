@@ -8,10 +8,11 @@ import Comment from "../components/Comment";
 import * as constants from "../utils/constants";
 import BlogSmall from "./BlogSmall";
 
-function Comments({ id }) {
+function Comments({ id, isOwner }) {
   const [currentPage, setCurrentPage] = useState(1);
   const [blogsReq, setBlogsReq] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [blog, setBlog] = useState(null);
 
   const getBlogs = (searchUrl) => {
     setLoading(true);
@@ -34,7 +35,7 @@ function Comments({ id }) {
     } else {
       getBlogs(`http://127.0.0.1:8000/restaurants/${id}/blog/`);
     }
-  }, [currentPage]);
+  }, [currentPage, blog]);
 
   return (
     <Box>
@@ -42,7 +43,7 @@ function Comments({ id }) {
         <Box>
           <Box
             overflowY={blogsReq.count > 3 ? "scroll" : "none"}
-            h="80vh"
+            h="70vh"
             mt="1"
           >
             <Stack mt="1.2rem" ml="2" mr="2">
@@ -52,6 +53,9 @@ function Comments({ id }) {
                     title={blog.title}
                     contents={blog.contents}
                     banner={blog.banner}
+                    id={blog.id}
+                    setBlog={setBlog}
+                    isOwner={isOwner}
                   />
                 ))}
               <Center

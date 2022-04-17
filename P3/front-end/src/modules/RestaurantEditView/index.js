@@ -64,12 +64,15 @@ function RestaurantView() {
     axios
       .get("http://127.0.0.1:8000/restaurants/owned/", config)
       .then((res) => {
-        if (res.data.id != id) {
+        if (res.data.id != id || !window.sessionStorage.getItem("token")) {
           navigate("/restaurants");
         }
         setLoading(false);
       })
       .catch((err) => {
+        if (err.response.status == 401) {
+          navigate("/restaurants");
+        }
         // TODO
       });
   };
@@ -121,8 +124,8 @@ function RestaurantView() {
   };
 
   useEffect(() => {
-    getRestaurant();
     getOwnedRestaurant();
+    getRestaurant();
   }, []);
 
   return (
@@ -132,11 +135,11 @@ function RestaurantView() {
         <Box
           style={{
             marginLeft: "2rem",
-            height: "88vh",
+            // height: "88vh",
             margin: "auto",
             marginTop: "1rem",
             background: colors.purple.medium,
-            height: "100%",
+            height: "100vh",
           }}
         >
           <Grid templateColumns="repeat(5, 1fr)" gap={5}>
@@ -420,11 +423,11 @@ function RestaurantView() {
                     </TabPanel>
                     {/* Pictures */}
                     <TabPanel>
-                      <Carousel id={id} isOwner />
+                      <Carousel res_id={id} isOwner />
                     </TabPanel>
                     {/* Blog posts */}
                     <TabPanel>
-                      <BlogsSmall id={id} />
+                      <BlogsSmall id={id} isOwner />
                     </TabPanel>
                   </TabPanels>
                 </Tabs>

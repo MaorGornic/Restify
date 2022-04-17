@@ -9,7 +9,7 @@ import {
 import MainNavBar from "../MainNavBar";
 
 
-const ProfileEdit = () => {
+const Feed = () => {
     const [userProfile, setuserProfile] = useState([]);
 
     const initState = { first_name: "", last_name: "", email: "", phone_num: "", avatar: "" };
@@ -143,76 +143,8 @@ const ProfileEdit = () => {
         <Box>
             <MainNavBar>
             </MainNavBar>
-
-            <div className="Profile">
-                <FormControl className="profForm" onSubmit={handleSubmit}>
-                    <Flex><Center>
-                        <Box w='300px' class='idCard'>
-                            <Box>
-                                <Center><Box>
-                                    <Avatar size='2xl' name='userAvatar' src={userProfile.avatar} />{' '}
-                                </Box></Center>
-                                <Center><Box>
-                                    <Text as='abbr' fontSize='2xl' color={'black'}>{userProfile.username}</Text>
-                                </Box></Center>
-                                <Center><Box>
-                                    <Text as='kbd' color={'gray'}>{userProfile.email}</Text>
-                                </Box></Center>
-                            </Box>
-                            <Center pl={'28%'} pt={'3%'} maxWidth={'72%'}>
-                                    <Button className='transButton' name='avatar' colorScheme='transparent' size='md'><input type="file" name='avatar' id="submitButton" onChange={handleChange}/></Button>
-                            </Center>
-                        </Box></Center>
-
-                        <Box w='70%'>
-                            <h4 className="profileTitle">Profile Settings</h4>
-
-                            <Flex>
-                                <Box w='50.5%' >
-                                    <FormLabel htmlFor='first-name' className="profLabel">First name</FormLabel>
-                                </Box >
-                                <Box w='49.5%' >
-                                    <FormLabel htmlFor='last-name' className="profLabel">Last name</FormLabel>
-                                </Box >
-                            </Flex>
-                            <Flex>
-                                <Center w='49.5%' >
-                                    <Input id='first-name' name="first_name" onChange={handleChange}
-                                        defaultValue={userProfile.first_name} />
-                                </Center >
-                                <Box w='1%'></Box>
-                                <Center w='49.5%' >
-                                    <Input id='last-name' name="last_name" onChange={handleChange} defaultValue={userProfile.last_name} />
-                                </Center >
-                            </Flex>
-
-                            <Flex>
-                                <Box w='49.5%' >
-                                    <p>{formErr.first_name}</p>
-                                </Box >
-                                <Box w='1%'></Box>
-                                <Box w='49.5%' >
-                                    <p>{formErr.last_name}</p>
-                                </Box >
-                            </Flex>
-
-                            <FormLabel htmlFor='email' className="profLabel">Email</FormLabel>
-                            <Input id='email' name="email" type='email' onChange={handleChange} defaultValue={userProfile.email} />
-                            <p>{formErr.email}</p>
-                            <FormLabel htmlFor='phone' className="profLabel">Phone Number</FormLabel>
-                            <Input id='phone' name="phone_num" onChange={handleChange} defaultValue={userProfile.phone_num} />
-                            <p>{formErr.phone_num}</p>
-
-                            <Center pr={'40%'} pt={'3%'} >
-                                <Button type="submit" onClick={handleSubmit} colorScheme='blue' size='md'>SAVE PROFILE</Button>
-                            </Center>
-
-                        </Box>
-                    </Flex>
-                </FormControl>
-            </div>
         </Box>
     );
 }
 
-export default ProfileEdit;
+export default Feed;

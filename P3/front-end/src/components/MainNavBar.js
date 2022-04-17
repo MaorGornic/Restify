@@ -26,6 +26,7 @@ import {
 } from "react-icons/fa";
 import Notification from "./Notification";
 import axios from "axios";
+import { Avatar, AvatarBadge, AvatarGroup } from '@chakra-ui/react'
 
 function NavBar() {
   const navigate = useNavigate();
@@ -83,6 +84,7 @@ function NavBar() {
               }
               variantColor="teal"
               variant="link"
+              onClick={() => navigate("/feed")}
             >
               Feed
             </Button>
@@ -102,7 +104,7 @@ function NavBar() {
           </ButtonGroup>
         </HStack>
         <Box style={{ marginTop: "1.5rem", marginRight: "4rem" }}>
-          <Notification style={{ textDecoration: "none" }} />
+          <Notification style={{ textDecoration: "none", marginTop: "-1rem" }} />
           <Menu>
             <MenuButton
               style={{
@@ -114,9 +116,7 @@ function NavBar() {
               as={Button}
               rightIcon={<FaCaretDown />}
               leftIcon={
-                <FaUserCircle
-                  style={{ color: "white", width: "20px", height: "20px" }}
-                />
+                <Avatar size='xs' name='userAvatar' src={window.sessionStorage.getItem("avatar")} />
               }
             >
               {window.sessionStorage.getItem("username")}

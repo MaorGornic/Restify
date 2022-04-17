@@ -40,9 +40,21 @@ class GetBlogFeed(ListAPIView):
     serializer_class = BlogSerializer
     permission_classes = [IsAuthenticated]
 
+    # def dispatch(self, request, *args, **kwargs):
+    #     print(request.user.id)
+    #     curr_user = ModifiedUser.objects.get(id=request.user.id)
+    #     try:
+    #         self.followed_rest = Restaurant.objects.get(followers=curr_user)
+    #     except:
+    #         return JsonResponse({"detail": "No Followed Restaurants."}, status=204)
+    #     return super().dispatch(request, *args, **kwargs)
+
     def get_queryset(self):
         curr_user = ModifiedUser.objects.get(id=self.request.user.id)
-        followed_rest = Restaurant.objects.get(followers=curr_user)
+        try:
+            followed_rest = Restaurant.objects.get(followers=curr_user)
+        except Restaurant.DoesNotExist:
+            followed_rest = None
         # return Blog.objects.filter(likes=curr_user) # Method to get all liked blogs
         return Blog.objects.filter(restaurant=followed_rest).order_by('id')
 

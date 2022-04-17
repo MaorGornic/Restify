@@ -52,7 +52,7 @@ function RestaurantView() {
         setIsFollowing(true);
       })
       .catch((err) => {
-        // TODO
+        if (err.response.status == 401) navigate("/login");
       });
   };
 
@@ -91,7 +91,7 @@ function RestaurantView() {
         setIsLiked(true);
       })
       .catch((err) => {
-        // TODO
+        if (err.response.status == 401) navigate("/login");
       });
   };
 
@@ -167,11 +167,10 @@ function RestaurantView() {
         <Box
           style={{
             marginLeft: "2rem",
-            height: "88vh",
+            height: "100vh",
             margin: "auto",
             marginTop: "1rem",
             background: colors.purple.medium,
-            height: "100%",
           }}
         >
           <Grid templateColumns="repeat(5, 1fr)" gap={5}>
@@ -377,7 +376,7 @@ function RestaurantView() {
                     </TabPanel>
                     {/* Pictures */}
                     <TabPanel>
-                      <Carousel id={id} />
+                      <Carousel res_id={id} />
                     </TabPanel>
                     {/* Blog posts */}
                     <TabPanel>
