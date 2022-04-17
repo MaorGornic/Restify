@@ -25,6 +25,7 @@ import {
   FaUserCircle,
 } from "react-icons/fa";
 import Notification from "./Notification";
+import axios from "axios";
 
 function NavBar() {
   const navigate = useNavigate();
@@ -117,12 +118,20 @@ function NavBar() {
                 />
               }
             >
-              Todd
+              {window.sessionStorage.getItem("username")}
             </MenuButton>
             <MenuList>
               <MenuItem onClick={() => navigate("/profile")}>Profile</MenuItem>
               <MenuItem onClick={() => navigate("/profile/edit")}>Edit Profile</MenuItem>
-              <MenuItem onClick={() => navigate("/login")}>Log out</MenuItem>
+              <MenuItem onClick={() => {
+                const config = {
+                  headers: {
+                    Authorization: `Bearer ${window.sessionStorage.getItem("token")}`,
+                  },
+                };
+                window.sessionStorage.setItem("token", '');
+                navigate("/login");
+              }}>Log out</MenuItem>
             </MenuList>
           </Menu>
         </Box>

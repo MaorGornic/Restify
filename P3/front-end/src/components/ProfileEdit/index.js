@@ -68,6 +68,10 @@ const ProfileEdit = () => {
                     navigate('/profile');
                 })
                 .catch(error => {
+                    if (error.response.status === 401){
+                        navigate('/login');
+                        alert('User Validation Failed. Please Login.');
+                    }
                     if (!error.response.data.id) {
                         // output error msg
                         alert("Saving Failed: Check Error Messages.");
@@ -114,7 +118,10 @@ const ProfileEdit = () => {
                 setuserProfile(respond.data);
             })
             .catch((err) => {
-                console.log(err.response);
+                if (err.response.status === 401){
+                    navigate('/login');
+                    alert('User Validation Failed. Please Login.');
+                }
             });
     }, []);
 

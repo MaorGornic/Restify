@@ -48,6 +48,7 @@ const Login = () => {
                         // Source: https://stackoverflow.com/questions/40399873/initializing-and-using-sessionstorage-in-react
                         setUser({ token: json.access });
                         window.sessionStorage.setItem("token", json.access);
+                        window.sessionStorage.setItem("username", formValue.username);
                         alert("Login Success.");
                         document.body.style = 'background: transparent;';
                         navigate('/restaurants');

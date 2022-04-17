@@ -30,7 +30,10 @@ const Profile = () => {
                 setuserProfile(respond.data);
             })
             .catch((err) => {
-                console.log(err.response);
+                if (err.response.status === 401){
+                    navigate('/login');
+                    alert('User Validation Failed. Please Login.');
+                }
             });
     }, []);
 
