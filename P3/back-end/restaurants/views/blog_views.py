@@ -52,11 +52,12 @@ class GetBlogFeed(ListAPIView):
     def get_queryset(self):
         curr_user = ModifiedUser.objects.get(id=self.request.user.id)
         try:
-            followed_rest = Restaurant.objects.get(followers=curr_user)
+            followed_rest = Restaurant.objects.filter(followers=curr_user)
         except Restaurant.DoesNotExist:
             followed_rest = None
+        print(followed_rest)
         # return Blog.objects.filter(likes=curr_user) # Method to get all liked blogs
-        return Blog.objects.filter(restaurant=followed_rest).order_by('id')
+        return Blog.objects.filter(restaurant__in=followed_rest).order_by('id')
 
 class GetBlogRest(ListAPIView):
     queryset = Blog.objects.all()
