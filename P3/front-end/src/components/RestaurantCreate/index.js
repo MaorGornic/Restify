@@ -167,8 +167,8 @@ const RestaurantCreate = () => {
                             </Box>
                             <Center pl={'28%'} pt={'3%'} maxWidth={'72%'}>
                                     <Button className='transButton' name='avatar' colorScheme='transparent' 
-                                    size='md'><input type="file" name='avatar' id="submitButton" 
-                                    onChange={handleChange}/></Button>
+                                    size='md'>
+                                        <input type="file" name='avatar' id="submitButton" onChange={handleChange}/></Button>
                             </Center>
                         </Box></Center>
 

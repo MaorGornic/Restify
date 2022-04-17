@@ -120,9 +120,8 @@ function Notification({ style }) {
                     if (!notif.viewed) {
                       notif.viewed = true;
                       axios
-                        .patch(
-                          `http://127.0.0.1:8000/accounts/notifications/viewed/${notif.id}/`,
-                          notif,
+                        .delete(
+                          `http://127.0.0.1:8000/accounts/notifications/delete/${notif.id}/`,
                           {
                             headers: {
                               Authorization: `Bearer ${window.sessionStorage.getItem(
