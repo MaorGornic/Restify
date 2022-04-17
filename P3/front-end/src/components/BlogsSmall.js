@@ -1,18 +1,28 @@
-import { Box, Spinner, Center, Stack } from "@chakra-ui/react";
+import {
+  Box,
+  Spinner,
+  Center,
+  Stack,
+  Text,
+  HStack,
+  IconButton,
+} from "@chakra-ui/react";
 // import Pagination from "../components/Pagination";
 import * as colors from "../utils/colors";
 import axios from "axios";
 import React, { useState, useEffect } from "react";
 import Pagination from "../components/Pagination";
-import Comment from "../components/Comment";
+import { Link, useNavigate } from "react-router-dom";
 import * as constants from "../utils/constants";
 import BlogSmall from "./BlogSmall";
+import { FaPlusCircle } from "react-icons/fa";
 
 function Comments({ id, isOwner }) {
   const [currentPage, setCurrentPage] = useState(1);
   const [blogsReq, setBlogsReq] = useState([]);
   const [loading, setLoading] = useState(false);
   const [blog, setBlog] = useState(null);
+  const navigate = useNavigate();
 
   const getBlogs = (searchUrl) => {
     setLoading(true);
@@ -39,6 +49,19 @@ function Comments({ id, isOwner }) {
 
   return (
     <Box>
+      {isOwner && (
+        <HStack ml="2">
+          <IconButton
+            style={{ marginTop: ".5rem" }}
+            // height="3vh"
+            colorScheme="blue"
+            icon={<FaPlusCircle />}
+            onClick={() => navigate(`/restaurants/${id}/blogs/create`)}
+          />
+          <Text color="white">Add Blog Post</Text>
+        </HStack>
+      )}
+
       {!loading ? (
         <Box>
           <Box
