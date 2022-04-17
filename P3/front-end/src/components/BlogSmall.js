@@ -6,14 +6,35 @@ import {
   Image,
   HStack,
   Button,
+  IconButton,
 } from "@chakra-ui/react";
 import * as colors from "../utils/colors";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { FaHeart } from "react-icons/fa";
+import { FaHeart, FaTrashAlt } from "react-icons/fa";
+import axios from "axios";
 
-function BlogSmall({ title, contents, banner, id }) {
+function BlogSmall({ title, contents, banner, id, setBlog, isOwner }) {
   const navigate = useNavigate();
+
+  const deleteBlog = () => {
+    const config = {
+      headers: {
+        Authorization: `Bearer ${window.sessionStorage.getItem("token")}`,
+      },
+    };
+
+    axios
+      .delete(`http://127.0.0.1:8000/restaurants/blog/${id}/delete/`, config)
+      .then((res) => {
+        // need to trigger reload in menu items
+        setBlog(res.data);
+      })
+      .catch((err) => {
+        setBlog(err.data);
+      });
+  };
+
   return (
     <Stack>
       <Box
@@ -47,16 +68,30 @@ function BlogSmall({ title, contents, banner, id }) {
               >
                 READ MORE
               </Button>
-              <Button
-                leftIcon={<FaHeart />}
-                background={colors.black.dark}
-                color="white"
-                opacity="0.7"
-                variant="solid"
-                _hover={{ opacity: "1" }}
-              >
-                LIKE
-              </Button>
+              {!isOwner ? (
+                <Button
+                  leftIcon={<FaHeart />}
+                  background={colors.black.dark}
+                  color="white"
+                  opacity="0.7"
+                  variant="solid"
+                  _hover={{ opacity: "1" }}
+                >
+                  LIKE
+                </Button>
+              ) : (
+                <IconButton
+                  background={colors.black.dark}
+                  colorScheme="blue"
+                  opacity="0.7"
+                  icon={<FaTrashAlt />}
+                  _hover={{ opacity: "1" }}
+                  onClick={() => {
+                    deleteBlog();
+                    // deleteComment();
+                  }}
+                />
+              )}
             </HStack>
           </Stack>
           <Box>

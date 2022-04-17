@@ -424,7 +424,7 @@ function RestaurantView() {
                     </TabPanel>
                     {/* Blog posts */}
                     <TabPanel>
-                      <BlogsSmall id={id} />
+                      <BlogsSmall id={id} isOwner />
                     </TabPanel>
                   </TabPanels>
                 </Tabs>
