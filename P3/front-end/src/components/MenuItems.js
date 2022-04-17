@@ -12,6 +12,7 @@ function MenuItems({ res_id, isOwner }) {
   const [currentPage, setCurrentPage] = useState(1);
   const [menusReq, setMenusReq] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [menuItem, setMenuItem] = useState(false);
 
   const getMenuItems = (searchUrl) => {
     setLoading(true);
@@ -34,7 +35,7 @@ function MenuItems({ res_id, isOwner }) {
     } else {
       getMenuItems(`http://127.0.0.1:8000/restaurants/${res_id}/menu/items/`);
     }
-  }, [currentPage]);
+  }, [currentPage, menuItem]);
 
   return (
     <Box>
@@ -51,6 +52,8 @@ function MenuItems({ res_id, isOwner }) {
                   description={menuItem.description}
                   menutImg={menuItem.picture}
                   price={menuItem.price}
+                  res_id={res_id}
+                  setMenuItem={setMenuItem}
                 />
               ))}
           </Flex>
