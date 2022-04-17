@@ -144,7 +144,6 @@ const RestaurantCreate = () => {
             )
             .then(res => {
                 navigate(`/restaurants/${res.data.id}`);
-                alert("Can Own One Restaurant Only.")
             })
             .catch((err) => {
                 if (err.response.status === 401) {
