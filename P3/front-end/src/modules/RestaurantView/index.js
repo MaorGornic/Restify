@@ -52,7 +52,7 @@ function RestaurantView() {
         setIsFollowing(true);
       })
       .catch((err) => {
-        // TODO
+        if (err.response.status == 401) navigate("/login");
       });
   };
 
@@ -91,7 +91,7 @@ function RestaurantView() {
         setIsLiked(true);
       })
       .catch((err) => {
-        // TODO
+        if (err.response.status == 401) navigate("/login");
       });
   };
 
@@ -377,7 +377,7 @@ function RestaurantView() {
                     </TabPanel>
                     {/* Pictures */}
                     <TabPanel>
-                      <Carousel id={id} />
+                      <Carousel res_id={id} />
                     </TabPanel>
                     {/* Blog posts */}
                     <TabPanel>

@@ -126,7 +126,7 @@ function Comments({ id, isOwner }) {
                     res_id={id}
                     id={comment.id}
                     setComment={setCommentSate}
-                    isOwner
+                    isOwner={isOwner}
                   />
                 ))}
             </Stack>
