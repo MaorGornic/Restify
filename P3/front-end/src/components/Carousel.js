@@ -1,4 +1,4 @@
-import { Image } from "@chakra-ui/react";
+import { Image, Text, Center } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
@@ -31,7 +31,7 @@ function CustomCarousel({ id }) {
     );
   }, [currentPage]);
 
-  return (
+  return imagesReq.count > 0 ? (
     <Carousel
       infiniteLoop
       showArrows={true}
@@ -64,6 +64,12 @@ function CustomCarousel({ id }) {
           );
         })}
     </Carousel>
+  ) : (
+    <Center>
+      <Text color="white" fontSize="5xl" marginTop="30vh">
+        Not Available
+      </Text>
+    </Center>
   );
 }
 

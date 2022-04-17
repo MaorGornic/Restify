@@ -1,16 +1,5 @@
-import {
-  Box,
-  Image,
-  Stack,
-  Text,
-  Badge,
-  Flex,
-  HStack,
-  Textarea,
-  Button,
-} from "@chakra-ui/react";
+import { Box, Stack, Text, Badge, HStack } from "@chakra-ui/react";
 import * as colors from "../utils/colors";
-import { useNavigate } from "react-router-dom";
 import React, { useState } from "react";
 
 /* Used https://chakra-ui.com/docs/components/layout/box as a reference*/
@@ -19,15 +8,12 @@ function Comment({ authorName, timestamp, contents }) {
     <Stack>
       <Box
         background={colors.purple.medium}
-        // maxW="450px"
-        // maxHeight="200px"
-        // minHeight="260px"
-        // borderWidth="1px"
         borderRadius="lg"
         overflow="hidden"
       >
         <HStack>
           <Badge
+            marginTop="1rem"
             bg={colors.blue.medium}
             color="white"
             borderRadius="5px"
@@ -36,10 +22,10 @@ function Comment({ authorName, timestamp, contents }) {
             {authorName}
           </Badge>
           <Text color="white" size="xs">
-            Posted 2 weeks ago
+            {new Date(timestamp).toUTCString()}
           </Text>
         </HStack>
-        <Text color="white" mt="1">
+        <Text color="white" marginTop="-0.5rem">
           {contents}
         </Text>
       </Box>
