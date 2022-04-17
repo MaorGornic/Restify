@@ -416,7 +416,7 @@ function RestaurantView() {
                     </TabPanel>
                     {/* Comments */}
                     <TabPanel>
-                      <Comments id={id} />
+                      <Comments id={id} isOwner />
                     </TabPanel>
                     {/* Pictures */}
                     <TabPanel>
