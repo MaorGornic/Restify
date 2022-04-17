@@ -160,7 +160,7 @@ function CustomCarousel({ res_id, isOwner }) {
         <Stack
           onMouseEnter={() => setPictureEdit(true)}
           onMouseLeave={() => setPictureEdit(false)}
-          _hover={{ transform: "scale(1.02)" }}
+          _hover={{ transform: isOwner ? "scale(1.02)" : "scale(1)" }}
         >
           <Carousel
             infiniteLoop
