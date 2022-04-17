@@ -420,7 +420,7 @@ function RestaurantView() {
                     </TabPanel>
                     {/* Pictures */}
                     <TabPanel>
-                      <Carousel id={id} />
+                      <Carousel id={id} isOwner />
                     </TabPanel>
                     {/* Blog posts */}
                     <TabPanel>
