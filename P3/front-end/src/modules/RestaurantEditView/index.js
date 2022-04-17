@@ -64,12 +64,15 @@ function RestaurantView() {
     axios
       .get("http://127.0.0.1:8000/restaurants/owned/", config)
       .then((res) => {
-        if (res.data.id != id) {
+        if (res.data.id != id || !window.sessionStorage.getItem("token")) {
           navigate("/restaurants");
         }
         setLoading(false);
       })
       .catch((err) => {
+        if (err.response.status == 401) {
+          navigate("/restaurants");
+        }
         // TODO
       });
   };
@@ -121,8 +124,8 @@ function RestaurantView() {
   };
 
   useEffect(() => {
-    getRestaurant();
     getOwnedRestaurant();
+    getRestaurant();
   }, []);
 
   return (
