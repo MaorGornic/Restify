@@ -12,7 +12,7 @@ import MainNavBar from "../MainNavBar";
 const RestaurantCreate = () => {
     const [userProfile, setuserProfile] = useState([]);
 
-    const initState = { first_name: "", address: "", email: "", postal_code: "", phone_num: "", avatar: "" };
+    const initState = { name: "", address: "", email: "", postal_code: "", phone_num: "", avatar: "" };
     const [formValue, setFormValue] = useState(initState);
     const [formErr, setFormErr] = useState({});
     const [isSubmit, setIsSubmit] = useState(false);
@@ -78,8 +78,8 @@ const RestaurantCreate = () => {
                     if (!error.response.data.id) {
                         // output error msg
                         alert("Saving Failed: Check Error Messages.");
-                        if (error.response.data.first_name) {
-                            setFormErr(formErr => ({ ...formErr, first_name: error.response.data.username }));
+                        if (error.response.data.name) {
+                            setFormErr(formErr => ({ ...formErr, name: error.response.data.username }));
                         }
                         if (error.response.data.address) {
                             setFormErr(formErr => ({ ...formErr, address: error.response.data.address }));
@@ -114,23 +114,37 @@ const RestaurantCreate = () => {
         return errors;
     };
 
+
+    // Check if the user currently owns a restaurant.
+    // Use an axios API request to  http://127.0.0.1:8000/restaurants/owned/
+    // If yes, redirect to the restaurant page.
+    // If no, render the form.
+    
+
     useEffect(() => {
         axios
             .get(
-                `http://127.0.0.1:8000/accounts/view/`,
+                `http://127.0.0.1:8000/restaurants/owned/`,
                 config
             )
-            .then(respond => {
-                setuserProfile(respond.data);
+            .then(res => {
+                console.log("navigating... to id ");
+                navigate(`/restaurants/${res.data.id}`);
             })
             .catch((err) => {
+                console.log("Got error...", err);
                 if (err.response.status === 401){
                     navigate('/login');
                     alert('User Validation Failed. Please Login.');
                 }
+                else if (err.response.status === 404){
+                    console.log(err.response);
+                }
             });
     }, []);
 
+
+   
     return (
         <Box>
             <MainNavBar>
@@ -142,13 +156,13 @@ const RestaurantCreate = () => {
                         <Box w='300px' class='idCard'>
                             <Box>
                                 <Center><Box>
-                                    <Avatar size='2xl' name='userAvatar' src={userProfile.avatar} />{' '}
+                                    <Avatar size='2xl' name='userAvatar' />{' '}
                                 </Box></Center>
                                 <Center><Box>
-                                    <Text as='abbr' fontSize='2xl' color={'black'}>{userProfile.username}</Text>
+                                    <Text as='abbr' fontSize='2xl' color={'black'}></Text>
                                 </Box></Center>
                                 <Center><Box>
-                                    <Text as='kbd' color={'gray'}>{userProfile.email}</Text>
+                                    <Text as='kbd' color={'gray'}>{}</Text>
                                 </Box></Center>
                             </Box>
                             <Center pl={'28%'} pt={'3%'} maxWidth={'72%'}>
@@ -159,9 +173,12 @@ const RestaurantCreate = () => {
                         </Box></Center>
 
                         <Box w='70%'>
-                            <h4 className="profileTitle">Restaurant creation form</h4>
+                            <h4 className="profileTitle">Restaurant Creation Form</h4>
 
                             <Flex>
+                                <Center>
+                                    
+                                </Center>
                                 <Box w='50.5%' >
                                     <FormLabel htmlFor='name' className="profLabel">Restaurant name</FormLabel>
                                 </Box >
@@ -171,7 +188,7 @@ const RestaurantCreate = () => {
                             </Flex>
                             <Flex>
                                 <Center w='49.5%' >
-                                    <Input id='first-name' name="name" onChange={handleChange} />
+                                    <Input id='name' name="name" onChange={handleChange} />
                                 </Center >
                                 <Box w='1%'></Box>
                                 <Center w='49.5%' >
@@ -181,7 +198,7 @@ const RestaurantCreate = () => {
 
                             <Flex>
                                 <Box w='49.5%' >
-                                    <p>{formErr.first_name}</p>
+                                    <p>{formErr.name}</p>
                                 </Box >
                                 <Box w='1%'></Box>
                                 <Box w='49.5%' >
