@@ -31,24 +31,52 @@ function RestaurantView() {
   const { id } = useParams();
   const [restaurant, setRestaurant] = useState([]);
   const [followers, setFollowers] = useState(0);
+  const [isFollowing, setIsFollowing] = useState(false);
   const [loading, setLoading] = useState(false);
+  const config = {
+    headers: {
+      Authorization: `Bearer ${window.sessionStorage.getItem("token")}`,
+    },
+  };
 
-  //   const followRestaurant = async () => {
-  //     const config = {
-  //       headers: {
-  //         Authorization: `Bearer ${window.sessionStorage.getItem("token")}`,
-  //       },
-  //     };
-  //     axios
-  //       .patch(`http://127.0.0.1:8000/restaurants/${id}/follow/`, null, config)
-  //       .then((res) => {
-  //         setCommentsReq(res.data);
-  //         console.log(res.data);
-  //       })
-  //       .catch((err) => {
-  //         // TODO
-  //       });
-  //   };
+  const followRestaurant = async () => {
+    axios
+      .patch(`http://127.0.0.1:8000/restaurants/${id}/follow/`, null, config)
+      .then(() => {
+        setFollowers(followers + 1);
+        setIsFollowing(true);
+      })
+      .catch((err) => {
+        // TODO
+      });
+  };
+
+  const unFollowRestaurant = async () => {
+    axios
+      .patch(`http://127.0.0.1:8000/restaurants/${id}/unfollow/`, null, config)
+      .then(() => {
+        setFollowers(followers - 1);
+        setIsFollowing(false);
+      })
+      .catch((err) => {
+        // TODO
+      });
+  };
+
+  const doesFollow = () => {
+    // http://127.0.0.1:8000/restaurants/doesfollow/1/
+    setLoading(true);
+    axios
+      .get(`http://127.0.0.1:8000/restaurants/doesfollow/${id}/`, config)
+      .then((res) => {
+        setIsFollowing(res.data.is_followed);
+        console.log(`follows? ${res.data.is_followed}`);
+        setLoading(false);
+      })
+      .catch((err) => {
+        // TODO
+      });
+  };
 
   const getRestaurant = () => {
     setLoading(true);
@@ -56,8 +84,7 @@ function RestaurantView() {
       .get(`http://127.0.0.1:8000/restaurants/info/${id}/`)
       .then((res) => {
         setRestaurant(res.data);
-        console.log(res.data);
-        // console.log(res.data.results);
+        setFollowers(res.data.followers.length);
         setLoading(false);
       })
       .catch((err) => {
@@ -67,6 +94,7 @@ function RestaurantView() {
 
   useEffect(() => {
     getRestaurant();
+    doesFollow();
   }, []);
 
   return (
@@ -132,10 +160,10 @@ function RestaurantView() {
                   variant="solid"
                   _hover={{ opacity: "1" }}
                   onClick={() => {
-                    // TODO;
+                    isFollowing ? unFollowRestaurant() : followRestaurant();
                   }}
                 >
-                  Follow
+                  {isFollowing ? "Unfollow" : "Follow"}
                 </Button>
                 <Button
                   leftIcon={<FaHeart />}
@@ -152,8 +180,7 @@ function RestaurantView() {
                     <Tag size="md" background={colors.grey.dark}>
                       <FaUserFriends color="white" />
                       <TagLabel marginLeft="0.5rem" color="white">
-                        {restaurant.followers &&
-                          `Followers: ${restaurant.followers.length}`}
+                        {restaurant.followers && `Followers: ${followers}`}
                       </TagLabel>
                     </Tag>
                     <Tag size="md" background={colors.grey.dark}>
