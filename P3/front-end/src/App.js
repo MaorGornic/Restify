@@ -11,6 +11,8 @@ import SignUp from "./components/SignUp";
 import LandingLayout from "./components/LandingLayout";
 import Profile from "./components/Profile";
 import ProfileEdit from "./components/ProfileEdit";
+import RestaurantCreate from "./components/RestaurantCreate";
+
 
 function App() {
   return (
@@ -31,6 +33,7 @@ function App() {
           ></Route>
           <Route path="/profile" element={<Profile />}></Route>
           <Route path="/profile/edit" element={<ProfileEdit />}></Route>
+          <Route path="/restaurant/create" element={<RestaurantCreate />}></Route>
         </Routes>
       </BrowserRouter>
     </ChakraProvider>

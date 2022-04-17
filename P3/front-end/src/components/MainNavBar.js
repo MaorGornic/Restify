@@ -95,6 +95,7 @@ function NavBar() {
               }
               variantColor="teal"
               variant="link"
+              onClick={() => navigate("/restaurant/create")}
             >
               My Restaurant
             </Button>
