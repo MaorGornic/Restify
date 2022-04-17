@@ -48,7 +48,26 @@ const Login = () => {
                         // Source: https://stackoverflow.com/questions/40399873/initializing-and-using-sessionstorage-in-react
                         setUser({ token: json.access });
                         window.sessionStorage.setItem("token", json.access);
-                        window.sessionStorage.setItem("username", formValue.username);
+                        const config = {
+                            headers: {
+                                Authorization: `Bearer ${window.sessionStorage.getItem("token")}`,
+                            },
+                        };
+                        axios
+                        .get(
+                            `http://127.0.0.1:8000/accounts/view/`,
+                            config
+                        )
+                        .then(respond => {
+                            window.sessionStorage.setItem("username", respond.data.username);
+                            window.sessionStorage.setItem("avatar", respond.data.avatar);
+                        })
+                        .catch((err) => {
+                            if (err.response.status === 401){
+                                navigate('/login');
+                                alert('Login Failed.');
+                            }
+                        });
                         alert("Login Success.");
                         document.body.style = 'background: transparent;';
                         navigate('/restaurants');

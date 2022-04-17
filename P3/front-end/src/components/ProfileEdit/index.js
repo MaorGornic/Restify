@@ -64,6 +64,20 @@ const ProfileEdit = () => {
             // Validated now send the request
             axios.patch(`http://127.0.0.1:8000/accounts/update/`, fd, config)
                 .then(respond => {
+                    axios
+                    .get(
+                        `http://127.0.0.1:8000/accounts/view/`,
+                        config
+                    )
+                    .then(respond => {
+                        window.sessionStorage.setItem("avatar", respond.data.avatar);
+                    })
+                    .catch((err) => {
+                        if (err.response.status === 401){
+                            navigate('/login');
+                            alert('User Validation Failed. Please Login.');
+                        }
+                    });
                     alert("Profile Saved.");
                     navigate('/profile');
                 })
