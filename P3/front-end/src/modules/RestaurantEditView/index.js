@@ -20,7 +20,7 @@ import { FaHeart, FaUserFriends } from "react-icons/fa";
 import * as colors from "../../utils/colors";
 import axios from "axios";
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { Navigate, useParams } from "react-router-dom";
 import MainNavBar from "../../components/MainNavBar";
 import MenuItems from "../../components/MenuItems";
 import Comments from "../../components/Comments";
@@ -32,11 +32,8 @@ function RestaurantView() {
   const { id } = useParams();
   const [restaurant, setRestaurant] = useState([]);
   const [followers, setFollowers] = useState(0);
-  const [isFollowing, setIsFollowing] = useState(false);
   const [likes, setLikes] = useState(0);
-  const [isLiked, setIsLiked] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [isOwner, setIsOwner] = useState(false);
   const config = {
     headers: {
       Authorization: `Bearer ${window.sessionStorage.getItem("token")}`,
@@ -44,92 +41,14 @@ function RestaurantView() {
   };
   const navigate = useNavigate();
 
-  const followRestaurant = async () => {
-    axios
-      .patch(`http://127.0.0.1:8000/restaurants/${id}/follow/`, null, config)
-      .then(() => {
-        setFollowers(followers + 1);
-        setIsFollowing(true);
-      })
-      .catch((err) => {
-        // TODO
-      });
-  };
-
-  const unFollowRestaurant = async () => {
-    axios
-      .patch(`http://127.0.0.1:8000/restaurants/${id}/unfollow/`, null, config)
-      .then(() => {
-        setFollowers(followers - 1);
-        setIsFollowing(false);
-      })
-      .catch((err) => {
-        // TODO
-      });
-  };
-
-  const doesFollow = () => {
-    // http://127.0.0.1:8000/restaurants/doesfollow/1/
-    setLoading(true);
-    axios
-      .get(`http://127.0.0.1:8000/restaurants/doesfollow/${id}/`, config)
-      .then((res) => {
-        setIsFollowing(res.data.is_followed);
-        console.log(`follows? ${res.data.is_followed}`);
-        setLoading(false);
-      })
-      .catch((err) => {
-        // TODO
-      });
-  };
-
-  const likeRestaurant = async () => {
-    axios
-      .patch(`http://127.0.0.1:8000/restaurants/${id}/like/`, null, config)
-      .then(() => {
-        setLikes(likes + 1);
-        setIsLiked(true);
-      })
-      .catch((err) => {
-        // TODO
-      });
-  };
-
-  const unLikeRestaurant = async () => {
-    axios
-      .patch(`http://127.0.0.1:8000/restaurants/${id}/unlike/`, null, config)
-      .then(() => {
-        setLikes(likes - 1);
-        setIsLiked(false);
-      })
-      .catch((err) => {
-        // TODO
-      });
-  };
-
-  const doesLike = () => {
-    // http://127.0.0.1:8000/restaurants/doesfollow/1/
-    setLoading(true);
-    axios
-      .get(`http://127.0.0.1:8000/restaurants/doeslike/${id}/`, config)
-      .then((res) => {
-        setIsLiked(res.data.is_liked);
-        setLoading(false);
-      })
-      .catch((err) => {
-        // TODO
-      });
-  };
-
   const getOwnedRestaurant = () => {
     setLoading(true);
     axios
       .get("http://127.0.0.1:8000/restaurants/owned/", config)
       .then((res) => {
-        if (res.data.id == id) {
-          setIsOwner(true);
+        if (res.data.id != id) {
+          navigate("/restaurants");
         }
-        console.log(`======> ${res.data.id} and ${id}`);
         setLoading(false);
       })
       .catch((err) => {
@@ -155,10 +74,6 @@ function RestaurantView() {
   useEffect(() => {
     getRestaurant();
     getOwnedRestaurant();
-    if (!isOwner) {
-      doesFollow();
-      doesLike();
-    }
   }, []);
 
   return (
@@ -217,50 +132,19 @@ function RestaurantView() {
                   </Heading>
                 </Center>
 
-                {isOwner ? (
-                  <Button
-                    style={{ marginTop: "1.5rem" }}
-                    background={!isFollowing ? colors.purple.dark : "#F21F44"}
-                    color="white"
-                    opacity="0.7"
-                    variant="solid"
-                    _hover={{ opacity: "1" }}
-                    onClick={() => {
-                      navigate(`/restaurants/${id}/edit`);
-                    }}
-                  >
-                    Edit
-                  </Button>
-                ) : (
-                  <Stack>
-                    <Button
-                      style={{ marginTop: "1.5rem" }}
-                      background={!isFollowing ? colors.purple.dark : "#F21F44"}
-                      color="white"
-                      opacity="0.7"
-                      variant="solid"
-                      _hover={{ opacity: "1" }}
-                      onClick={() => {
-                        isFollowing ? unFollowRestaurant() : followRestaurant();
-                      }}
-                    >
-                      {isFollowing ? "Unfollow" : "Follow"}
-                    </Button>
-                    <Button
-                      leftIcon={<FaHeart />}
-                      background={!isLiked ? colors.purple.dark : "#F21F44"}
-                      color="white"
-                      opacity="0.7"
-                      variant="solid"
-                      _hover={{ opacity: "1" }}
-                      onClick={() => {
-                        isLiked ? unLikeRestaurant() : likeRestaurant();
-                      }}
-                    >
-                      {isLiked ? "Unlike" : "Like"}
-                    </Button>
-                  </Stack>
-                )}
+                <Button
+                  style={{ marginTop: "1.5rem" }}
+                  background={colors.purple.dark}
+                  color="white"
+                  opacity="0.7"
+                  variant="solid"
+                  _hover={{ opacity: "1" }}
+                  onClick={() => {
+                    // TODO
+                  }}
+                >
+                  Save
+                </Button>
 
                 <Center>
                   <Stack marginTop="2rem" marginBottom="1rem">

@@ -3,6 +3,7 @@ import RestaurantsNavBar from "./components/RestaurantsNavBar";
 import Restaurants from "./modules/Restaurants";
 import { ChakraProvider, theme } from "@chakra-ui/react";
 import RestaurantView from "./modules/RestaurantView";
+import RestaurantEditView from "./modules/RestaurantEditView";
 import LandingNavBar from "./components/LandingNavBar";
 import Home from "./components/Home";
 import Login from "./components/Login";
@@ -24,6 +25,10 @@ function App() {
           <Route path="/restaurants" element={<Restaurants />}></Route>
           <Route path="/restaurants/search" element={<Restaurants />}></Route>
           <Route path="/restaurants/:id" element={<RestaurantView />}></Route>
+          <Route
+            path="/restaurants/:id/edit"
+            element={<RestaurantEditView />}
+          ></Route>
           <Route path="/profile" element={<Profile />}></Route>
           <Route path="/profile/edit" element={<ProfileEdit />}></Route>
         </Routes>
