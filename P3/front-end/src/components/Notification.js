@@ -48,7 +48,7 @@ function Notification({ style }) {
     } else if (notif.type === "NEWBLOG") {
       message = `${notif.restaurant.name} posted a new blog post`;
     }
-    else {
+    else {   // should never be reached unless there is a bug
       message = `TODO add message for ${notif.type}`;
     }
     return message;
@@ -113,7 +113,7 @@ function Notification({ style }) {
                 <Box
                   cursor="pointer"
                   onClick={() => {
-                    navigate(`/restaurants/1`);
+                    navigate(`/restaurants/${notif.restaurant.id}`);
                   }}
                 >
                   <Alert status="info" variant="left-accent">
