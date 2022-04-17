@@ -72,5 +72,5 @@ class NotificationRecordsSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Notification
-        fields = ['user', 'type', 'viewed', 'blog', 'restaurant', 'actor_user']
+        fields = ['id','user', 'type', 'viewed', 'blog', 'restaurant', 'actor_user']
         depth = 1
