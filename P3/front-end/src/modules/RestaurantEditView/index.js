@@ -1,6 +1,7 @@
 import {
   Box,
   Tab,
+  Input,
   TabList,
   TabPanel,
   TabPanels,
@@ -13,10 +14,20 @@ import {
   TagLabel,
   Image,
   Grid,
+  Textarea,
   GridItem,
   Stack,
+  HStack,
+  IconButton,
+  useDisclosure,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalFooter,
+  ModalBody,
 } from "@chakra-ui/react";
-import { FaHeart, FaUserFriends } from "react-icons/fa";
+import { FaHeart, FaUserFriends, FaPlusCircle } from "react-icons/fa";
 import * as colors from "../../utils/colors";
 import axios from "axios";
 import React, { useState, useEffect } from "react";
@@ -34,12 +45,19 @@ function RestaurantView() {
   const [followers, setFollowers] = useState(0);
   const [likes, setLikes] = useState(0);
   const [loading, setLoading] = useState(false);
+
+  const [dishName, setDishName] = useState("");
+  const [description, setDescription] = useState("");
+  const [price, setPrice] = useState(0);
+  const [menuItemPicture, setMenuItemPicture] = useState(null);
+
   const config = {
     headers: {
       Authorization: `Bearer ${window.sessionStorage.getItem("token")}`,
     },
   };
   const navigate = useNavigate();
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
   const getOwnedRestaurant = () => {
     setLoading(true);
@@ -49,6 +67,37 @@ function RestaurantView() {
         if (res.data.id != id) {
           navigate("/restaurants");
         }
+        setLoading(false);
+      })
+      .catch((err) => {
+        // TODO
+      });
+  };
+
+  const createMenuItem = () => {
+    setLoading(true);
+    const configModified = {
+      headers: {
+        Authorization: `Bearer ${window.sessionStorage.getItem("token")}`,
+        "content-type": "multipart/form-data",
+      },
+    };
+
+    let formData = new FormData();
+    formData.append("name", dishName);
+    formData.append("price", price);
+    formData.append("description", description);
+    formData.append("picture", menuItemPicture);
+
+    axios
+      .post(
+        `http://127.0.0.1:8000/restaurants/${id}/menu/new/`,
+        formData,
+        configModified
+      )
+      .then((res) => {
+        // need to trigger reload in menu items
+        onClose();
         setLoading(false);
       })
       .catch((err) => {
@@ -140,10 +189,10 @@ function RestaurantView() {
                   variant="solid"
                   _hover={{ opacity: "1" }}
                   onClick={() => {
-                    // TODO
+                    navigate(`/restaurants/${id}`);
                   }}
                 >
-                  Save
+                  Confirm
                 </Button>
 
                 <Center>
@@ -186,18 +235,17 @@ function RestaurantView() {
                           >
                             Restaurant Name
                           </Heading>
-                          <Heading
-                            marginTop="0.5rem"
-                            as="h3"
-                            size="sm"
+                          <Input
+                            size="md"
+                            defaultValue={restaurant.name && restaurant.name}
                             style={{
-                              color: "white",
-                              opacity: "0.6",
-                              marginLeft: "1.5rem",
+                              width: "30%",
+                              fill: "white",
+                              marginTop: "0.5rem",
+                              background: "white",
+                              color: "black",
                             }}
-                          >
-                            {restaurant.name && restaurant.name}
-                          </Heading>
+                          />
                         </Box>
                         <Box>
                           <Heading
@@ -208,18 +256,19 @@ function RestaurantView() {
                           >
                             Restaurant Address
                           </Heading>
-                          <Heading
-                            marginTop="0.5rem"
-                            as="h3"
-                            size="sm"
+                          <Input
+                            size="md"
+                            defaultValue={
+                              restaurant.address && restaurant.address
+                            }
                             style={{
-                              color: "white",
-                              opacity: "0.6",
-                              marginLeft: "1.5rem",
+                              width: "30%",
+                              fill: "white",
+                              marginTop: "0.5rem",
+                              background: "white",
+                              color: "black",
                             }}
-                          >
-                            {restaurant.address && restaurant.address}
-                          </Heading>
+                          />
                         </Box>
                         <Box>
                           <Heading
@@ -230,31 +279,140 @@ function RestaurantView() {
                           >
                             Restaurant Phone Number
                           </Heading>
-                          <Heading
-                            marginTop="0.5rem"
-                            as="h3"
-                            size="sm"
+                          <Input
+                            size="md"
+                            defaultValue={
+                              restaurant.phone_num && restaurant.phone_num
+                            }
                             style={{
-                              color: "white",
-                              opacity: "0.6",
-                              marginLeft: "1.5rem",
+                              width: "30%",
+                              fill: "white",
+                              marginTop: "0.5rem",
+                              background: "white",
+                              color: "black",
                             }}
-                          >
-                            {restaurant.phone_num && restaurant.phone_num}
-                          </Heading>
+                          />
                         </Box>
                         <Box>
-                          <Heading
-                            marginTop="0.5rem"
-                            as="h3"
-                            size="md"
-                            style={{ color: "white" }}
-                          >
-                            Menu
-                          </Heading>
+                          <HStack>
+                            <Heading
+                              marginTop="0.5rem"
+                              as="h3"
+                              size="md"
+                              style={{ color: "white" }}
+                            >
+                              Menu
+                            </Heading>
+                            <IconButton
+                              style={{ marginTop: ".5rem" }}
+                              height="3vh"
+                              colorScheme="blue"
+                              icon={<FaPlusCircle />}
+                              onClick={onOpen}
+                            />
+                          </HStack>
                           <MenuItems id={id} />
                         </Box>
                       </Stack>
+                      <Modal isOpen={isOpen} onClose={onClose}>
+                        <ModalOverlay />
+                        <ModalContent>
+                          <ModalHeader>Add new menu item </ModalHeader>
+                          {/* <ModalCloseButton /> */}
+                          <ModalBody>
+                            <Heading
+                              marginTop="0.5rem"
+                              as="h3"
+                              size="sm"
+                              style={{ color: "black", opacity: "0.6" }}
+                            >
+                              Dish Name
+                            </Heading>
+                            <Input
+                              size="md"
+                              placeholder="Pizza"
+                              onChange={(event) =>
+                                setDishName(event.target.value)
+                              }
+                              style={{
+                                fill: "white",
+                                marginTop: "0.5rem",
+                                background: "white",
+                                color: "black",
+                              }}
+                            />
+                            <Heading
+                              marginTop="0.5rem"
+                              as="h3"
+                              size="sm"
+                              style={{ color: "black", opacity: "0.6" }}
+                            >
+                              Description
+                            </Heading>
+                            <Textarea
+                              onChange={(event) =>
+                                setDescription(event.target.value)
+                              }
+                              placeholder="For only $12, you can get a large pizza with fresh cheese"
+                              maxHeight="30vh"
+                              size="sm"
+                            />
+                            <Heading
+                              marginTop="0.5rem"
+                              as="h3"
+                              size="sm"
+                              style={{ color: "black", opacity: "0.6" }}
+                            >
+                              Price
+                            </Heading>
+                            <Input
+                              onChange={(event) => setPrice(event.target.value)}
+                              size="md"
+                              placeholder="12"
+                              style={{
+                                fill: "white",
+                                marginTop: "0.5rem",
+                                background: "white",
+                                color: "black",
+                              }}
+                            />
+                            <Stack>
+                              <Heading
+                                marginTop="0.5rem"
+                                as="h3"
+                                size="sm"
+                                style={{ color: "black", opacity: "0.6" }}
+                              >
+                                Select an image
+                              </Heading>
+                              <input
+                                onChange={(event) => {
+                                  setMenuItemPicture(event.target.files[0]);
+                                }}
+                                type="file"
+                                class="form-control"
+                                id="customFile"
+                                accept="image/*"
+                              ></input>
+                            </Stack>
+                          </ModalBody>
+
+                          <ModalFooter>
+                            <Button mr={3} onClick={onClose}>
+                              CANCEL
+                            </Button>
+                            <Button
+                              colorScheme="blue"
+                              mr={3}
+                              onClick={() => {
+                                createMenuItem();
+                              }}
+                            >
+                              CONFIRM CHANGES
+                            </Button>
+                          </ModalFooter>
+                        </ModalContent>
+                      </Modal>
                     </TabPanel>
                     {/* Comments */}
                     <TabPanel>

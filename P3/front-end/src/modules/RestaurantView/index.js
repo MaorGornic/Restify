@@ -129,7 +129,6 @@ function RestaurantView() {
         if (res.data.id == id) {
           setIsOwner(true);
         }
-        console.log(`======> ${res.data.id} and ${id}`);
         setLoading(false);
       })
       .catch((err) => {
@@ -220,7 +219,7 @@ function RestaurantView() {
                 {isOwner ? (
                   <Button
                     style={{ marginTop: "1.5rem" }}
-                    background={!isFollowing ? colors.purple.dark : "#F21F44"}
+                    background={colors.purple.dark}
                     color="white"
                     opacity="0.7"
                     variant="solid"
