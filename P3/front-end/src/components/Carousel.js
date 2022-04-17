@@ -205,7 +205,7 @@ function CustomCarousel({ res_id, isOwner }) {
               onClick={deletePicture}
             >
               <Center>
-                <Text color="white" fontSize="lg" marginBottom="0.5rem">
+                <Text color="white" fontSize="lg" paddingBottom="0.4rem">
                   DELETE
                 </Text>
               </Center>
@@ -221,7 +221,7 @@ function CustomCarousel({ res_id, isOwner }) {
           </Stack>
         </Center>
       )}
-      {isOwner && (
+      {isOwner && !pictureEdit && (
         <HStack>
           <IconButton
             style={{ marginTop: ".5rem" }}

@@ -167,11 +167,10 @@ function RestaurantView() {
         <Box
           style={{
             marginLeft: "2rem",
-            height: "88vh",
+            height: "100vh",
             margin: "auto",
             marginTop: "1rem",
             background: colors.purple.medium,
-            height: "100%",
           }}
         >
           <Grid templateColumns="repeat(5, 1fr)" gap={5}>

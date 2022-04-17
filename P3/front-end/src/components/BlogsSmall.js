@@ -42,7 +42,7 @@ function Comments({ id }) {
         <Box>
           <Box
             overflowY={blogsReq.count > 3 ? "scroll" : "none"}
-            h="80vh"
+            h="70vh"
             mt="1"
           >
             <Stack mt="1.2rem" ml="2" mr="2">
