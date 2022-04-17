@@ -18,7 +18,7 @@ def main():
     global number_of_blogs
     restaurants = scrape_restaurants()
 
-    restaurants = restaurants[:20]    # Only taking the first 20 restaurants
+    restaurants = restaurants[:50]    # Only taking the first 20 restaurants
 
     for i in range(1, len(restaurants) + 1):
         username = f"naruto{i}"
