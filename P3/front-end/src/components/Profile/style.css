@@ -1,0 +1,42 @@
+.Profile {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 75vh;
+    max-width:65%;
+    margin: auto;
+}
+
+.profForm {
+    width: 80%;
+    padding: 50px;
+    border-radius: 10px;
+    background: rgb(246, 247, 249);
+}
+
+.profileTitle {
+    color: rgb(0, 0, 0);
+    font-weight: bold;
+    padding-bottom: 20px;
+    font-size: 30px;
+}
+
+.profLabel {
+    color: rgb(0, 0, 0);
+}
+
+.form-ctrl{
+    width: 70%;
+    float: right;
+    border-radius: 750px;
+    padding-left: 3%;
+    border: 1px solid rgb(191, 189, 189);
+}
+
+.editProf{
+    padding-top: 3%;
+}
+
+.idCard{
+}
