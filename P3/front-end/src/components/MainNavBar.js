@@ -84,6 +84,7 @@ function NavBar() {
               }
               variantColor="teal"
               variant="link"
+              onClick={() => navigate("/feed")}
             >
               Feed
             </Button>

@@ -30,5 +30,16 @@ def scrape_restaurants():
     return all_data
 
 
+
+def scrape_menus():
+    all_menus = []
+    f = open("data/menu.csv", "r")
+    lines = f.readlines()
+    for line in lines:
+        all_menus.append(line.strip())
+    
+    return all_menus 
+
+
 # scrape_restaurants()
 # print(scrape_restaurants())
