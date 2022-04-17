@@ -24,13 +24,15 @@ import "react-responsive-carousel/lib/styles/carousel.min.css";
 import * as constants from "../utils/constants";
 import { FaPlusCircle } from "react-icons/fa";
 
-function CustomCarousel({ id, isOwner }) {
+function CustomCarousel({ res_id, isOwner }) {
   let lastSlide = 1;
   const [currentPage, setCurrentPage] = useState(1);
   const [imagesReq, setImagesReq] = useState([]);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [picture, setPicture] = useState(null);
   const [newImageId, setNewImageId] = useState(0);
+  const [pictureEdit, setPictureEdit] = useState(false);
+  const [currentPicture, setCurrentPicture] = useState(1);
 
   const addPicture = () => {
     const configModified = {
@@ -45,7 +47,7 @@ function CustomCarousel({ id, isOwner }) {
 
     axios
       .post(
-        `http://127.0.0.1:8000/restaurants/${id}/images/upload/`,
+        `http://127.0.0.1:8000/restaurants/${res_id}/images/upload/`,
         formData,
         configModified
       )
@@ -57,6 +59,30 @@ function CustomCarousel({ id, isOwner }) {
       })
       .catch((err) => {
         // TODO
+      });
+  };
+
+  const deletePicture = () => {
+    const config = {
+      headers: {
+        Authorization: `Bearer ${window.sessionStorage.getItem("token")}`,
+      },
+    };
+
+    axios
+      .delete(
+        `http://127.0.0.1:8000/restaurants/${res_id}/images/${getImageFromIndex()}/remove/`,
+        config
+      )
+      .then((res) => {
+        // need to trigger reload in menu items
+        // setMenuItem(res.data);
+        setNewImageId(null);
+        onClose();
+      })
+      .catch((err) => {
+        setNewImageId(null);
+        onClose();
       });
   };
 
@@ -104,6 +130,12 @@ function CustomCarousel({ id, isOwner }) {
     );
   }
 
+  function getImageFromIndex() {
+    return imagesReq.results.find((image, index) => {
+      if (index + 1 === currentPicture) return image.id;
+    }).id;
+  }
+
   const getPictures = (searchUrl) => {
     axios
       .get(searchUrl)
@@ -118,45 +150,68 @@ function CustomCarousel({ id, isOwner }) {
 
   useEffect(() => {
     getPictures(
-      `http://127.0.0.1:8000/restaurants/${id}/images/?page=${currentPage}`
+      `http://127.0.0.1:8000/restaurants/${res_id}/images/?page=${currentPage}`
     );
   }, [currentPage, newImageId]);
 
   return (
     <Box>
       {imagesReq.count > 0 ? (
-        <Carousel
-          infiniteLoop
-          showArrows={true}
-          showThumbs={true}
-          onChange={(index) => {
-            // If clicked on the right arrow button when at the end
-            if (lastSlide + 1 == constants.pageSize && index == 0) {
-              lastSlide = 1;
-              if (imagesReq.count > 0 && currentPage >= imagesReq.count) return;
-              setCurrentPage(currentPage + 1);
-              // If clicked on the left arrow button when at the start
-            } else if (lastSlide == 0 && index > lastSlide + 1) {
-              if (currentPage <= 1) return;
-              setCurrentPage(currentPage - 1);
-            }
-
-            // Updating the last slide
-            lastSlide = index;
-          }}
+        <Stack
+          onMouseEnter={() => setPictureEdit(true)}
+          onMouseLeave={() => setPictureEdit(false)}
+          _hover={{ transform: "scale(1.02)" }}
         >
-          {imagesReq.count > 0 &&
-            imagesReq.results.map((slide, index) => {
-              return (
-                <Image
-                  key={index}
-                  src={slide.ref_img}
-                  height="70vh"
-                  maxWidth="100vh"
-                />
-              );
-            })}
-        </Carousel>
+          <Carousel
+            infiniteLoop
+            showArrows={true}
+            showThumbs={true}
+            onChange={(index) => {
+              setCurrentPicture(index + 1);
+              // If clicked on the right arrow button when at the end
+              if (lastSlide + 1 == constants.pageSize && index == 0) {
+                lastSlide = 1;
+                if (imagesReq.count > 0 && currentPage >= imagesReq.count)
+                  return;
+                setCurrentPage(currentPage + 1);
+                // If clicked on the left arrow button when at the start
+              } else if (lastSlide == 0 && index > lastSlide + 1) {
+                if (currentPage <= 1) return;
+                setCurrentPage(currentPage - 1);
+              }
+
+              // Updating the last slide
+              lastSlide = index;
+            }}
+          >
+            {imagesReq.count > 0 &&
+              imagesReq.results.map((slide, index) => {
+                return (
+                  <Image
+                    key={index}
+                    src={slide.ref_img}
+                    height="70vh"
+                    maxWidth="100vh"
+                  />
+                );
+              })}
+          </Carousel>
+          {pictureEdit && (
+            <Box
+              bg="grey"
+              opacity="0.6"
+              style={{ marginBottom: "1rem" }}
+              cursor="pointer"
+              onClick={deletePicture}
+            >
+              <Center>
+                <Text color="white" fontSize="lg" marginBottom="0.5rem">
+                  DELETE
+                </Text>
+              </Center>
+            </Box>
+          )}
+        </Stack>
       ) : (
         <Center>
           <Stack>
