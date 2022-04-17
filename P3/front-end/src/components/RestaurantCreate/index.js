@@ -4,174 +4,213 @@ import axios from "axios";
 import { useMemo, useState, useEffect, useLocation } from "react";
 import {
     Box, Flex, Heading, Spacer, Text, Center, Square, FormLabel,
-    FormControl, Input, FormHelperText, WrapItem, Avatar, Button
+    FormControl, Input, FormHelperText, WrapItem, Avatar, Button,
 } from "@chakra-ui/react";
 import MainNavBar from "../MainNavBar";
-import "./style.css"
+
 
 const RestaurantCreate = () => {
-    // Component to create a new restaurant form 
-    // Restaurant creation includes a Restaurant Name, logo, address,
-    // postal code, and phone number
+    const [userProfile, setuserProfile] = useState([]);
+
+    const initState = { first_name: "", address: "", email: "", postal_code: "", phone_num: "", avatar: "" };
+    const [formValue, setFormValue] = useState(initState);
+    const [formErr, setFormErr] = useState({});
+    const [isSubmit, setIsSubmit] = useState(false);
     const navigate = useNavigate();
+
     const config = {
         headers: {
             Authorization: `Bearer ${window.sessionStorage.getItem("token")}`,
         },
     };
-    const [restaurantName, setRestaurantName] = useState("");
-    const [restaurantLogo, setRestaurantLogo] = useState("");
-    const [restaurantAddress, setRestaurantAddress] = useState("");
-    const [restaurantPostalCode, setRestaurantPostalCode] = useState("");
-    const [restaurantEmail, setRestaurantEmail] = useState("");
-    const [restaurantPhoneNumber, setRestaurantPhoneNumber] = useState("");
-    const fd = new FormData();
+
+    const handleChange = (e) => {
+        if (e.target.type === 'file'){
+            setFormValue({ ...formValue, [e.target.name]: e.target.files[0] });
+            setuserProfile({ ...userProfile, [e.target.name]: URL.createObjectURL(e.target.files[0])});
+        }
+        else {
+            const { name, value } = e.target;
+            setFormValue({ ...formValue, [name]: value });
+        }
+    };
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        fd.append('name', restaurantName);
-        fd.append('address', restaurantAddress);
-        fd.append('postal_code', restaurantPostalCode);
-        fd.append('phone_num', restaurantPhoneNumber);
-        fd.append('email', restaurantEmail);
+        setFormErr(validation(formValue));
+        setIsSubmit(true);
+    };
 
-        axios.post("http://127.0.0.1:8000/restaurants/new/", fd, config)
-        .then(res => {
-            navigate(`/restaurants/${res.data.id}`)
-        })
-        .catch(err => {
-            console.log(err)
-        })
-    }
+    useEffect(() => {
+        if (Object.keys(formErr).length === 0 && isSubmit) {
+            const fd = new FormData();
+            fd.append('_method', 'POST');
+            if (formValue.name !== '') {
+                fd.append('name', formValue.name);
+            }
+            if (formValue.address !== '') {
+                fd.append('address', formValue.address);
+            }
+            if (formValue.email !== '') {
+                fd.append('email', formValue.email);
+            }
+            if (formValue.postal_code !== '') {
+                fd.append('postal_code', formValue.postal_code);
+            }
+            if (formValue.phone_num !== '') {
+                fd.append('phone_num', formValue.phone_num);
+            }
+            if (formValue.avatar !== '') {
+                fd.append('logo', formValue.avatar);
+            }
+
+            // Validated now send the request
+            axios.post(`http://127.0.0.1:8000/restaurants/new/`, fd, config)
+                .then(res => {
+                    console.log(res);
+                    navigate(`/restaurants/${res.data.id}`);
+                })
+                .catch(error => {
+                    if (error.response.status === 401){
+                        navigate('/login');
+                        alert('User Validation Failed. Please Login.');
+                    }
+                    if (!error.response.data.id) {
+                        // output error msg
+                        alert("Saving Failed: Check Error Messages.");
+                        if (error.response.data.first_name) {
+                            setFormErr(formErr => ({ ...formErr, first_name: error.response.data.username }));
+                        }
+                        if (error.response.data.address) {
+                            setFormErr(formErr => ({ ...formErr, address: error.response.data.address }));
+                        }
+                        if (error.response.data.email) {
+                            setFormErr(formErr => ({ ...formErr, email: error.response.data.email }));
+                        }
+                        if (error.response.data.postal_code) {
+                            setFormErr(formErr => ({ ...formErr, postal_code: error.response.data.postal_code }));
+                        }
+                        if (error.response.data.phone_num) {
+                            setFormErr(formErr => ({ ...formErr, phone_num: error.response.data.phone_num }));
+                        }
+                        if (error.response.data.avatar) {
+                            setFormErr(formErr => ({ ...formErr, avatar: error.response.data.avatar }));
+                            alert("Avatar Upload Failed.");
+                        }
+                    }
+                    console.log(error.response);
+                });
+        }
+    }, [formErr]);
+
+    const validation = (formValue) => {
+        const errors = {};
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
+        if (formValue.email) {
+            if (!emailRegex.test(formValue.email)) {
+                errors.email = "Email Format Invalid."
+            }
+        }
+        return errors;
+    };
+
+    useEffect(() => {
+        axios
+            .get(
+                `http://127.0.0.1:8000/accounts/view/`,
+                config
+            )
+            .then(respond => {
+                setuserProfile(respond.data);
+            })
+            .catch((err) => {
+                if (err.response.status === 401){
+                    navigate('/login');
+                    alert('User Validation Failed. Please Login.');
+                }
+            });
+    }, []);
 
     return (
-        <>
-            <MainNavBar />
-            <Box
-                as="form"
-                onSubmit={handleSubmit}
-                display="flex"
-                flexDirection="column"
-                alignItems="center"
-                justifyContent="center"
-                maxW="sm"
-                w="100%"
-                h="100%"
-                p={4}
-                borderWidth="1px"
-                borderRadius="md"
-                borderColor="gray.200"
-                boxShadow="0 2px 4px rgba(0, 0, 0, 0.1)"
-                backgroundColor="white"
-            >
-                <Heading as="h1" size="lg" mb={4}>
-                    Create a Restaurant
-                </Heading>
-                <Box>
-                    <FormControl isRequired>
-                        <FormLabel htmlFor="restaurantName">Restaurant Name</FormLabel>
-                        <Input
-                            id="restaurantName"
-                            placeholder="Restaurant Name"
-                            value={restaurantName}
-                            onChange={(e) => setRestaurantName(e.target.value)}
-                        />
-                        <FormHelperText>
-                            Please enter the name of the restaurant
-                        </FormHelperText>
+        <Box>
+            <MainNavBar>
+            </MainNavBar>
 
-                    </FormControl>
-                </Box>
-                <Box>
-                    {/* Upload a logo file image for the restaurant. A logo is an image file in the format of png or jpg. type should be file */}
-                    <FormControl isRequired>
-                        <FormLabel htmlFor="restaurantLogo">Restaurant Logo</FormLabel>
-                        <Input
-                            id="restaurantLogo"
-                            placeholder="Restaurant Logo"
-                            type="file"
-                            width="100%"
-                            value={restaurantLogo}
-                            onChange={(e) => setRestaurantLogo(e.target.value)}
-                        />
-                        <FormHelperText>
-                            Please upload a logo for the restaurant
-                        </FormHelperText>
-                    </FormControl>
-                </Box>
-                <Box>
-                    <FormControl isRequired>
-                        <FormLabel htmlFor="restaurantAddress">Restaurant Address</FormLabel>
-                        <Input
-                            id="restaurantAddress"
-                            placeholder="Restaurant Address"
-                            value={restaurantAddress}
-                            onChange={(e) => setRestaurantAddress(e.target.value)}
-                        />
-                        <FormHelperText>
-                            Please enter the address of the restaurant
-                        </FormHelperText>
-                    </FormControl>
-                </Box>
-                <Box>
-                    <FormControl isRequired>
-                        <FormLabel htmlFor="restaurantPostalCode">Restaurant Postal Code</FormLabel>
-                        <Input
-                            id="restaurantPostalCode"
-                            placeholder="Restaurant Postal Code"
-                            value={restaurantPostalCode}
-                            onChange={(e) => setRestaurantPostalCode(e.target.value)}
-                        />
-                        <FormHelperText>
-                            Please enter the postal code of the restaurant
-                        </FormHelperText>
-                    </FormControl>
-                </Box>
-                <Box>
-                    <FormControl isRequired>
-                        <FormLabel htmlFor="restaurantPhoneNumber">Restaurant Phone Number</FormLabel>
-                        <Input
-                            id="restaurantPhoneNumber"
-                            placeholder="Restaurant Phone Number"
-                            value={restaurantPhoneNumber}
-                            onChange={(e) => setRestaurantPhoneNumber(e.target.value)}
-                        />
-                        <FormHelperText>
-                            Please enter the phone number of the restaurant
-                        </FormHelperText>
-                    </FormControl>
-                </Box>
-                {/* Add restaurant email field */}
-                <Box>
-                    <FormControl isRequired>
-                        <FormLabel htmlFor="restaurantEmail">Restaurant Email</FormLabel>
-                        <Input
-                            id="restaurantEmail"
-                            placeholder="Restaurant Email"
-                            value={restaurantEmail}
-                            onChange={(e) => setRestaurantEmail(e.target.value)}
-                        />
-                        <FormHelperText>
-                            Please enter the email of the restaurant
-                        </FormHelperText>
-                    </FormControl>
-                </Box>
-                <Box>
-                    <Button
-                        type="submit"
-                        variantColor="teal"
-                        variant="outline"
-                        w="100%"
-                        mt={4}
-                    >
-                        Create Restaurant
-                    </Button>
-                </Box>
-            </Box>
-        </>
-    )
+            <div className="Profile">
+                <FormControl className="profForm" onSubmit={handleSubmit}>
+                    <Flex><Center>
+                        <Box w='300px' class='idCard'>
+                            <Box>
+                                <Center><Box>
+                                    <Avatar size='2xl' name='userAvatar' src={userProfile.avatar} />{' '}
+                                </Box></Center>
+                                <Center><Box>
+                                    <Text as='abbr' fontSize='2xl' color={'black'}>{userProfile.username}</Text>
+                                </Box></Center>
+                                <Center><Box>
+                                    <Text as='kbd' color={'gray'}>{userProfile.email}</Text>
+                                </Box></Center>
+                            </Box>
+                            <Center pl={'28%'} pt={'3%'} maxWidth={'72%'}>
+                                    <Button className='transButton' name='avatar' colorScheme='transparent' 
+                                    size='md'><input type="file" name='avatar' id="submitButton" 
+                                    onChange={handleChange}/></Button>
+                            </Center>
+                        </Box></Center>
 
+                        <Box w='70%'>
+                            <h4 className="profileTitle">Restaurant creation form</h4>
 
+                            <Flex>
+                                <Box w='50.5%' >
+                                    <FormLabel htmlFor='name' className="profLabel">Restaurant name</FormLabel>
+                                </Box >
+                                <Box w='49.5%' >
+                                    <FormLabel htmlFor='address' className="profLabel">Address</FormLabel>
+                                </Box >
+                            </Flex>
+                            <Flex>
+                                <Center w='49.5%' >
+                                    <Input id='first-name' name="name" onChange={handleChange} />
+                                </Center >
+                                <Box w='1%'></Box>
+                                <Center w='49.5%' >
+                                    <Input id='address' name="address" onChange={handleChange} />
+                                </Center >
+                            </Flex>
+
+                            <Flex>
+                                <Box w='49.5%' >
+                                    <p>{formErr.first_name}</p>
+                                </Box >
+                                <Box w='1%'></Box>
+                                <Box w='49.5%' >
+                                    <p>{formErr.address}</p>
+                                </Box >
+                            </Flex>
+
+                            <FormLabel htmlFor='email' className="profLabel">Email</FormLabel>
+                            <Input id='email' name="email" type='email' onChange={handleChange} />
+                            <p>{formErr.email}</p>
+                            {/* postal code */}
+                            <FormLabel htmlFor='postal_code' className="profLabel">Postal Code</FormLabel>
+                            <Input id='email' name="postal_code" type='text' onChange={handleChange} />
+                            <p>{formErr.email}</p>
+                            <FormLabel htmlFor='phone' className="profLabel">Phone Number</FormLabel>
+                            <Input id='phone' name="phone_num" onChange={handleChange} />
+                            <p>{formErr.phone_num}</p>
+
+                            <Center pr={'40%'} pt={'3%'} >
+                                <Button type="submit" onClick={handleSubmit} colorScheme='blue' 
+                                size='md'>Create Restaurant</Button>
+                            </Center>
+
+                        </Box>
+                    </Flex>
+                </FormControl>
+            </div>
+        </Box>
+    );
 }
 
 export default RestaurantCreate;
