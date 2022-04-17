@@ -15,6 +15,15 @@
     background: rgb(246, 247, 249);
 }
 
+.transButton{
+    cursor: default;
+}
+
+#submitButton{
+    color: transparent;
+    text-align: center;
+}
+
 .profileTitle {
     color: rgb(0, 0, 0);
     font-weight: bold;

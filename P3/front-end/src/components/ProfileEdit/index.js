@@ -25,8 +25,14 @@ const ProfileEdit = () => {
     };
 
     const handleChange = (e) => {
-        const { name, value } = e.target;
-        setFormValue({ ...formValue, [name]: value });
+        if (e.target.type === 'file'){
+            setFormValue({ ...formValue, [e.target.name]: e.target.files[0] });
+            setuserProfile({ ...userProfile, [e.target.name]: URL.createObjectURL(e.target.files[0])});
+        }
+        else {
+            const { name, value } = e.target;
+            setFormValue({ ...formValue, [name]: value });
+        }
     };
 
     const handleSubmit = (e) => {
@@ -39,17 +45,20 @@ const ProfileEdit = () => {
         if (Object.keys(formErr).length === 0 && isSubmit) {
             const fd = new FormData();
             fd.append('_method', 'PATCH');
-            if (formValue.first_name !== ''){
+            if (formValue.first_name !== '') {
                 fd.append('first_name', formValue.first_name);
             }
-            if (formValue.last_name !== ''){
+            if (formValue.last_name !== '') {
                 fd.append('last_name', formValue.last_name);
             }
-            if (formValue.email !== ''){
+            if (formValue.email !== '') {
                 fd.append('email', formValue.email);
             }
-            if (formValue.phone_num !== ''){
+            if (formValue.phone_num !== '') {
                 fd.append('phone_num', formValue.phone_num);
+            }
+            if (formValue.avatar !== '') {
+                fd.append('avatar', formValue.avatar);
             }
 
             // Validated now send the request
@@ -76,6 +85,7 @@ const ProfileEdit = () => {
                         }
                         if (error.response.data.avatar) {
                             setFormErr(formErr => ({ ...formErr, avatar: error.response.data.avatar }));
+                            alert("Avatar Upload Failed.");
                         }
                     }
                     console.log(error.response);
@@ -87,7 +97,7 @@ const ProfileEdit = () => {
         const errors = {};
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
         if (formValue.email) {
-            if (!emailRegex.test(formValue.email)){
+            if (!emailRegex.test(formValue.email)) {
                 errors.email = "Email Format Invalid."
             }
         }
@@ -128,6 +138,9 @@ const ProfileEdit = () => {
                                     <Text as='kbd' color={'gray'}>{userProfile.email}</Text>
                                 </Box></Center>
                             </Box>
+                            <Center pl={'28%'} pt={'3%'} maxWidth={'72%'}>
+                                    <Button className='transButton' name='avatar' colorScheme='transparent' size='md'><input type="file" name='avatar' id="submitButton" onChange={handleChange}/></Button>
+                            </Center>
                         </Box></Center>
 
                         <Box w='70%'>
@@ -143,8 +156,8 @@ const ProfileEdit = () => {
                             </Flex>
                             <Flex>
                                 <Center w='49.5%' >
-                                    <Input id='first-name' name="first_name" onChange={handleChange} 
-                                    defaultValue={userProfile.first_name} />
+                                    <Input id='first-name' name="first_name" onChange={handleChange}
+                                        defaultValue={userProfile.first_name} />
                                 </Center >
                                 <Box w='1%'></Box>
                                 <Center w='49.5%' >

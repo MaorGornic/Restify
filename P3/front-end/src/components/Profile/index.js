@@ -58,6 +58,9 @@ const Profile = () => {
                                 <Center><Box>
                                     <Text as='kbd' color={'gray'}>{userProfile.email}</Text>
                                 </Box></Center>
+                                <Center pr={'100%'} pt={'3%'} >
+                                    <Button className='transButton' colorScheme='transparent' size='md'> </Button>
+                                </Center>
                             </Box>
                         </Box></Center>
                         <Box w='70%'>
@@ -101,7 +104,7 @@ const Profile = () => {
                             <Center pr={'40%'} pt={'3%'} >
                                 <Button onClick={handleRedirect} colorScheme='blue' size='md'>EDIT PROFILE</Button>
                             </Center>
-                            
+
                         </Box>
                     </Flex>
                 </FormControl>
