@@ -51,6 +51,10 @@ function RestaurantView() {
   const [price, setPrice] = useState(0);
   const [menuItemPicture, setMenuItemPicture] = useState(null);
 
+  const [restaurantName, setRestaurantName] = useState("");
+  const [restaurantAddr, setRestaurantAddr] = useState("");
+  const [restaurantPhoneNum, setRestaurantPhoneNum] = useState("");
+
   const config = {
     headers: {
       Authorization: `Bearer ${window.sessionStorage.getItem("token")}`,
@@ -114,12 +118,51 @@ function RestaurantView() {
       .get(`http://127.0.0.1:8000/restaurants/info/${id}/`)
       .then((res) => {
         setRestaurant(res.data);
+
+        setRestaurantName(res.data.name);
+        setRestaurantAddr(res.data.address);
+        setRestaurantPhoneNum(res.data.phone_num);
+
         setFollowers(res.data.followers.length);
         setLikes(res.data.likes.length);
+
         setLoading(false);
       })
       .catch((err) => {
         // TODO
+      });
+  };
+
+  const handleEditConfirm = () => {
+    if (
+      restaurantName === "" ||
+      restaurantAddr === "" ||
+      restaurantPhoneNum === ""
+    ) {
+      alert("Please check that all fields are valid!");
+      return;
+    }
+
+    setLoading(true);
+    axios
+      .patch(
+        `http://127.0.0.1:8000/restaurants/${id}/edit/`,
+        {
+          name: restaurantName,
+          address: restaurantAddr,
+          phone_num: restaurantPhoneNum,
+        },
+        config
+      )
+      .then((res) => {
+        setLoading(false);
+        navigate(`/restaurants/${id}`);
+      })
+      .catch((err) => {
+        if (err.response.status == 400) {
+          alert("Please check that all fields are valid!");
+          setLoading(false);
+        }
       });
   };
 
@@ -191,9 +234,7 @@ function RestaurantView() {
                   opacity="0.7"
                   variant="solid"
                   _hover={{ opacity: "1" }}
-                  onClick={() => {
-                    navigate(`/restaurants/${id}`);
-                  }}
+                  onClick={handleEditConfirm}
                 >
                   Confirm
                 </Button>
@@ -240,7 +281,8 @@ function RestaurantView() {
                           </Heading>
                           <Input
                             size="md"
-                            defaultValue={restaurant.name && restaurant.name}
+                            defaultValue={restaurantName && restaurantName}
+                            onChange={(e) => setRestaurantName(e.target.value)}
                             style={{
                               width: "30%",
                               fill: "white",
@@ -261,9 +303,8 @@ function RestaurantView() {
                           </Heading>
                           <Input
                             size="md"
-                            defaultValue={
-                              restaurant.address && restaurant.address
-                            }
+                            defaultValue={restaurantAddr && restaurantAddr}
+                            onChange={(e) => setRestaurantAddr(e.target.value)}
                             style={{
                               width: "30%",
                               fill: "white",
@@ -284,8 +325,11 @@ function RestaurantView() {
                           </Heading>
                           <Input
                             size="md"
+                            onChange={(e) =>
+                              setRestaurantPhoneNum(e.target.value)
+                            }
                             defaultValue={
-                              restaurant.phone_num && restaurant.phone_num
+                              restaurantPhoneNum && restaurantPhoneNum
                             }
                             style={{
                               width: "30%",
