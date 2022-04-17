@@ -311,7 +311,7 @@ function RestaurantView() {
                               onClick={onOpen}
                             />
                           </HStack>
-                          <MenuItems id={id} />
+                          <MenuItems res_id={id} isOwner />
                         </Box>
                       </Stack>
                       <Modal isOpen={isOpen} onClose={onClose}>
