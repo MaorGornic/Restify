@@ -32,6 +32,8 @@ function RestaurantView() {
   const [restaurant, setRestaurant] = useState([]);
   const [followers, setFollowers] = useState(0);
   const [isFollowing, setIsFollowing] = useState(false);
+  const [likes, setLikes] = useState(0);
+  const [isLiked, setIsLiked] = useState(false);
   const [loading, setLoading] = useState(false);
   const config = {
     headers: {
@@ -78,6 +80,44 @@ function RestaurantView() {
       });
   };
 
+  const likeRestaurant = async () => {
+    axios
+      .patch(`http://127.0.0.1:8000/restaurants/${id}/like/`, null, config)
+      .then(() => {
+        setLikes(likes + 1);
+        setIsLiked(true);
+      })
+      .catch((err) => {
+        // TODO
+      });
+  };
+
+  const unLikeRestaurant = async () => {
+    axios
+      .patch(`http://127.0.0.1:8000/restaurants/${id}/unlike/`, null, config)
+      .then(() => {
+        setLikes(likes - 1);
+        setIsLiked(false);
+      })
+      .catch((err) => {
+        // TODO
+      });
+  };
+
+  const doesLike = () => {
+    // http://127.0.0.1:8000/restaurants/doesfollow/1/
+    setLoading(true);
+    axios
+      .get(`http://127.0.0.1:8000/restaurants/doeslike/${id}/`, config)
+      .then((res) => {
+        setIsLiked(res.data.is_liked);
+        setLoading(false);
+      })
+      .catch((err) => {
+        // TODO
+      });
+  };
+
   const getRestaurant = () => {
     setLoading(true);
     axios
@@ -85,6 +125,7 @@ function RestaurantView() {
       .then((res) => {
         setRestaurant(res.data);
         setFollowers(res.data.followers.length);
+        setLikes(res.data.likes.length);
         setLoading(false);
       })
       .catch((err) => {
@@ -95,6 +136,7 @@ function RestaurantView() {
   useEffect(() => {
     getRestaurant();
     doesFollow();
+    doesLike();
   }, []);
 
   return (
@@ -154,7 +196,7 @@ function RestaurantView() {
                 </Center>
                 <Button
                   style={{ marginTop: "1.5rem" }}
-                  background={colors.purple.dark}
+                  background={!isFollowing ? colors.purple.dark : "#F21F44"}
                   color="white"
                   opacity="0.7"
                   variant="solid"
@@ -167,13 +209,16 @@ function RestaurantView() {
                 </Button>
                 <Button
                   leftIcon={<FaHeart />}
-                  background={colors.purple.dark}
+                  background={!isLiked ? colors.purple.dark : "#F21F44"}
                   color="white"
                   opacity="0.7"
                   variant="solid"
                   _hover={{ opacity: "1" }}
+                  onClick={() => {
+                    isLiked ? unLikeRestaurant() : likeRestaurant();
+                  }}
                 >
-                  Like
+                  {isLiked ? "Unlike" : "Like"}
                 </Button>
                 <Center>
                   <Stack marginTop="2rem" marginBottom="1rem">
@@ -186,8 +231,7 @@ function RestaurantView() {
                     <Tag size="md" background={colors.grey.dark}>
                       <FaHeart color="white" />
                       <TagLabel marginLeft="0.5rem" color="white">
-                        {restaurant.likes &&
-                          `Likes: ${restaurant.likes.length}`}
+                        {restaurant.likes && `Likes: ${likes}`}
                       </TagLabel>
                     </Tag>
                   </Stack>
