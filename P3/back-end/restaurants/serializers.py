@@ -3,6 +3,7 @@ from restaurants.models import Blog, Notification
 from restaurants.models import Restaurant, Comment, MenuItem, ImageModel
 from accounts.serializers import ModifiedUserSerializer
 
+
 class ImageModelSerializer(serializers.ModelSerializer):
     restaurant = serializers.ReadOnlyField()
 
@@ -22,6 +23,7 @@ class ImageModelSerializer(serializers.ModelSerializer):
     class Meta:
         model = ImageModel
         fields = ['id', 'ref_img', 'restaurant']
+
 
 class RestaurantSerializer(serializers.ModelSerializer):
     owner = serializers.ReadOnlyField()
@@ -51,7 +53,8 @@ class RestaurantSerializer(serializers.ModelSerializer):
                 for like in rep["likes"].all().iterator():
                     likes.append(ModifiedUserSerializer(like).data)
 
-            rep.update({"followers": followers, "likes": likes, "images": images})
+            rep.update({"followers": followers,
+                       "likes": likes, "images": images})
         return rep
 
     def update(self, instance, validated_data):
@@ -70,7 +73,8 @@ class RestaurantSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Restaurant
-        fields = ['id', 'owner', 'followers', 'name', 'address', 'email', 'phone_num', 'views', 'likes', 'logo', 'postal_code']
+        fields = ['id', 'owner', 'followers', 'name', 'address',
+                  'email', 'phone_num', 'views', 'likes', 'logo', 'postal_code']
 
 
 class MenuItemSerializer(serializers.ModelSerializer):
@@ -93,7 +97,8 @@ class MenuItemSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = MenuItem
-        fields = ['id', 'name', 'description', 'price', 'picture', 'restaurant']
+        fields = ['id', 'name', 'description',
+                  'price', 'picture', 'restaurant']
 
 
 # Comments Serializer
@@ -179,4 +184,5 @@ class BlogSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Blog
-        fields = ['id', 'restaurant', 'title', 'banner', 'contents', 'publish_timestamp', 'likes']
+        fields = ['id', 'restaurant', 'title', 'banner',
+                  'contents', 'publish_timestamp', 'likes']

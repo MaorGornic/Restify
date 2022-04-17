@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 // import Box ui component?
-import { Box} from "@chakra-ui/react";
+import { Box } from "@chakra-ui/react";
 // add AlertDescription, AlertTitle, AlertIcon
 // add Divider
 import { AlertIcon, AlertTitle, AlertDescription } from "@chakra-ui/react";
@@ -27,27 +27,14 @@ import {
 import { FaBell } from "react-icons/fa";
 
 function Notification({ style }) {
-  
   const [currentPage, setCurrentPage] = useState(1);
   const [notifReq, setNotifReq] = useState([]);
   const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
 
-  // A synchronous function to convert user id to username
-  // waits for API request to complete before returning 
-  const getUsername = async (id) => {
-    const res = axios.get(`http://127.0.0.1:8000/accounts/${id}/`);
-    return res;
-    // return res;
-  }; 
-
   function constructNotificationMessage(notif) {
-    let username;
-    // res.then((a)=>{return a.data.username})
-    // const username = getUsername(notif.actor_user);
-    getUsername(notif.actor_user).then((res2) => {username = res2.data.username
-    // console.log("Got username: " + username);
+    const username = notif.actor_user.username;
     let message = "";
     if (notif.type === "LIKEDRES") {
       message = `${username} liked your restaurant`;
@@ -57,13 +44,10 @@ function Notification({ style }) {
       message = `${username} commented on your restaurant`;
     } else if (notif.type === "LIKEDBLOG") {
       message = `${username} liked your blog`;
-    }
-    else {
+    } else {
       message = `TODO add message for ${notif.type}`;
     }
     return message;
-    });
-    
   }
 
   const getNotifications = (searchUrl) => {
@@ -85,21 +69,24 @@ function Notification({ style }) {
       });
   };
 
-  useEffect(() => { 
+  useEffect(() => {
     if (currentPage) {
-      getNotifications(`http://127.0.0.1:8000/accounts/notifications/?page=${currentPage}`);
+      getNotifications(
+        `http://127.0.0.1:8000/accounts/notifications/?page=${currentPage}`
+      );
     } else {
       getNotifications(`http://127.0.0.1:8000/accounts/notifications/`);
-  }}, [currentPage]);
+    }
+  }, [currentPage]);
 
-  // Return the results returned by the notification request inside a popover table 
+  // Return the results returned by the notification request inside a popover table
   return (
     <Popover>
       <PopoverTrigger>
         <IconButton
           variant="link"
           aria-label="notifications"
-            style={style}
+          style={style}
           icon={
             <FaBell style={{ color: "white", width: "20px", height: "20px" }} />
           }
@@ -109,10 +96,9 @@ function Notification({ style }) {
         <PopoverHeader>Notifications</PopoverHeader>
         <PopoverArrow />
         <PopoverCloseButton />
-        
+
         {loading ? (
-          <Center>
-          </Center>
+          <Center></Center>
         ) : (
           <Box>
             {notifReq.count > 0 &&
@@ -120,14 +106,13 @@ function Notification({ style }) {
                 // create element with notification details
                 // clicking on this element should redirect to http://localhost:3000/restaurants/1
                 // change the url to the restaurant id
-                <Box cursor="pointer"
-                onClick={() => {
-                  navigate(`/restaurants/1`);
-                }}>
-                  <Alert
-                    status="info"
-                    variant="left-accent"
-                  >
+                <Box
+                  cursor="pointer"
+                  onClick={() => {
+                    navigate(`/restaurants/1`);
+                  }}
+                >
+                  <Alert status="info" variant="left-accent">
                     <AlertIcon />
                     <AlertTitle mr={2}>
                       {constructNotificationMessage(notif)}

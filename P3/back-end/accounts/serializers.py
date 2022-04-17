@@ -11,12 +11,14 @@ class RegisterSerializer(serializers.ModelSerializer):
         validators=[UniqueValidator(queryset=ModifiedUser.objects.all())]
     )
 
-    password = serializers.CharField(write_only=True, required=True, validators=[validate_password])
+    password = serializers.CharField(
+        write_only=True, required=True, validators=[validate_password])
     password2 = serializers.CharField(write_only=True, required=True)
 
     class Meta:
         model = ModifiedUser
-        fields = ('username', 'password', 'password2', 'email', 'first_name', 'last_name')
+        fields = ('username', 'password', 'password2',
+                  'email', 'first_name', 'last_name')
         extra_kwargs = {
             'first_name': {'required': True},
             'last_name': {'required': True}
@@ -24,7 +26,8 @@ class RegisterSerializer(serializers.ModelSerializer):
 
     def validate(self, attrs):
         if attrs['password'] != attrs['password2']:
-            raise serializers.ValidationError({"password": "Password fields didn't match."})
+            raise serializers.ValidationError(
+                {"password": "Password fields didn't match."})
 
         return attrs
 
@@ -45,10 +48,29 @@ class RegisterSerializer(serializers.ModelSerializer):
 class ModifiedUserSerializer(serializers.ModelSerializer):
     class Meta:
         model = ModifiedUser
-        fields = ['id', 'username', 'first_name', 'last_name', 'email', 'avatar', 'phone_num']
+        fields = ['id', 'username', 'first_name',
+                  'last_name', 'email', 'avatar', 'phone_num']
 
 
 class NotificationRecordsSerializer(serializers.ModelSerializer):
+    def to_representation(self, instance):
+        rep = super().to_representation(instance)
+        rep.update({"user": {"id": rep.get("user").get("id"),
+                             "username": rep.get("user").get("username"),
+                             "first_name": rep.get("user").get("first_name"),
+                             "last_name": rep.get("user").get("last_name")}})
+
+        rep.update({"actor_user": {"id": rep.get("actor_user").get("id"),
+                                   "username": rep.get("actor_user").get("username"),
+                                   "first_name": rep.get("actor_user").get("first_name"),
+                                   "last_name": rep.get("actor_user").get("last_name")}})
+
+        rep.update({"restaurant":
+                    {"id": rep.get("restaurant").get("id"),
+                     "name": rep.get("restaurant").get("name")}})
+        return rep
+
     class Meta:
         model = Notification
         fields = ['user', 'type', 'viewed', 'blog', 'restaurant', 'actor_user']
+        depth = 1

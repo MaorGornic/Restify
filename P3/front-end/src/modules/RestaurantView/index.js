@@ -30,7 +30,25 @@ import BlogsSmall from "../../components/BlogsSmall";
 function RestaurantView() {
   const { id } = useParams();
   const [restaurant, setRestaurant] = useState([]);
+  const [followers, setFollowers] = useState(0);
   const [loading, setLoading] = useState(false);
+
+  //   const followRestaurant = async () => {
+  //     const config = {
+  //       headers: {
+  //         Authorization: `Bearer ${window.sessionStorage.getItem("token")}`,
+  //       },
+  //     };
+  //     axios
+  //       .patch(`http://127.0.0.1:8000/restaurants/${id}/follow/`, null, config)
+  //       .then((res) => {
+  //         setCommentsReq(res.data);
+  //         console.log(res.data);
+  //       })
+  //       .catch((err) => {
+  //         // TODO
+  //       });
+  //   };
 
   const getRestaurant = () => {
     setLoading(true);
@@ -113,6 +131,9 @@ function RestaurantView() {
                   opacity="0.7"
                   variant="solid"
                   _hover={{ opacity: "1" }}
+                  onClick={() => {
+                    // TODO;
+                  }}
                 >
                   Follow
                 </Button>

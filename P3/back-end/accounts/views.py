@@ -60,6 +60,7 @@ class GetUserView(APIView):
 #         user = get_object_or_404(ModifiedUser, id=self.request.user.id)
 #         return Response(serializer.data)
 
+
 class MarkViewedNotification(UpdateAPIView):
     queryset = Notification.objects.all()
     serializer_class = NotificationRecordsSerializer
@@ -68,7 +69,8 @@ class MarkViewedNotification(UpdateAPIView):
 
     def dispatch(self, request, *args, **kwargs):
         try:
-            self.notification = get_object_or_404(Notification, id=self.kwargs['notification_id'])
+            self.notification = get_object_or_404(
+                Notification, id=self.kwargs['notification_id'])
         except Http404:
             return JsonResponse({"detail": "Notification not found"}, status=404)
 
