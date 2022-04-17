@@ -158,7 +158,7 @@ function RestaurantView() {
       doesFollow();
       doesLike();
     }
-  }, []);
+  }, [window.location.pathname]);
 
   return (
     <Box>

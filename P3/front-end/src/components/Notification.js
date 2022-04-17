@@ -2,10 +2,12 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 // import Box ui component?
-import { Box } from "@chakra-ui/react";
+import { Box, useDisclosure } from "@chakra-ui/react";
 // add AlertDescription, AlertTitle, AlertIcon
 // add Divider
 import { AlertIcon, AlertTitle, AlertDescription } from "@chakra-ui/react";
+
+// A notificiation component with pagination and a popover
 
 import {
   Popover,
@@ -30,6 +32,7 @@ function Notification({ style }) {
   const [currentPage, setCurrentPage] = useState(1);
   const [notifReq, setNotifReq] = useState([]);
   const [loading, setLoading] = useState(false);
+  const { isOpen, onOpen, onClose } = useDisclosure(); 
 
   const navigate = useNavigate();
 
@@ -83,7 +86,9 @@ function Notification({ style }) {
     }
   }, [currentPage]);
 
-  // Return the results returned by the notification request inside a popover table
+  // Return notificiations paginated component with a popover
+  // When scrolling through notifications, the current page is updated 
+  // with more API requests
   return (
     <Popover>
       <PopoverTrigger>
@@ -96,7 +101,7 @@ function Notification({ style }) {
           }
         />
       </PopoverTrigger>
-      <PopoverContent>
+      <PopoverContent className="popoverClass">
         <PopoverHeader>Notifications</PopoverHeader>
         <PopoverArrow />
         <PopoverCloseButton />
@@ -107,9 +112,6 @@ function Notification({ style }) {
           <Box>
             {notifReq.count > 0 &&
               notifReq.results.map((notif) => (
-                // If notif.view is set to true then the notification has been viewed, 
-                // so we should set the background color to white. Otherwise, use blue 
-                // background color.
                 <Alert
                   key={notif.id}
                   status={notif.viewed ? "success" : "info"}
@@ -117,8 +119,6 @@ function Notification({ style }) {
                   cursor="pointer"
                   onClick={() => {
                     if (!notif.viewed) {
-                      // If the notification has been viewed, we should set the view to false
-                      // and then update the notification.
                       notif.viewed = true;
                       axios
                         .patch(
@@ -133,13 +133,13 @@ function Notification({ style }) {
                           }
                         )
                         .then((res) => {
-                          // TODO
+                          navigate(`/restaurants/${notif.restaurant.id}/`);
                         })
                         .catch((err) => {
                           // TODO
                         });
                     }
-                    navigate(`/restaurants/${notif.restaurant.id}`);
+                    navigate(`/restaurants/${notif.restaurant.id}/`);
                   }}
                 >
                   <AlertIcon />
@@ -154,6 +154,33 @@ function Notification({ style }) {
                   You have no notifications at this time.
                 </AlertDescription>
               </Alert>
+            )}
+            {/* Pagination button to increase current page */}
+            {notifReq.next && (
+              <Button
+                variant="link"
+                onClick={() => {
+                  setCurrentPage(currentPage + 1);
+                  document.getElementsByClassName("popoverClass")[0].focus();
+
+                }}
+              >
+                Next
+              </Button>
+            )}
+            {/* Pagination button to go back to the previous page */}
+            {notifReq.previous && (
+              <Button
+                variant="link"
+                onClick={() => {
+                  setCurrentPage(currentPage - 1);
+                  document.getElementsByClassName("popoverClass")[0].focus();
+                  // focus on the notificiation popup element
+
+                }}
+              >
+                Previous
+              </Button>
             )}
           </Box>
         )}

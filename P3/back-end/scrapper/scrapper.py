@@ -6,7 +6,7 @@ import requests
 
 # True indicates that the db is empty. Recreates users and restaurants 
 # False means you want to add more records
-FRESH = True      
+FRESH = False       
 
 valid_items = ["tea", "eggs and bacon", "cheese", "hot dog", "chicken", "pizza", "burger", "steak", "salad", "pasta", "soup", "dessert", "drink", "cake", "ice cream", "cake", "coffee", "tea", "eggs and bacon", "cheese", "hot dog"]
 valid_descriptions = ["tea", "eggs and bacon", "cheese", "chicken", "pizza", "burger", "steak", "salad", "pasta", "soup", "dessert", "drink", "cake", "ice cream", "cake", "coffee", "tea", "eggs and bacon", "cheese", "hot dog"]
