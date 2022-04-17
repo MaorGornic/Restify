@@ -18,12 +18,13 @@ import Comment from "../components/Comment";
 
 let PageSize = 10;
 
-function Comments({ id }) {
+function Comments({ id, isOwner }) {
   const [currentPage, setCurrentPage] = useState(1);
   const [commentsReq, setCommentsReq] = useState([]);
   const [loading, setLoading] = useState(false);
   const [changed, setChanged] = useState(false);
   const [comment, setComment] = useState("");
+  const [commentState, setCommentSate] = useState(false);
 
   const submitComment = async () => {
     const config = {
@@ -68,46 +69,48 @@ function Comments({ id }) {
     } else {
       getComments(`http://127.0.0.1:8000/restaurants/${id}/comments/all/`);
     }
-  }, [currentPage, changed]);
+  }, [currentPage, changed, commentState]);
 
   return (
     <Box>
       {!loading ? (
         <Box>
-          <Stack>
-            <HStack>
-              <Textarea
-                resize="horizontal"
-                variant="filled"
-                width="80vh"
-                maxWidth="100vh"
-                minWidth="60vh"
-                placeholder="Add comment"
-                size="md"
-                color="white"
-                onChange={(event) => setComment(event.target.value)}
-              />
-              <Button
-                disabled={!window.sessionStorage.getItem("token")}
-                bg={colors.blue.medium}
-                color="white"
-                _hover={{ transform: "scale(1.05)" }}
-                onClick={async () => {
-                  await submitComment();
-                  setLoading(true);
-                  await new Promise((r) => {
-                    setTimeout(r, 1000);
-                  });
-                  setLoading(false);
+          {!isOwner && (
+            <Stack>
+              <HStack>
+                <Textarea
+                  resize="horizontal"
+                  variant="filled"
+                  width="80vh"
+                  maxWidth="100vh"
+                  minWidth="60vh"
+                  placeholder="Add comment"
+                  size="md"
+                  color="white"
+                  onChange={(event) => setComment(event.target.value)}
+                />
+                <Button
+                  disabled={!window.sessionStorage.getItem("token")}
+                  bg={colors.blue.medium}
+                  color="white"
+                  _hover={{ transform: "scale(1.05)" }}
+                  onClick={async () => {
+                    await submitComment();
+                    setLoading(true);
+                    await new Promise((r) => {
+                      setTimeout(r, 1000);
+                    });
+                    setLoading(false);
 
-                  // wait for a bit
-                  setChanged(!changed);
-                }}
-              >
-                Comment
-              </Button>
-            </HStack>
-          </Stack>
+                    // wait for a bit
+                    setChanged(!changed);
+                  }}
+                >
+                  Comment
+                </Button>
+              </HStack>
+            </Stack>
+          )}
           <Box
             overflowY={commentsReq.count > 5 ? "scroll" : "none"}
             h="50vh"
@@ -120,6 +123,10 @@ function Comments({ id }) {
                     authorName={`${comment.user.first_name} ${comment.user.last_name}`}
                     timestamp={comment.timestamp}
                     contents={comment.contents}
+                    res_id={id}
+                    id={comment.id}
+                    setComment={setCommentSate}
+                    isOwner
                   />
                 ))}
             </Stack>

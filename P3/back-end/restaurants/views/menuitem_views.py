@@ -17,7 +17,8 @@ class CreateMenuItem(CreateAPIView):
 
     def dispatch(self, request, *args, **kwargs):
         try:
-            self.restaurant = get_object_or_404(Restaurant, id=self.kwargs['restaurant_id'])
+            self.restaurant = get_object_or_404(
+                Restaurant, id=self.kwargs['restaurant_id'])
         except Http404:
             return JsonResponse({"detail": "Restaurant not found"}, status=404)
 
@@ -35,7 +36,8 @@ class UpdateMenuItem(UpdateAPIView):
 
     def dispatch(self, request, *args, **kwargs):
         try:
-            self.restaurant = get_object_or_404(Restaurant, id=self.kwargs['restaurant_id'])
+            self.restaurant = get_object_or_404(
+                Restaurant, id=self.kwargs['restaurant_id'])
         except Http404:
             return JsonResponse({"detail": "Restaurant not found"}, status=404)
 
@@ -71,7 +73,8 @@ class DeleteMenuItem(DestroyAPIView):
 
     def dispatch(self, request, *args, **kwargs):
         try:
-            self.restaurant = get_object_or_404(Restaurant, id=self.kwargs['restaurant_id'])
+            self.restaurant = get_object_or_404(
+                Restaurant, id=self.kwargs['restaurant_id'])
         except Http404:
             return JsonResponse({"detail": "Restaurant not found"}, status=404)
 
