@@ -3,6 +3,9 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 // import Box ui component?
 import { Box} from "@chakra-ui/react";
+// add AlertDescription, AlertTitle, AlertIcon
+// add Divider
+import { AlertIcon, AlertTitle, AlertDescription } from "@chakra-ui/react";
 
 import {
   Popover,
@@ -30,6 +33,38 @@ function Notification({ style }) {
   const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
+
+  // A synchronous function to convert user id to username
+  // waits for API request to complete before returning 
+  const getUsername = async (id) => {
+    const res = axios.get(`http://127.0.0.1:8000/accounts/${id}/`);
+    return res;
+    // return res;
+  }; 
+
+  function constructNotificationMessage(notif) {
+    let username;
+    // res.then((a)=>{return a.data.username})
+    // const username = getUsername(notif.actor_user);
+    getUsername(notif.actor_user).then((res2) => {username = res2.data.username
+    // console.log("Got username: " + username);
+    let message = "";
+    if (notif.type === "LIKEDRES") {
+      message = `${username} liked your restaurant`;
+    } else if (notif.type === "FOLLOWED") {
+      message = `${username} followed your restaurant`;
+    } else if (notif.type === "COMMENTED") {
+      message = `${username} commented on your restaurant`;
+    } else if (notif.type === "LIKEDBLOG") {
+      message = `${username} liked your blog`;
+    }
+    else {
+      message = `TODO add message for ${notif.type}`;
+    }
+    return message;
+    });
+    
+  }
 
   const getNotifications = (searchUrl) => {
     const config = {
@@ -82,12 +117,24 @@ function Notification({ style }) {
           <Box>
             {notifReq.count > 0 &&
               notifReq.results.map((notif) => (
-                // create PopoverBody element with notification details
-                <PopoverBody>
-                  <VStack>
-                    <Text fontSize="sm">{notif.actor_user} {notif.type}</Text>
-                  </VStack>
-                </PopoverBody>
+                // create element with notification details
+                // clicking on this element should redirect to http://localhost:3000/restaurants/1
+                // change the url to the restaurant id
+                <Box cursor="pointer"
+                onClick={() => {
+                  navigate(`/restaurants/1`);
+                }}>
+                  <Alert
+                    status="info"
+                    variant="left-accent"
+                  >
+                    <AlertIcon />
+                    <AlertTitle mr={2}>
+                      {constructNotificationMessage(notif)}
+                    </AlertTitle>
+                  </Alert>
+                  <Divider />
+                </Box>
               ))}
           </Box>
         )}

@@ -43,6 +43,23 @@ class APIUserView(RetrieveAPIView):
         return get_object_or_404(ModifiedUser, id=self.request.user.id)
 
 
+class GetUserView(APIView):
+    """Get user by url provided user_id"""
+    permission_classes = (AllowAny,)
+
+    def get(self, request, user_id):
+        user = get_object_or_404(ModifiedUser, id=self.kwargs['user_id'])
+        serializer = ModifiedUserSerializer(user)
+        return Response(serializer.data)
+
+# class GetUserView(APIView):
+#     permission_classes = (IsAuthenticated,)
+#     serializer = ModifiedUserSerializer
+
+#     def get(self, request, *args, **kwargs):
+#         user = get_object_or_404(ModifiedUser, id=self.request.user.id)
+#         return Response(serializer.data)
+
 class MarkViewedNotification(UpdateAPIView):
     queryset = Notification.objects.all()
     serializer_class = NotificationRecordsSerializer
