@@ -1,4 +1,4 @@
-from restaurant_scrapper import scrape_restaurants
+from restaurant_scrapper import scrape_restaurants, scrape_menus
 from os import listdir
 from os.path import isfile, join
 import random
@@ -6,10 +6,10 @@ import requests
 
 # True indicates that the db is empty. Recreates users and restaurants 
 # False means you want to add more records
-FRESH = False       
+FRESH = True        
 
-valid_items = ["tea", "eggs and bacon", "cheese", "hot dog", "chicken", "pizza", "burger", "steak", "salad", "pasta", "soup", "dessert", "drink", "cake", "ice cream", "cake", "coffee", "tea", "eggs and bacon", "cheese", "hot dog"]
-valid_descriptions = ["tea", "eggs and bacon", "cheese", "chicken", "pizza", "burger", "steak", "salad", "pasta", "soup", "dessert", "drink", "cake", "ice cream", "cake", "coffee", "tea", "eggs and bacon", "cheese", "hot dog"]
+valid_descriptions = valid_items = scrape_menus()
+valid_comments = open("data/comments.csv", "r").readlines()
 all_words = ["this", "account", "restaurant", "is", "great", "sucks", "terrible", "hate", "love", "burger", "want", "cheese"]
 blog_words = ["ever wondered", "how to make", "my", "experience", "with", "baking", "cooking", "nice", "beautiful", "chairs", "ketchup", "hotdog", "bacon", "eggs", "cheese", "tea", "bun", "burger", "want", "love","great", "this", "account", "restaurant", "is", "great", "sucks", "terrible", "hate", "love", "burger", "want", "cheese"]
 number_of_blogs = 0
@@ -39,13 +39,13 @@ def main():
         # Each user follows and likes a few restaurants 
 
         for j in range(1, i):
-            if random.randint(1, 2) == 1:   # 1/3 probability to follow a restaurant 
+            if random.randint(1, 2) == 1:   # 1/2 probability to follow a restaurant 
                 URL = "http://127.0.0.1:8000/restaurants/{}/follow/".format(j)
                 r = requests.patch(url=URL, headers={'Authorization': f'Bearer {token}'})
-            if random.randint(1, 10) == 1:
+            if random.randint(1, 15) == 1:
                 URL = "http://127.0.0.1:8000/restaurants/{}/like/".format(j)
                 r = requests.patch(url=URL, headers={'Authorization': f'Bearer {token}'})
-            if random.randint(1, 20) == 1:
+            if random.randint(1, 10) == 1:
                 URL = "http://127.0.0.1:8000/restaurants/{}/comments/new/".format(j)
                 new_comment = generate_random_comment()
                 comment_data = {"contents": new_comment}
@@ -134,11 +134,7 @@ def generate_random_blog():
     return blog.strip()
 
 def generate_random_comment():
-    words = random.randint(1, 30)
-    comment = ""
-    for _ in range(words):
-        comment += random.choice(all_words) + " "
-    return comment.strip()
+    return random.choice(valid_comments).strip()
 
 def register(i, username, password):
     URL = "http://127.0.0.1:8000/accounts/register/"
