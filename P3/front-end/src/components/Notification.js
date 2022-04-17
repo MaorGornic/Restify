@@ -34,17 +34,21 @@ function Notification({ style }) {
   const navigate = useNavigate();
 
   function constructNotificationMessage(notif) {
-    const username = notif.actor_user.username;
     let message = "";
     if (notif.type === "LIKEDRES") {
-      message = `${username} liked your restaurant`;
+      message = `${notif.actor_user.username} liked your restaurant`;
     } else if (notif.type === "FOLLOWED") {
-      message = `${username} followed your restaurant`;
+      message = `${notif.actor_user.username} followed your restaurant`;
     } else if (notif.type === "COMMENTED") {
-      message = `${username} commented on your restaurant`;
+      message = `${notif.actor_user.username} commented on your restaurant`;
     } else if (notif.type === "LIKEDBLOG") {
-      message = `${username} liked your blog`;
-    } else {
+      message = `${notif.actor_user.username} liked your blog`;
+    } else if (notif.type === "MENUUPDATE") {
+      message = `${notif.restaurant.name} updated their menu`;
+    } else if (notif.type === "NEWBLOG") {
+      message = `${notif.restaurant.name} posted a new blog post`;
+    }
+    else {
       message = `TODO add message for ${notif.type}`;
     }
     return message;

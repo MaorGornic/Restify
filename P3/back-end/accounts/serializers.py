@@ -59,8 +59,8 @@ class NotificationRecordsSerializer(serializers.ModelSerializer):
                              "username": rep.get("user").get("username"),
                              "first_name": rep.get("user").get("first_name"),
                              "last_name": rep.get("user").get("last_name")}})
-
-        rep.update({"actor_user": {"id": rep.get("actor_user").get("id"),
+        if rep.get("actor_user"):
+            rep.update({"actor_user": {"id": rep.get("actor_user").get("id"),
                                    "username": rep.get("actor_user").get("username"),
                                    "first_name": rep.get("actor_user").get("first_name"),
                                    "last_name": rep.get("actor_user").get("last_name")}})
