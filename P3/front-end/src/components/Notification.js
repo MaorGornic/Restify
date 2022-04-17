@@ -32,7 +32,6 @@ function Notification({ style }) {
   const [currentPage, setCurrentPage] = useState(1);
   const [notifReq, setNotifReq] = useState([]);
   const [loading, setLoading] = useState(false);
-  const { isOpen, onOpen, onClose } = useDisclosure(); 
 
   const navigate = useNavigate();
 
