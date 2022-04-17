@@ -39,10 +39,18 @@ const ProfileEdit = () => {
         if (Object.keys(formErr).length === 0 && isSubmit) {
             const fd = new FormData();
             fd.append('_method', 'PATCH');
-            fd.append('first_name', formValue.first_name);
-            fd.append('last_name', formValue.last_name);
-            fd.append('email', formValue.email);
-            fd.append('phone_num', formValue.phone_num);
+            if (formValue.first_name !== ''){
+                fd.append('first_name', formValue.first_name);
+            }
+            if (formValue.last_name !== ''){
+                fd.append('last_name', formValue.last_name);
+            }
+            if (formValue.email !== ''){
+                fd.append('email', formValue.email);
+            }
+            if (formValue.phone_num !== ''){
+                fd.append('phone_num', formValue.phone_num);
+            }
 
             // Validated now send the request
             axios.patch(`http://127.0.0.1:8000/accounts/update/`, fd, config)
