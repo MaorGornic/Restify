@@ -146,20 +146,20 @@ const ProfileEdit = () => {
 
                             <Flex>
                                 <Box w='49.5%' >
-                                    <Text>{formErr.first_name}</Text>
+                                    <p>{formErr.first_name}</p>
                                 </Box >
                                 <Box w='1%'></Box>
                                 <Box w='49.5%' >
-                                    <Text>{formErr.last_name}</Text>
+                                    <p>{formErr.last_name}</p>
                                 </Box >
                             </Flex>
 
                             <FormLabel htmlFor='email' className="profLabel">Email</FormLabel>
                             <Input id='email' name="email" type='email' onChange={handleChange} defaultValue={userProfile.email} />
-                            <Text>{formErr.email}</Text>
+                            <p>{formErr.email}</p>
                             <FormLabel htmlFor='phone' className="profLabel">Phone Number</FormLabel>
                             <Input id='phone' name="phone_num" onChange={handleChange} defaultValue={userProfile.phone_num} />
-                            <Text>{formErr.phone_num}</Text>
+                            <p>{formErr.phone_num}</p>
 
                             <Center pr={'40%'} pt={'3%'} >
                                 <Button type="submit" onClick={handleSubmit} colorScheme='blue' size='md'>SAVE PROFILE</Button>

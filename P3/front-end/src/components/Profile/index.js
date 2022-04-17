@@ -12,6 +12,8 @@ import "./style.css"
 const Profile = () => {
     const initState = { username: "", first_name: "", last_name: "", email: "", phone_num: "", avatar: "" };
     const [userProfile, setuserProfile] = useState([]);
+    const navigate = useNavigate();
+
     const config = {
         headers: {
             Authorization: `Bearer ${window.sessionStorage.getItem("token")}`,
@@ -31,6 +33,11 @@ const Profile = () => {
                 console.log(err.response);
             });
     }, []);
+
+    const handleRedirect = (e) => {
+        e.preventDefault();
+        navigate('/profile/edit');
+    };
 
     return (
         <Box>
@@ -74,13 +81,25 @@ const Profile = () => {
                                 </Center >
                             </Flex>
 
+                            <Flex>
+                                <Box w='49.5%' >
+                                    <p></p>
+                                </Box >
+                                <Box w='1%'></Box>
+                                <Box w='49.5%' >
+                                    <p></p>
+                                </Box >
+                            </Flex>
+
                             <FormLabel htmlFor='email' className="profLabel">Email</FormLabel>
                             <Input id='email' type='email' value={userProfile.email} />
+                            <p></p>
                             <FormLabel htmlFor='phone' className="profLabel">Phone Number</FormLabel>
                             <Input id='phone' value={userProfile.phone_num} />
+                            <p></p>
 
                             <Center pr={'40%'} pt={'3%'} >
-                                <Link to="/profile/edit" className="editProf btn btn-primary"> <Button colorScheme='blue' size='md'>EDIT PROFILE</Button> </Link>
+                                <Button onClick={handleRedirect} colorScheme='blue' size='md'>EDIT PROFILE</Button>
                             </Center>
                             
                         </Box>
