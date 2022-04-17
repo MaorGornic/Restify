@@ -196,7 +196,7 @@ function CustomCarousel({ res_id, isOwner }) {
                 );
               })}
           </Carousel>
-          {pictureEdit && (
+          {isOwner && pictureEdit && (
             <Box
               bg="grey"
               opacity="0.6"
