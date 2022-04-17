@@ -13,6 +13,7 @@ function Comment({ authorName, timestamp, contents }) {
       >
         <HStack>
           <Badge
+            marginTop="1rem"
             bg={colors.blue.medium}
             color="white"
             borderRadius="5px"
@@ -24,7 +25,7 @@ function Comment({ authorName, timestamp, contents }) {
             Posted 2 weeks ago
           </Text>
         </HStack>
-        <Text color="white" mt="1">
+        <Text color="white" marginTop="-0.5rem">
           {contents}
         </Text>
       </Box>
