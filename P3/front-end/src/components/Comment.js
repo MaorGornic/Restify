@@ -22,7 +22,7 @@ function Comment({ authorName, timestamp, contents }) {
             {authorName}
           </Badge>
           <Text color="white" size="xs">
-            Posted 2 weeks ago
+            {new Date(timestamp).toUTCString()}
           </Text>
         </HStack>
         <Text color="white" marginTop="-0.5rem">
