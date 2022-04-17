@@ -53,22 +53,23 @@ const Profile = () => {
                                 </Box></Center>
                             </Box>
                         </Box></Center>
-                        <Box w='75%'>
+                        <Box w='70%'>
                             <h4 className="profileTitle">Profile Settings</h4>
 
                             <Flex>
-                                <Box w='50%' >
+                                <Box w='50.5%' >
                                     <FormLabel htmlFor='first-name' className="profLabel">First name</FormLabel>
                                 </Box >
-                                <Box w='50%' >
+                                <Box w='49.5%' >
                                     <FormLabel htmlFor='last-name' className="profLabel">Last name</FormLabel>
                                 </Box >
                             </Flex>
                             <Flex>
-                                <Center w='50%' >
+                                <Center w='49.5%' >
                                     <Input id='first-name' value={userProfile.first_name} />
                                 </Center >
-                                <Center w='50%' >
+                                <Box w='1%'></Box>
+                                <Center w='49.5%' >
                                     <Input id='last-name' value={userProfile.last_name} />
                                 </Center >
                             </Flex>
@@ -78,14 +79,12 @@ const Profile = () => {
                             <FormLabel htmlFor='phone' className="profLabel">Phone Number</FormLabel>
                             <Input id='phone' value={userProfile.phone_num} />
 
-                            <Center pr={'50%'} pt={'3%'} >
+                            <Center pr={'40%'} pt={'3%'} >
                                 <Link to="/profile/edit" className="editProf btn btn-primary"> <Button colorScheme='blue' size='md'>EDIT PROFILE</Button> </Link>
                             </Center>
                             
                         </Box>
                     </Flex>
-
-
                 </FormControl>
             </div>
         </Box>

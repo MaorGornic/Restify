@@ -4,7 +4,7 @@
     justify-content: center;
     align-items: center;
     height: 75vh;
-    max-width:65%;
+    max-width:80%;
     margin: auto;
 }
 
@@ -36,7 +36,4 @@
 
 .editProf{
     padding-top: 3%;
-}
-
-.idCard{
 }
