@@ -4,7 +4,6 @@ import Restaurants from "./modules/Restaurants";
 import { ChakraProvider, theme } from "@chakra-ui/react";
 import RestaurantView from "./modules/RestaurantView";
 import RestaurantEditView from "./modules/RestaurantEditView";
-import LandingNavBar from "./components/LandingNavBar";
 import Home from "./components/Home";
 import Login from "./components/Login";
 import SignUp from "./components/SignUp";
@@ -12,8 +11,8 @@ import LandingLayout from "./components/LandingLayout";
 import Profile from "./components/Profile";
 import ProfileEdit from "./components/ProfileEdit";
 import RestaurantCreate from "./components/RestaurantCreate";
-import Feed from "./components/Feed"
-
+import Feed from "./components/Feed";
+import BlogCreationView from "./modules/BlogCreationView";
 
 function App() {
   return (
@@ -32,9 +31,16 @@ function App() {
             path="/restaurants/:id/edit"
             element={<RestaurantEditView />}
           ></Route>
+          <Route
+            path="/restaurants/:id/blogs/create"
+            element={<BlogCreationView />}
+          ></Route>
           <Route path="/profile" element={<Profile />}></Route>
           <Route path="/profile/edit" element={<ProfileEdit />}></Route>
-          <Route path="/restaurant/create" element={<RestaurantCreate />}></Route>
+          <Route
+            path="/restaurant/create"
+            element={<RestaurantCreate />}
+          ></Route>
           <Route path="/feed" element={<Feed />}></Route>
         </Routes>
       </BrowserRouter>
