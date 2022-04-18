@@ -32,6 +32,7 @@ const ProfileEdit = () => {
         else {
             const { name, value } = e.target;
             setFormValue({ ...formValue, [name]: value });
+            setFormErr(formErr => ({ ...formErr, [name]: '' }));
         }
     };
 
