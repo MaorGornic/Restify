@@ -1,4 +1,4 @@
-from restaurant_scrapper import scrape_restaurants, scrape_menus
+from restaurant_scrapper import scrape_menus
 from os import listdir
 from os.path import isfile, join
 import random
@@ -8,6 +8,8 @@ import requests
 # False means you want to add more records
 FRESH = True        
 
+f = open("data/restaurants.csv", "r")
+restaurants = f.readlines()
 valid_descriptions = valid_items = scrape_menus()
 valid_comments = open("data/comments.csv", "r").readlines()
 all_words = ["this", "account", "restaurant", "is", "great", "sucks", "terrible", "hate", "love", "burger", "want", "cheese"]
@@ -15,10 +17,9 @@ blog_words = ["ever wondered", "how to make", "my", "experience", "with", "bakin
 number_of_blogs = 0
 
 def main():
-    global number_of_blogs
-    restaurants = scrape_restaurants()
+    global number_of_blogs, restaurants
 
-    restaurants = restaurants[:50]    # Only taking the first 20 restaurants
+    restaurants = restaurants[:50]    # Only taking the first 50 restaurants
 
     for i in range(1, len(restaurants) + 1):
         username = f"naruto{i}"
@@ -30,7 +31,7 @@ def main():
         token = login(username, password)
 
         if FRESH:
-            create_restaurant(token, restaurants[i-1])
+            create_restaurant(token, i - 1)
          
         add_menu_items(i, token)
         upload_pictures(i, token)
@@ -95,11 +96,28 @@ def login(username, password):
     token = data['access']
     return token
 
-def create_restaurant(token, res):
+def create_restaurant(token, i):
+    global restaurants 
+
     URL = "http://127.0.0.1:8000/restaurants/new/"
-    dir_name = "res_logos"
-    logo = {'logo': open(f'{dir_name}/{pick_random_image(dir_name)}', 'rb')}
-    r = requests.post(url=URL, data=res, files=logo, headers={'Authorization': f'Bearer {token}'})
+    res = restaurants[i].split("$$")
+    
+    res_data = {
+        "name": res[0],
+        "address": res[1],
+        "email": res[2],
+        "phone_num": res[3],
+        "postal_code": res[4].strip()
+    }
+
+    if len(res) == 6:
+        logo = {'logo': open(f'res_logos/{res[5]}', 'rb')}
+    else:
+        dir_name = "res_logos"
+        logo = {'logo': open(f'{dir_name}/{pick_random_image(dir_name)}', 'rb')}
+    
+    print("sending data", res_data, logo)    
+    r = requests.post(url=URL, data=res_data, files=logo, headers={'Authorization': f'Bearer {token}'})
 
 def add_menu_items(res_id, token, min_items=0, max_items=5):
     URL = "http://127.0.0.1:8000/restaurants/{}/menu/new/".format(res_id)

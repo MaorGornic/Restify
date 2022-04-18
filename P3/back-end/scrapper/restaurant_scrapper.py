@@ -1,5 +1,6 @@
 import requests
-
+import random 
+valid_phones = open("data/phones.csv", "r").readlines()
 
 def scrape_restaurants():
     response = requests.get(
@@ -17,16 +18,20 @@ def scrape_restaurants():
             addr.replace("\n", " ")
             email = f"{name.strip()}@gmail.com".replace(" ", "")
             postal_code = data[1][:5]
-            # if not postal_code.isnumeric():
-            #     continue
             if postal_code.isnumeric():
                 all_data.append({"name": name,
                                  "address": addr,
                                  "email": email,
-                                 "phone_num": "+1-605-555-0166 ",
+                                 "phone_num": random.choice(valid_phones).strip(),
                                  "postal_code": postal_code})
             ch = ''
         ch += line
+
+    # Move all data back to a file
+    f = open("data/restaurants.csv", "w")
+    for data in all_data:
+        f.write(f"{data['name']}$${data['address']}$${data['email']}$${data['phone_num']}$${data['postal_code']}\n")
+    f.close()
     return all_data
 
 
@@ -42,4 +47,3 @@ def scrape_menus():
 
 
 # scrape_restaurants()
-# print(scrape_restaurants())
