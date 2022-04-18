@@ -200,9 +200,9 @@ function CustomCarousel({ res_id, isOwner }) {
             <Box
               bg="grey"
               opacity="0.6"
-              style={{ marginBottom: "1rem" }}
               cursor="pointer"
               onClick={deletePicture}
+              style={{ marginTop: "-1rem" }}
             >
               <Center>
                 <Text color="white" fontSize="lg" paddingBottom="0.4rem">

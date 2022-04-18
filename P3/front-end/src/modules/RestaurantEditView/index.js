@@ -21,6 +21,7 @@ import {
   IconButton,
   useDisclosure,
   Modal,
+  Text,
   ModalOverlay,
   ModalContent,
   ModalHeader,
@@ -30,8 +31,8 @@ import {
 import { FaHeart, FaUserFriends, FaPlusCircle } from "react-icons/fa";
 import * as colors from "../../utils/colors";
 import axios from "axios";
-import React, { useState, useEffect } from "react";
-import { Navigate, useParams } from "react-router-dom";
+import React, { useState, useEffect, useRef } from "react";
+import { useParams } from "react-router-dom";
 import MainNavBar from "../../components/MainNavBar";
 import MenuItems from "../../components/MenuItems";
 import Comments from "../../components/Comments";
@@ -45,6 +46,7 @@ function RestaurantView() {
   const [followers, setFollowers] = useState(0);
   const [likes, setLikes] = useState(0);
   const [loading, setLoading] = useState(false);
+  const [hoveringLogo, setHoveringLogo] = useState(false);
 
   const [dishName, setDishName] = useState("");
   const [description, setDescription] = useState("");
@@ -54,6 +56,9 @@ function RestaurantView() {
   const [restaurantName, setRestaurantName] = useState("");
   const [restaurantAddr, setRestaurantAddr] = useState("");
   const [restaurantPhoneNum, setRestaurantPhoneNum] = useState("");
+  const [curRestaurantLogo, setCurNewRestaurantLogo] = useState(null);
+  const [newRestaurantLogo, setNewRestaurantLogo] = useState(null);
+  const logoChooser = useRef(null);
 
   const config = {
     headers: {
@@ -82,6 +87,8 @@ function RestaurantView() {
   };
 
   const createMenuItem = () => {
+    if (!isNaN(price)) {
+    }
     setLoading(true);
     const configModified = {
       headers: {
@@ -108,7 +115,13 @@ function RestaurantView() {
         setLoading(false);
       })
       .catch((err) => {
-        // TODO
+        if (err.response.status == 400) {
+          alert("Invalid input was entered. Please try again.");
+        } else {
+          alert("Something went wrong...");
+        }
+
+        setLoading(false);
       });
   };
 
@@ -122,6 +135,7 @@ function RestaurantView() {
         setRestaurantName(res.data.name);
         setRestaurantAddr(res.data.address);
         setRestaurantPhoneNum(res.data.phone_num);
+        setCurNewRestaurantLogo(res.data.logo);
 
         setFollowers(res.data.followers.length);
         setLikes(res.data.likes.length);
@@ -144,16 +158,15 @@ function RestaurantView() {
     }
 
     setLoading(true);
+
+    let formData = new FormData();
+    formData.append("name", restaurantName);
+    formData.append("address", restaurantAddr);
+    formData.append("phone_num", restaurantPhoneNum);
+    if (newRestaurantLogo) formData.append("logo", newRestaurantLogo);
+
     axios
-      .patch(
-        `http://127.0.0.1:8000/restaurants/${id}/edit/`,
-        {
-          name: restaurantName,
-          address: restaurantAddr,
-          phone_num: restaurantPhoneNum,
-        },
-        config
-      )
+      .patch(`http://127.0.0.1:8000/restaurants/${id}/edit/`, formData, config)
       .then((res) => {
         setLoading(false);
         navigate(`/restaurants/${id}`);
@@ -206,15 +219,44 @@ function RestaurantView() {
                   borderRadius="4rem"
                   height="200px"
                 >
-                  <Center>
-                    <Image
-                      borderRadius="2rem"
-                      width="250px"
-                      height="150px"
-                      marginTop="1.4rem"
-                      src={restaurant.logo}
-                    />
-                  </Center>
+                  <Stack>
+                    <input
+                      ref={logoChooser}
+                      onChange={(event) => {
+                        setNewRestaurantLogo(event.target.files[0]);
+                        setCurNewRestaurantLogo(
+                          URL.createObjectURL(event.target.files[0])
+                        );
+                      }}
+                      type="file"
+                      class="form-control"
+                      id="customFile"
+                      accept="image/*"
+                      hidden
+                    ></input>
+                    <Center>
+                      <Image
+                        onMouseEnter={() => setHoveringLogo(true)}
+                        onMouseLeave={() => setHoveringLogo(false)}
+                        borderRadius="2rem"
+                        width="250px"
+                        height="150px"
+                        marginTop="1.4rem"
+                        src={curRestaurantLogo}
+                        cursor={"pointer"}
+                        onClick={() => logoChooser.current.click()}
+                      />
+                    </Center>
+                    {hoveringLogo && (
+                      <Center>
+                        <Box width="200px" background="grey" opacity="0.8">
+                          <Text textAlign="center" color="white">
+                            CHANGE
+                          </Text>
+                        </Box>
+                      </Center>
+                    )}
+                  </Stack>
                 </Box>
                 <Center>
                   <Heading

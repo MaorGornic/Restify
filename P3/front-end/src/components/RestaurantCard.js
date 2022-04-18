@@ -2,12 +2,32 @@ import { Box, Image, Stack, IconButton, Flex, HStack } from "@chakra-ui/react";
 import * as colors from "../utils/colors";
 import { useNavigate } from "react-router-dom";
 import { FaHeart, FaCommentDots, FaQuestionCircle } from "react-icons/fa";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 
 /* Used https://chakra-ui.com/docs/components/layout/box as a reference*/
 function RestaurantCard({ restaurantImg, title, isLiked, likes, id }) {
   const navigate = useNavigate();
   const [isLikedState, setIsLikedState] = useState(isLiked);
+
+  const doesLike = () => {
+    axios
+      .get(`http://127.0.0.1:8000/restaurants/doeslike/${id}/`, {
+        headers: {
+          Authorization: `Bearer ${window.sessionStorage.getItem("token")}`,
+        },
+      })
+      .then((res) => {
+        setIsLikedState(res.data.is_liked);
+      })
+      .catch((err) => {
+        // TODO
+      });
+  };
+
+  useEffect(() => {
+    doesLike();
+  }, []);
 
   const property = {
     imageUrl: restaurantImg,

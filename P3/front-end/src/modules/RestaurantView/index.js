@@ -108,7 +108,6 @@ function RestaurantView() {
   };
 
   const doesLike = () => {
-    // http://127.0.0.1:8000/restaurants/doesfollow/1/
     setLoading(true);
     axios
       .get(`http://127.0.0.1:8000/restaurants/doeslike/${id}/`, config)

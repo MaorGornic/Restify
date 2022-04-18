@@ -3,7 +3,7 @@ import RestaurantCard from "../components/RestaurantCard";
 import Pagination from "../components/Pagination";
 import * as colors from "../utils/colors";
 import axios from "axios";
-import React, { useMemo, useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import RestaurantsNavBar from "../components/RestaurantsNavBar";
 
@@ -21,7 +21,6 @@ function Restaurants() {
       .get(searchUrl)
       .then((res) => {
         setRestaurantsReq(res.data);
-        // console.log(res.data.results);
         setLoading(false);
       })
       .catch((err) => {
@@ -90,7 +89,7 @@ function Restaurants() {
                   <RestaurantCard
                     id={restraurant.id}
                     title={restraurant.name}
-                    isLiked={true} // need to check if the currently logged in user likes this restaurant
+                    // isLiked={doesLike(restraurant.id)} // need to check if the currently logged in user likes this restaurant
                     likes={restraurant.likes.length}
                     restaurantImg={restraurant.logo}
                   />
