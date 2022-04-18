@@ -87,6 +87,8 @@ function RestaurantView() {
   };
 
   const createMenuItem = () => {
+    if (!isNaN(price)) {
+    }
     setLoading(true);
     const configModified = {
       headers: {
@@ -113,7 +115,13 @@ function RestaurantView() {
         setLoading(false);
       })
       .catch((err) => {
-        // TODO
+        if (err.response.status == 400) {
+          alert("Invalid input was entered. Please try again.");
+        } else {
+          alert("Something went wrong...");
+        }
+
+        setLoading(false);
       });
   };
 
