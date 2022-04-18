@@ -80,23 +80,21 @@ import {
       <Box>
         <MainNavBar />
         {!loading ? (
-          <Box
-            style={{
-              marginLeft: "2rem",
-              height: "100vh",
-              margin: "auto",
-              marginTop: "1rem",
-              background: colors.purple.medium,
-            }}
-          >
-                <Stack marginLeft="1rem">
+          <Box>
+              {/* create a blog title in the center */}
+            <Heading
+                as="h1"
+                size="xl"
+                textAlign="center"
+                fontWeight="bold"
+                fontFamily="heading"
+                mb={4}
+            >
+              {blog.title}        
+                </Heading>
+              
                   <Box
-                    style={{
-                      marginTop: "2rem",
-                    }}
                     background="white"
-                    borderRadius="4rem"
-                    height="200px"
                   >
                     <Center>
                       <Image
@@ -109,14 +107,7 @@ import {
                     </Center>
                   </Box>
                   <Center>
-                    <Heading
-                      marginTop="0.5rem"
-                      as="h3"
-                      size="xs"
-                      style={{ color: "white", opacity: "0.75" }}
-                    >
-                      {blog.title}
-                    </Heading>
+                    
                     {/* display contents of the blog */}
                     <Box
                         style={{
@@ -144,7 +135,6 @@ import {
                       </Tag>
                     </Stack>
                   </Center>
-                </Stack>
                 <Box marginLeft="2rem">
                 </Box>
 
