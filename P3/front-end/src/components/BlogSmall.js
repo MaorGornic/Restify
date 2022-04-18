@@ -68,18 +68,7 @@ function BlogSmall({ title, contents, banner, id, setBlog, isOwner }) {
               >
                 READ MORE
               </Button>
-              {!isOwner ? (
-                <Button
-                  leftIcon={<FaHeart />}
-                  background={colors.black.dark}
-                  color="white"
-                  opacity="0.7"
-                  variant="solid"
-                  _hover={{ opacity: "1" }}
-                >
-                  LIKE
-                </Button>
-              ) : (
+              {isOwner && (
                 <IconButton
                   background={colors.black.dark}
                   colorScheme="blue"
