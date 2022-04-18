@@ -9,6 +9,7 @@ import {
     IconButton,
     Center,
     VStack,
+    Grid,
     StackDivider,
 } from "@chakra-ui/react";
 import * as colors from "../../utils/colors";
@@ -105,56 +106,62 @@ function BlogLarge(props) {
     };
 
     return (
-        <Stack>
+        <Box>
             {!loading ? (
                 <Box
                     boxShadow="dark-lg"
-                    p="2"
+                    p="3"
                     background={colors.purple.medium}
                     borderRadius="lg"
                 >
                     <Flex justifyContent="space-between">
-                        <Stack>
-                            <Text as='kbd' color="white" fontSize="xl" fontWeight="normal">
+                        <Stack w="70%">
+                            <Text isTruncated as='kbd' maxWidth="130vh" color="white" fontSize="xl" fontWeight="normal">
                                 {title}
                             </Text>
 
-                            <Flex style={{ marginLeft: "2rem" }}>
-                                <Box w='200px' >
-                                    <Button colorScheme='blue' size='sm' width='100px' height='22px'>Restaurant: </Button>
-                                </Box >
-                                <Box w='50%' >
-                                    <Text color="white">{restName} </Text>
-                                </Box >
+                            <Stack w="30%">
+                                <Flex style={{ marginLeft: "2rem" }}>
+                                    <Box w='40%' >
+                                        <Button colorScheme='blue' size='sm' width='100px' height='22px'>Restaurant: </Button>
+                                    </Box >
+                                    <Box w='60%' >
+                                        <Text color="white">{restName} </Text>
+                                    </Box >
+                                </Flex>
+
+
+                                <Flex style={{ marginLeft: "2rem" }}>
+                                    <Box w='40%' >
+                                        <Button colorScheme='blue' size='sm' width='100px' height='22px'>Date: </Button>
+                                    </Box >
+                                    <Box w='60%' >
+                                        <Text color="white">{timestamp} </Text>
+                                    </Box >
+                                </Flex>
+
+                                <Flex style={{ marginLeft: "2rem" }}>
+                                    <Box w='40%' >
+                                        <Button colorScheme='blue' size='sm' width='100px' height='22px'>Like: </Button>
+                                    </Box >
+                                    <Box w='60%' >
+                                        <Text color="white">{liked} </Text>
+                                    </Box >
+                                </Flex>
+                            </Stack>
+
+                            <Flex >
+                                <Text
+                                    isTruncated
+                                    color="white"
+                                    fontSize="lg"
+                                    maxWidth="130vh"
+                                    style={{ marginLeft: "2rem" }}
+                                >
+                                    {contents}
+                                </Text>
                             </Flex>
 
-                            <Flex style={{ marginLeft: "2rem" }}>
-                                <Box w='200px' >
-                                    <Button colorScheme='blue' size='sm' width='100px' height='22px'>Date: </Button>
-                                </Box >
-                                <Box w='50%' >
-                                    <Text color="white">{timestamp} </Text>
-                                </Box >
-                            </Flex>
-
-                            <Flex style={{ marginLeft: "2rem" }}>
-                                <Box w='200px' >
-                                    <Button colorScheme='blue' size='sm' width='100px' height='22px'>Like: </Button>
-                                </Box >
-                                <Box w='50%' >
-                                    <Text color="white">{liked} </Text>
-                                </Box >
-                            </Flex>
-
-                            <Text
-                                isTruncated
-                                color="white"
-                                fontSize="lg"
-                                maxWidth="60%"
-                                style={{ marginLeft: "2rem" }}
-                            >
-                                {contents}
-                            </Text>
                             <HStack style={{ marginTop: "1.5rem" }}>
                                 <Button
                                     background={colors.black.dark}
@@ -182,16 +189,17 @@ function BlogLarge(props) {
                                 </Button>
                             </HStack>
                         </Stack>
-                        <Box w='25%' class='blogPic'>
+
+                        <Flex w='25%' maxWidth="25%" class='blogPic'>
                             <Image
                                 borderRadius="1rem"
                                 src={banner}
                             />
-                        </Box>
+                        </Flex>
                     </Flex>
                 </Box>
             ) : (<></>)}
-        </Stack>
+        </Box>
     );
 }
 
