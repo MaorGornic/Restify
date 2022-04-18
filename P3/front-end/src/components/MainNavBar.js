@@ -33,7 +33,7 @@ function NavBar() {
 
   return (
     <Box bg={colors.purple.medium} h="70px">
-      <Flex justify="space-between" onClick={() => navigate("/restaurants")} cursor="pointer"> 
+      <Flex justify="space-between">
         <HStack>
           <Image
             onClick={() => navigate("/restaurants")}
@@ -48,6 +48,8 @@ function NavBar() {
           ></Image>
           <Flex>
             <Text
+              onClick={() => navigate("/restaurants")}
+              cursor="pointer"
               style={{
                 color: "white",
                 fontSize: "1.75rem",
@@ -56,7 +58,13 @@ function NavBar() {
             >
               Resti
             </Text>
-            <Text style={{ color: "white", fontSize: "1.75rem" }}>fy</Text>
+            <Text
+              onClick={() => navigate("/restaurants")}
+              cursor="pointer"
+              style={{ color: "white", fontSize: "1.75rem" }}
+            >
+              fy
+            </Text>
           </Flex>
           <ButtonGroup
             style={{ marginTop: "0.5rem", marginLeft: "2rem" }}

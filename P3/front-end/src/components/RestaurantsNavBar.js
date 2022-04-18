@@ -47,8 +47,10 @@ function NavBar() {
             src={logo}
             alt="Restify"
           ></Image>
-          <Flex onClick={() => navigate("/restaurants")} cursor="pointer">
+          <Flex>
             <Text
+              onClick={() => navigate("/restaurants")}
+              cursor="pointer"
               style={{
                 color: "white",
                 fontSize: "1.75rem",
@@ -57,7 +59,13 @@ function NavBar() {
             >
               Resti
             </Text>
-            <Text style={{ color: "white", fontSize: "1.75rem" }}>fy</Text>
+            <Text
+              onClick={() => navigate("/restaurants")}
+              cursor="pointer"
+              style={{ color: "white", fontSize: "1.75rem" }}
+            >
+              fy
+            </Text>
           </Flex>
           <Input
             placeholder="Search"
