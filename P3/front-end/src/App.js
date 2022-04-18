@@ -13,6 +13,7 @@ import ProfileEdit from "./components/ProfileEdit";
 import RestaurantCreate from "./components/RestaurantCreate";
 import Feed from "./components/Feed";
 import BlogCreationView from "./modules/BlogCreationView";
+import BlogView from "./modules/BlogView";
 
 function App() {
   return (
@@ -34,6 +35,10 @@ function App() {
           <Route
             path="/restaurants/:id/blogs/create"
             element={<BlogCreationView />}
+          ></Route>
+          <Route
+            path="/blogs/:id/"
+            element={<BlogView />}
           ></Route>
           <Route path="/profile" element={<Profile />}></Route>
           <Route path="/profile/edit" element={<ProfileEdit />}></Route>
