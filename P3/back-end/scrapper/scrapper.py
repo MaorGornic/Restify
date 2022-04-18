@@ -130,7 +130,6 @@ def add_menu_items(res_id, token, min_items=0, max_items=5):
             "price": random.randint(1, 50)
         }        
         if "sushi" in restaurants[res_id - 1]:
-            print("has sushi... going to add a sushi picture")
             dir_name = "sushi_images"
         else:
             dir_name = "menu_images"
