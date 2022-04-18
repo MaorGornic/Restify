@@ -74,7 +74,11 @@ function MenuItem({
         onClose();
       })
       .catch((err) => {
-        // TODO
+        if (err.response.status === 400) {
+          alert(
+            "Invalid input was provided. Please provide valid input and try again!"
+          );
+        }
       });
   };
 
