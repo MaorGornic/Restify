@@ -25,7 +25,7 @@ import {
   FaUserCircle,
 } from "react-icons/fa";
 import Notification from "./Notification";
-import { Avatar, AvatarBadge, AvatarGroup } from '@chakra-ui/react'
+import { Avatar, AvatarBadge, AvatarGroup } from "@chakra-ui/react";
 
 function NavBar() {
   const navigate = useNavigate();
@@ -155,8 +155,8 @@ function NavBar() {
             </Button>
           </ButtonGroup>
         </HStack>
-        <Box style={{ marginTop: "1.5rem", marginRight: "4rem" }}>
-          <Notification style={{ textDecoration: "none", marginTop: "-1rem" }} />
+        <HStack style={{ marginTop: "0.5rem", marginRight: "4rem" }}>
+          <Notification style={{ textDecoration: "none" }} />
           <Menu>
             <MenuButton
               style={{
@@ -168,26 +168,38 @@ function NavBar() {
               as={Button}
               rightIcon={<FaCaretDown />}
               leftIcon={
-                <Avatar size='xs' name='userAvatar' src={window.sessionStorage.getItem("avatar")} />
+                <Avatar
+                  size="xs"
+                  name="userAvatar"
+                  src={window.sessionStorage.getItem("avatar")}
+                />
               }
             >
               {window.sessionStorage.getItem("username")}
             </MenuButton>
             <MenuList>
               <MenuItem onClick={() => navigate("/profile")}>Profile</MenuItem>
-              <MenuItem onClick={() => navigate("/profile/edit")}>Edit Profile</MenuItem>
-              <MenuItem onClick={() => {
-                const config = {
-                  headers: {
-                    Authorization: `Bearer ${window.sessionStorage.getItem("token")}`,
-                  },
-                };
-                window.sessionStorage.setItem("token", '');
-                navigate("/login");
-              }}>Log out</MenuItem>
+              <MenuItem onClick={() => navigate("/profile/edit")}>
+                Edit Profile
+              </MenuItem>
+              <MenuItem
+                onClick={() => {
+                  const config = {
+                    headers: {
+                      Authorization: `Bearer ${window.sessionStorage.getItem(
+                        "token"
+                      )}`,
+                    },
+                  };
+                  window.sessionStorage.setItem("token", "");
+                  navigate("/login");
+                }}
+              >
+                Log out
+              </MenuItem>
             </MenuList>
           </Menu>
-        </Box>
+        </HStack>
       </Flex>
     </Box>
   );
