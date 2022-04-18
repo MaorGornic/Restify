@@ -190,7 +190,7 @@ function CustomCarousel({ res_id, isOwner }) {
                   <Image
                     key={index}
                     src={slide.ref_img}
-                    height="70vh"
+                    height="60vh"
                     maxWidth="100vh"
                   />
                 );

@@ -1,4 +1,4 @@
-import { Box, Flex, Heading, Spinner, Center } from "@chakra-ui/react";
+import { Box, Flex, Heading, Spinner, Center, Text } from "@chakra-ui/react";
 import RestaurantCard from "../components/RestaurantCard";
 import Pagination from "../components/Pagination";
 import * as colors from "../utils/colors";
@@ -64,12 +64,28 @@ function Restaurants() {
             marginTop: "1.5rem",
           }}
         >
-          <Flex justify="space-between" wrap="wrap" gap="1rem">
-            <Heading as="h3" size="lg" style={{ color: colors.purple.medium }}>
-              Restaurants
-              {/* TODO: Add no restaurants if there is none in the db */}
-            </Heading>
-          </Flex>
+          {restaurantsReq.count > 0 ? (
+            <Flex justify="space-between" wrap="wrap" gap="1rem">
+              <Heading
+                as="h3"
+                size="lg"
+                style={{ color: colors.purple.medium }}
+              >
+                Restaurants
+                {/* TODO: Add no restaurants if there is none in the db */}
+              </Heading>
+            </Flex>
+          ) : (
+            <Center>
+              <Text
+                color={colors.purple.medium}
+                fontSize="5xl"
+                marginTop="35vh"
+              >
+                Nothing to show
+              </Text>
+            </Center>
+          )}
 
           <Box
             id="restaurants"
