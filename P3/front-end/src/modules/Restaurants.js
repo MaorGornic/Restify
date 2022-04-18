@@ -4,13 +4,14 @@ import Pagination from "../components/Pagination";
 import * as colors from "../utils/colors";
 import axios from "axios";
 import React, { useState, useEffect } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import RestaurantsNavBar from "../components/RestaurantsNavBar";
 
 let PageSize = 10;
 
 function Restaurants() {
   // const [searchUrl, setearchUrl] = useState([]);
+  const navigate = useNavigate();
   const search = useLocation().search;
   const [restaurantsReq, setRestaurantsReq] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -24,7 +25,7 @@ function Restaurants() {
         setLoading(false);
       })
       .catch((err) => {
-        // TODO
+        if (err.response.status == 401) navigate("/login");
       });
   };
 

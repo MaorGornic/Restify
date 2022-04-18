@@ -33,6 +33,7 @@ function CustomCarousel({ res_id, isOwner }) {
   const [newImageId, setNewImageId] = useState(0);
   const [pictureEdit, setPictureEdit] = useState(false);
   const [currentPicture, setCurrentPicture] = useState(1);
+  const navigate = useNavigate();
 
   const addPicture = () => {
     const configModified = {
@@ -58,7 +59,7 @@ function CustomCarousel({ res_id, isOwner }) {
         onClose();
       })
       .catch((err) => {
-        // TODO
+        if (err.response.status == 401) navigate("/login");
       });
   };
 
@@ -143,7 +144,7 @@ function CustomCarousel({ res_id, isOwner }) {
         setImagesReq(res.data);
       })
       .catch((err) => {
-        // TODO
+        if (err.response.status == 401) navigate("/login");
       });
   };
 

@@ -5,6 +5,7 @@ import axios from "axios";
 import React, { useState, useEffect } from "react";
 import MenuItem from "../components/MenuItem";
 import Pagination from "../components/Pagination";
+import { useNavigate } from "react-router-dom";
 
 let PageSize = 10;
 
@@ -13,6 +14,7 @@ function MenuItems({ res_id, isOwner }) {
   const [menusReq, setMenusReq] = useState([]);
   const [loading, setLoading] = useState(false);
   const [menuItem, setMenuItem] = useState(false);
+  const navigate = useNavigate();
 
   const getMenuItems = (searchUrl) => {
     setLoading(true);
@@ -23,7 +25,7 @@ function MenuItems({ res_id, isOwner }) {
         setLoading(false);
       })
       .catch((err) => {
-        // TODO
+        if (err.response.status == 401) navigate("/login");
       });
   };
 

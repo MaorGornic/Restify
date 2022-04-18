@@ -23,7 +23,7 @@ function RestaurantCard({ restaurantImg, title, likes, id }) {
         setIsLikedState(res.data.is_liked);
       })
       .catch((err) => {
-        // TODO
+        if (err.response.status == 401) navigate("/login");
       });
   };
 
@@ -47,7 +47,7 @@ function RestaurantCard({ restaurantImg, title, likes, id }) {
         setLikesState(likesState - 1);
       })
       .catch((err) => {
-        // TODO
+        if (err.response.status == 401) navigate("/login");
       });
   };
 

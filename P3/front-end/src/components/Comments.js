@@ -15,6 +15,7 @@ import axios from "axios";
 import React, { useState, useEffect } from "react";
 import Pagination from "../components/Pagination";
 import Comment from "../components/Comment";
+import { useNavigate } from "react-router-dom";
 
 let PageSize = 10;
 
@@ -25,6 +26,7 @@ function Comments({ id, isOwner }) {
   const [changed, setChanged] = useState(false);
   const [comment, setComment] = useState("");
   const [commentState, setCommentSate] = useState(false);
+  const navigate = useNavigate();
 
   const submitComment = async () => {
     const config = {
@@ -42,7 +44,7 @@ function Comments({ id, isOwner }) {
         setCommentsReq(res.data);
       })
       .catch((err) => {
-        // TODO
+        if (err.response.status == 401) navigate("/login");
       });
   };
 
@@ -55,7 +57,7 @@ function Comments({ id, isOwner }) {
         setLoading(false);
       })
       .catch((err) => {
-        // TODO
+        if (err.response.status == 401) navigate("/login");
       });
   };
 

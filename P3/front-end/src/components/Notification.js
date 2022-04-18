@@ -71,7 +71,7 @@ function Notification({ style }) {
         setLoading(false);
       })
       .catch((err) => {
-        // TODO
+        if (err.response.status == 401) navigate("/login");
       });
   };
 
@@ -145,7 +145,7 @@ function Notification({ style }) {
                           navigate(`/restaurants/${notif.restaurant.id}/`);
                         })
                         .catch((err) => {
-                          // TODO
+                          if (err.response.status == 401) navigate("/login");
                         });
                     }
                     navigate(`/restaurants/${notif.restaurant.id}/`);
