@@ -45,4 +45,3 @@ def scrape_menus():
     
     return all_menus 
 
-

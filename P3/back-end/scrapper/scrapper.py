@@ -32,7 +32,7 @@ def main():
 
         if FRESH:
             create_restaurant(token, i - 1)
-         
+        
         add_menu_items(i, token)
         upload_pictures(i, token)
         add_blog_posts(i, token)
@@ -120,6 +120,8 @@ def create_restaurant(token, i):
     r = requests.post(url=URL, data=res_data, files=logo, headers={'Authorization': f'Bearer {token}'})
 
 def add_menu_items(res_id, token, min_items=0, max_items=5):
+    global restaurants
+
     URL = "http://127.0.0.1:8000/restaurants/{}/menu/new/".format(res_id)
     for j in range(1, random.randint(min_items+1, max_items+1)):   
         menu_item_dic = {
@@ -127,7 +129,11 @@ def add_menu_items(res_id, token, min_items=0, max_items=5):
             "description": random.choice(valid_descriptions),
             "price": random.randint(1, 50)
         }        
-        dir_name = "menu_images"
+        if "sushi" in restaurants[res_id - 1]:
+            print("has sushi... going to add a sushi picture")
+            dir_name = "sushi_images"
+        else:
+            dir_name = "menu_images"
         picture = {'picture': open(f'{dir_name}/{pick_random_image(dir_name)}', 'rb')}
         r = requests.post(url=URL, data=menu_item_dic, files=picture, headers={'Authorization': f'Bearer {token}'})
 
