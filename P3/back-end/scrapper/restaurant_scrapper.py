@@ -46,4 +46,3 @@ def scrape_menus():
     return all_menus 
 
 
-# scrape_restaurants()

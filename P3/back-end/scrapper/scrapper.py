@@ -111,7 +111,7 @@ def create_restaurant(token, i):
     }
 
     if len(res) == 6:
-        logo = {'logo': open(f'res_logos/{res[5]}', 'rb')}
+        logo = {'logo': open(f'res_logos/{res[5].strip()}', 'rb')}
     else:
         dir_name = "res_logos"
         logo = {'logo': open(f'{dir_name}/{pick_random_image(dir_name)}', 'rb')}
