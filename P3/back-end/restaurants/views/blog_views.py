@@ -12,6 +12,7 @@ from rest_framework.permissions import IsAuthenticated, AllowAny
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 
+
 class GetBlogs(RetrieveAPIView):
     serializer_class = BlogSerializer
     permission_classes = [AllowAny]
@@ -31,10 +32,12 @@ class GetBlogs(RetrieveAPIView):
             return JsonResponse({"detail": "Blog ID is not found"}, status=404)
         return ret
 
+
 class GetAllBlogs(ListAPIView):
     queryset = Blog.objects.all()
     serializer_class = BlogSerializer
     permission_classes = [AllowAny]
+
 
 class GetBlogFeed(ListAPIView):
     serializer_class = BlogSerializer
@@ -59,6 +62,7 @@ class GetBlogFeed(ListAPIView):
         # return Blog.objects.filter(likes=curr_user) # Method to get all liked blogs
         return Blog.objects.filter(restaurant__in=followed_rest).order_by('id')
 
+
 class GetBlogRest(ListAPIView):
     queryset = Blog.objects.all()
     serializer_class = BlogSerializer
@@ -66,7 +70,8 @@ class GetBlogRest(ListAPIView):
 
     def dispatch(self, request, *args, **kwargs):
         try:
-            self.restaurant = get_object_or_404(Restaurant, id=self.kwargs['restaurant_id'])
+            self.restaurant = get_object_or_404(
+                Restaurant, id=self.kwargs['restaurant_id'])
         except Http404:
             return JsonResponse({"detail": "Restaurant not found"}, status=404)
         return super().dispatch(request, *args, **kwargs)
@@ -76,6 +81,7 @@ class GetBlogRest(ListAPIView):
         # Reference: https://stackoverflow.com/questions/44033670/python-django-rest-framework-unorderedobjectlistwarning
         return Blog.objects.filter(restaurant=self.restaurant).order_by('id')
 
+
 class DeleteBlog(DestroyAPIView):
     queryset = Blog.objects.all()
     serializer_class = BlogSerializer
@@ -84,7 +90,8 @@ class DeleteBlog(DestroyAPIView):
     def dispatch(self, request, *args, **kwargs):
         if not Blog.objects.filter(id=self.kwargs['pk']):
             return JsonResponse({"detail": "Blog ID is not found"}, status=404)
-        self.restaurant = get_object_or_404(Blog, id=self.kwargs['pk']).restaurant
+        self.restaurant = get_object_or_404(
+            Blog, id=self.kwargs['pk']).restaurant
         return super().dispatch(request, *args, **kwargs)
 
     # Redirect to my restaurant after remove a blog?
@@ -97,11 +104,13 @@ class DeleteBlog(DestroyAPIView):
 
 class CreateBlog(CreateAPIView):
     serializer_class = BlogSerializer
-    permission_classes = [IsAuthenticated, IsRestaurantOwner]  # Must be authenticated
+    permission_classes = [IsAuthenticated,
+                          IsRestaurantOwner]  # Must be authenticated
 
     def dispatch(self, request, *args, **kwargs):
         try:
-            self.restaurant = get_object_or_404(Restaurant, id=self.kwargs['restaurant_id'])
+            self.restaurant = get_object_or_404(
+                Restaurant, id=self.kwargs['restaurant_id'])
         except Http404:
             return JsonResponse({"detail": "Restaurant not found"}, status=404)
 
@@ -145,6 +154,39 @@ class LikeBlog(UpdateAPIView):
         serializer.validated_data.update({'likes': [current_user]})
         return super().perform_update(serializer)
 
+
+class UnlikeBlog(UpdateAPIView):
+    queryset = Blog.objects.all()
+    serializer_class = BlogSerializer
+    permission_classes = [IsAuthenticated]
+    http_method_names = ["patch"]
+
+    def dispatch(self, request, *args, **kwargs):
+        if not Blog.objects.filter(id=self.kwargs['blog_id']):
+            return JsonResponse({"detail": "Blog ID is not found"}, status=404)
+        self.blog = get_object_or_404(Blog, id=self.kwargs['blog_id'])
+        return super().dispatch(request, *args, **kwargs)
+
+    def get_serializer(self, *args, **kwargs):
+        serializer = super().get_serializer(*args, **kwargs)
+        # Making this endpoint ignore the given body
+        for field in serializer.fields:
+            serializer.fields[field].read_only = True
+        return serializer
+
+    def update(self, request, *args, **kwargs):
+        # Check if the current restaurant is followed by this user
+        if not self.blog.likes.filter(id=self.request.user.id).exists():
+            return JsonResponse({"detail": "User does not like this blog"}, status=409)
+        self.kwargs['pk'] = self.kwargs['blog_id']
+        return super().update(request, *args, **kwargs)
+
+    def perform_update(self, serializer):
+        self.blog.likes.remove(
+            ModifiedUser.objects.get(id=self.request.user.id))
+        return super().perform_update(serializer)
+
+
 class FetchIfLikedBlog(RetrieveAPIView):
     queryset = Blog.objects.all()
     serializer_class = BlogSerializer
@@ -158,7 +200,8 @@ class FetchIfLikedBlog(RetrieveAPIView):
 
     def finalize_response(self, request, response, *args, **kwargs):
         if response.status_code not in [401, 403, 404]:
-            response.data = {'is_liked': self.blog.likes.filter(id=self.request.user.id).exists()}
+            response.data = {'is_liked': self.blog.likes.filter(
+                id=self.request.user.id).exists()}
         return super().finalize_response(request, response, *args, **kwargs)
 
     def retrieve(self, request, *args, **kwargs):
