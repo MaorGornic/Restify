@@ -1,4 +1,4 @@
-import { Box, Flex, Heading, Spinner, Center } from "@chakra-ui/react";
+import { Box, Flex, Spinner, Center } from "@chakra-ui/react";
 // import Pagination from "../components/Pagination";
 import * as colors from "../utils/colors";
 import axios from "axios";

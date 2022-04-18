@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 // import Box ui component?
-import { Box, useDisclosure } from "@chakra-ui/react";
+import { Box, Flex } from "@chakra-ui/react";
 // add AlertDescription, AlertTitle, AlertIcon
 // add Divider
 import { AlertIcon, AlertTitle, AlertDescription } from "@chakra-ui/react";
@@ -23,10 +23,10 @@ import {
   Alert,
   Center,
   Text,
-  Image,
-  VStack,
+  Badge,
+  HStack,
 } from "@chakra-ui/react";
-import { FaBell } from "react-icons/fa";
+import { FaBell, FaCircle } from "react-icons/fa";
 
 function Notification({ style }) {
   const [currentPage, setCurrentPage] = useState(1);
@@ -49,8 +49,8 @@ function Notification({ style }) {
       message = `${notif.restaurant.name} updated their menu`;
     } else if (notif.type === "NEWBLOG") {
       message = `${notif.restaurant.name} posted a new blog post`;
-    }
-    else {   // should never be reached unless there is a bug
+    } else {
+      // should never be reached unless there is a bug
       message = `TODO add message for ${notif.type}`;
     }
     return message;
@@ -86,19 +86,30 @@ function Notification({ style }) {
   }, [currentPage]);
 
   // Return notificiations paginated component with a popover
-  // When scrolling through notifications, the current page is updated 
+  // When scrolling through notifications, the current page is updated
   // with more API requests
   return (
     <Popover>
       <PopoverTrigger>
-        <IconButton
-          variant="link"
-          aria-label="notifications"
-          style={style}
-          icon={
-            <FaBell style={{ color: "white", width: "20px", height: "20px" }} />
-          }
-        />
+        <HStack>
+          <IconButton
+            variant="link"
+            aria-label="notifications"
+            style={style}
+            icon={
+              <FaBell
+                style={{ color: "white", width: "20px", height: "20px" }}
+              />
+            }
+          />
+          {notifReq.count > 0 && (
+            <FaCircle
+              fontSize="5px"
+              color="red"
+              style={{ marginLeft: "-0.8rem", marginTop: "-1rem" }}
+            />
+          )}
+        </HStack>
       </PopoverTrigger>
       <PopoverContent className="popoverClass">
         <PopoverHeader>Notifications</PopoverHeader>
@@ -108,7 +119,7 @@ function Notification({ style }) {
         {loading ? (
           <Center></Center>
         ) : (
-          <Box>
+          <Box overflowY="scroll" maxHeight="80vh">
             {notifReq.count > 0 &&
               notifReq.results.map((notif) => (
                 <Alert
@@ -154,32 +165,32 @@ function Notification({ style }) {
               </Alert>
             )}
             {/* Pagination button to increase current page */}
-            {notifReq.next && (
-              <Button
-                variant="link"
-                onClick={() => {
-                  setCurrentPage(currentPage + 1);
-                  document.getElementsByClassName("popoverClass")[0].focus();
-
-                }}
-              >
-                Next
-              </Button>
-            )}
-            {/* Pagination button to go back to the previous page */}
-            {notifReq.previous && (
-              <Button
-                variant="link"
-                onClick={() => {
-                  setCurrentPage(currentPage - 1);
-                  document.getElementsByClassName("popoverClass")[0].focus();
-                  // focus on the notificiation popup element
-
-                }}
-              >
-                Previous
-              </Button>
-            )}
+            <Flex justify="space-between">
+              {notifReq.next && (
+                <Button
+                  variant="link"
+                  onClick={() => {
+                    setCurrentPage(currentPage + 1);
+                    document.getElementsByClassName("popoverClass")[0].focus();
+                  }}
+                >
+                  Next
+                </Button>
+              )}
+              {/* Pagination button to go back to the previous page */}
+              {notifReq.previous && (
+                <Button
+                  variant="link"
+                  onClick={() => {
+                    setCurrentPage(currentPage - 1);
+                    document.getElementsByClassName("popoverClass")[0].focus();
+                    // focus on the notificiation popup element
+                  }}
+                >
+                  Previous
+                </Button>
+              )}
+            </Flex>
           </Box>
         )}
       </PopoverContent>

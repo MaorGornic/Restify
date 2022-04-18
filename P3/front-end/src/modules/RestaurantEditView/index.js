@@ -191,7 +191,6 @@ function RestaurantView() {
         <Box
           style={{
             marginLeft: "2rem",
-            // height: "88vh",
             margin: "auto",
             marginTop: "1rem",
             background: colors.purple.medium,
