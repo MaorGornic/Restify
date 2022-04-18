@@ -16,7 +16,7 @@ import {
 import logo from "../assets/images/logo.png";
 import * as colors from "../utils/colors";
 import { useNavigate } from "react-router-dom";
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   FaHome,
   FaNewspaper,
@@ -30,6 +30,27 @@ import { Avatar, AvatarBadge, AvatarGroup } from "@chakra-ui/react";
 
 function NavBar() {
   const navigate = useNavigate();
+
+  const [isOwner, setIsOwner] = useState(false);
+  const [restID, setRestID] = useState(0);
+
+  const config = {
+    headers: {
+      Authorization: `Bearer ${window.sessionStorage.getItem("token")}`,
+    },
+  };
+
+  useEffect(() => {
+    axios
+      .get(
+        `http://127.0.0.1:8000/restaurants/owned/`,
+        config
+      )
+      .then(respond => {
+        setRestID(respond.data.id);
+        setIsOwner(true);
+      });
+  }, []);
 
   return (
     <Box bg={colors.purple.medium} h="70px">
@@ -105,7 +126,14 @@ function NavBar() {
               }
               variantColor="teal"
               variant="link"
-              onClick={() => navigate("/restaurant/create")}
+              onClick={() => {
+                if (!isOwner) {
+                  navigate("/restaurant/create")
+                }
+                else {
+                  navigate(`/restaurants/${restID}`)
+                }
+              }}
             >
               My Restaurant
             </Button>
