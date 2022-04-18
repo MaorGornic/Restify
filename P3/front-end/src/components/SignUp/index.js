@@ -15,6 +15,7 @@ const SignUp = () => {
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormValue({ ...formValue, [name]: value });
+    setFormErr(formErr => ({ ...formErr, [name]: '' }));
   };
 
   const handleSubmit = (e) => {
