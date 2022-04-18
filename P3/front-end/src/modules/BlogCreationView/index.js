@@ -132,7 +132,7 @@ const BlogCreate = () => {
         // navigate(`/restaurants/${res.data.id}`);
       })
       .catch((err) => {
-        console.log("Got error...", err);
+        console.log(err);
         if (err.response.status === 401) {
           navigate("/login");
           alert("User Validation Failed. Please Login.");

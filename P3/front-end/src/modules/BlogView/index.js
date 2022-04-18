@@ -87,7 +87,7 @@ function BlogView() {
         setLoading(false);
       })
       .catch((err) => {
-        // TODO
+        if (err.response.status == 401) navigate("/login");
       });
   };
 

@@ -40,7 +40,6 @@ function Comments({ id, isOwner }) {
       )
       .then((res) => {
         setCommentsReq(res.data);
-        console.log(res.data);
       })
       .catch((err) => {
         // TODO
@@ -53,7 +52,6 @@ function Comments({ id, isOwner }) {
       .get(searchUrl)
       .then((res) => {
         setCommentsReq(res.data);
-        console.log(res.data);
         setLoading(false);
       })
       .catch((err) => {

@@ -64,7 +64,7 @@ function RestaurantView() {
         setIsFollowing(false);
       })
       .catch((err) => {
-        // TODO
+        if (err.response.status == 401) navigate("/login");
       });
   };
 
@@ -79,7 +79,7 @@ function RestaurantView() {
         setLoading(false);
       })
       .catch((err) => {
-        // TODO
+        if (err.response.status == 401) navigate("/login");
       });
   };
 
@@ -103,7 +103,7 @@ function RestaurantView() {
         setIsLiked(false);
       })
       .catch((err) => {
-        // TODO
+        if (err.response.status == 401) navigate("/login");
       });
   };
 
@@ -116,7 +116,7 @@ function RestaurantView() {
         setLoading(false);
       })
       .catch((err) => {
-        // TODO
+        if (err.response.status == 401) navigate("/login");
       });
   };
 
@@ -131,7 +131,7 @@ function RestaurantView() {
         setLoading(false);
       })
       .catch((err) => {
-        // TODO
+        if (err.response.status == 401) navigate("/login");
       });
   };
 
@@ -146,7 +146,7 @@ function RestaurantView() {
         setLoading(false);
       })
       .catch((err) => {
-        // TODO
+        if (err.response.status == 401) navigate("/login");
       });
   };
 

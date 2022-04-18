@@ -82,7 +82,7 @@ function RestaurantView() {
         if (err.response.status == 401) {
           navigate("/restaurants");
         }
-        // TODO
+        if (err.response.status == 401) navigate("/login");
       });
   };
 
@@ -143,7 +143,7 @@ function RestaurantView() {
         setLoading(false);
       })
       .catch((err) => {
-        // TODO
+        if (err.response.status == 401) navigate("/login");
       });
   };
 

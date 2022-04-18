@@ -141,7 +141,6 @@ function CustomCarousel({ res_id, isOwner }) {
       .get(searchUrl)
       .then((res) => {
         setImagesReq(res.data);
-        console.log(res.data);
       })
       .catch((err) => {
         // TODO

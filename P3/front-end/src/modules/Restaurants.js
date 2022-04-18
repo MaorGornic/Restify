@@ -31,7 +31,6 @@ function Restaurants() {
   const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
-    // console.log(search);
     const filterType = new URLSearchParams(search).get("type");
     let searchUrl;
 
