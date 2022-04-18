@@ -1,7 +1,7 @@
 from django.http import Http404, JsonResponse
 from rest_framework import generics
 from django.contrib.auth.models import User
-from rest_framework.generics import RetrieveAPIView, get_object_or_404, UpdateAPIView
+from rest_framework.generics import RetrieveAPIView, get_object_or_404, UpdateAPIView, DestroyAPIView
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
@@ -88,6 +88,21 @@ class MarkViewedNotification(UpdateAPIView):
         serializer.validated_data.update({'viewed': True})
         return super().perform_update(serializer)
 
+class DeleteNotification(DestroyAPIView):
+    queryset = Notification.objects.all()
+    serializer_class = NotificationRecordsSerializer
+    permission_classes = [IsAuthenticated]
+
+    def dispatch(self, request, *args, **kwargs):
+        try:
+            self.notification = get_object_or_404(
+                Notification, id=self.kwargs['pk'])
+        except Http404:
+            return JsonResponse({"detail": "Notification not found"}, status=404)
+
+        return super().dispatch(request, *args, **kwargs)
+
+    
 
 class NotificationView(generics.ListAPIView):
     # queryset = Notification.objects.all()
