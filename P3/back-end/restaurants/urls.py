@@ -61,6 +61,7 @@ urlpatterns = [
     path('<int:restaurant_id>/blog/new/',
          CreateBlog.as_view(), name='create-blog'),
     path('blog/<int:blog_id>/like/', LikeBlog.as_view(), name='like-blog'),
+    path('blog/<int:blog_id>/unlike/', UnlikeBlog.as_view(), name='unlike-blog'),
     path('blog/all/', GetAllBlogs.as_view(), name='get-all-blog'),
     path('blog/feed/', GetBlogFeed.as_view(), name='get-blog-feed'),
     path('<int:restaurant_id>/blog/', GetBlogRest.as_view(), name='get-rest-blog'),
