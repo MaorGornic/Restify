@@ -62,53 +62,63 @@ function Comments({ id, isOwner }) {
         </HStack>
       )}
 
-      {!loading ? (
-        <Box>
-          <Box
-            overflowY={blogsReq.count > 3 ? "scroll" : "none"}
-            h="70vh"
-            mt="1"
-          >
-            <Stack mt="1.2rem" ml="2" mr="2">
-              {blogsReq.count > 0 &&
-                blogsReq.results.map((blog) => (
-                  <BlogSmall
-                    title={blog.title}
-                    contents={blog.contents}
-                    banner={blog.banner}
-                    id={blog.id}
-                    setBlog={setBlog}
-                    isOwner={isOwner}
-                  />
-                ))}
-              <Center
-                marginBottom="0.5rem"
-                marginTop="0.5rem"
-                marginRight="30%"
-              >
-                {blogsReq.count > 0 && (
-                  <Pagination
-                    className="pagination-bar"
-                    currentPage={currentPage}
-                    totalCount={blogsReq.count}
-                    pageSize={constants.pageSize}
-                    onPageChange={(page) => setCurrentPage(page)}
-                  />
-                )}
-              </Center>
-            </Stack>
+      {blogsReq.count > 0 ? (
+        !loading ? (
+          <Box>
+            <Box
+              overflowY={blogsReq.count > 3 ? "scroll" : "none"}
+              h="70vh"
+              mt="1"
+            >
+              <Stack mt="1.2rem" ml="2" mr="2">
+                {blogsReq.count > 0 &&
+                  blogsReq.results.map((blog) => (
+                    <BlogSmall
+                      title={blog.title}
+                      contents={blog.contents}
+                      banner={blog.banner}
+                      id={blog.id}
+                      setBlog={setBlog}
+                      isOwner={isOwner}
+                    />
+                  ))}
+                <Center
+                  marginBottom="0.5rem"
+                  marginTop="0.5rem"
+                  marginRight="30%"
+                >
+                  {blogsReq.count > 0 && (
+                    <Pagination
+                      className="pagination-bar"
+                      currentPage={currentPage}
+                      totalCount={blogsReq.count}
+                      pageSize={constants.pageSize}
+                      onPageChange={(page) => setCurrentPage(page)}
+                    />
+                  )}
+                </Center>
+              </Stack>
+            </Box>
           </Box>
-        </Box>
+        ) : (
+          <Box textAlign="center" marginTop="50vh">
+            <Spinner
+              thickness="4px"
+              speed="0.65s"
+              emptyColor="gray.200"
+              color={colors.purple.medium}
+              size="xl"
+            />
+          </Box>
+        )
       ) : (
-        <Box textAlign="center" marginTop="50vh">
-          <Spinner
-            thickness="4px"
-            speed="0.65s"
-            emptyColor="gray.200"
-            color={colors.purple.medium}
-            size="xl"
-          />
-        </Box>
+        <Center>
+          <Stack>
+            <Text color="white" fontSize="5xl" marginTop="30vh">
+              Not Available
+            </Text>
+          </Stack>
+        </Center>
       )}
     </Box>
   );

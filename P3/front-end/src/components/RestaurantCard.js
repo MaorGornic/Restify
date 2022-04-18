@@ -6,19 +6,45 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 
 /* Used https://chakra-ui.com/docs/components/layout/box as a reference*/
-function RestaurantCard({ restaurantImg, title, isLiked, likes, id }) {
+function RestaurantCard({ restaurantImg, title, likes, id }) {
   const navigate = useNavigate();
-  const [isLikedState, setIsLikedState] = useState(isLiked);
+  const [isLikedState, setIsLikedState] = useState(false);
+  const [likesState, setLikesState] = useState(likes);
+  const config = {
+    headers: {
+      Authorization: `Bearer ${window.sessionStorage.getItem("token")}`,
+    },
+  };
 
   const doesLike = () => {
     axios
-      .get(`http://127.0.0.1:8000/restaurants/doeslike/${id}/`, {
-        headers: {
-          Authorization: `Bearer ${window.sessionStorage.getItem("token")}`,
-        },
-      })
+      .get(`http://127.0.0.1:8000/restaurants/doeslike/${id}/`, config)
       .then((res) => {
         setIsLikedState(res.data.is_liked);
+      })
+      .catch((err) => {
+        // TODO
+      });
+  };
+
+  const likeRestaurant = async () => {
+    axios
+      .patch(`http://127.0.0.1:8000/restaurants/${id}/like/`, null, config)
+      .then(() => {
+        setIsLikedState(true);
+        setLikesState(likesState + 1);
+      })
+      .catch((err) => {
+        if (err.response.status == 401) navigate("/login");
+      });
+  };
+
+  const unLikeRestaurant = async () => {
+    axios
+      .patch(`http://127.0.0.1:8000/restaurants/${id}/unlike/`, null, config)
+      .then(() => {
+        setIsLikedState(false);
+        setLikesState(likesState - 1);
       })
       .catch((err) => {
         // TODO
@@ -63,7 +89,7 @@ function RestaurantCard({ restaurantImg, title, isLiked, likes, id }) {
           </Box>
           <Box display="flex" mt="2" alignItems="center">
             <Box as="span" ml="2" color="gray.500" fontSize="sm">
-              {likes} likes
+              {likesState} likes
             </Box>
           </Box>
         </Box>
@@ -75,7 +101,9 @@ function RestaurantCard({ restaurantImg, title, isLiked, likes, id }) {
             variant="link"
             aria-label="like"
             opacity={isLikedState ? "100%" : "50%"}
-            onClick={() => setIsLikedState(!isLikedState)}
+            onClick={() =>
+              isLikedState ? unLikeRestaurant() : likeRestaurant()
+            }
             _hover={{ transform: "scale(1.25)" }}
             _focus={{ outline: "none" }}
             icon={
@@ -95,6 +123,7 @@ function RestaurantCard({ restaurantImg, title, isLiked, likes, id }) {
               aria-label="like"
               _hover={{ transform: "scale(1.25)" }}
               _focus={{ outline: "none" }}
+              onClick={() => navigate(`/restaurants/${id}`)}
               icon={
                 <FaCommentDots
                   style={{
@@ -110,6 +139,7 @@ function RestaurantCard({ restaurantImg, title, isLiked, likes, id }) {
               aria-label="like"
               _hover={{ transform: "scale(1.25)" }}
               _focus={{ outline: "none" }}
+              onClick={() => navigate(`/restaurants/${id}`)}
               icon={
                 <FaQuestionCircle
                   style={{

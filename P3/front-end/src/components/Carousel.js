@@ -77,11 +77,11 @@ function CustomCarousel({ res_id, isOwner }) {
       .then((res) => {
         // need to trigger reload in menu items
         // setMenuItem(res.data);
-        setNewImageId(null);
+        setNewImageId(res.data);
         onClose();
       })
       .catch((err) => {
-        setNewImageId(null);
+        setNewImageId(err.response);
         onClose();
       });
   };
@@ -199,13 +199,13 @@ function CustomCarousel({ res_id, isOwner }) {
           {isOwner && pictureEdit && (
             <Box
               bg="grey"
-              opacity="0.6"
+              opacity="0.8"
               cursor="pointer"
               onClick={deletePicture}
               style={{ marginTop: "-1rem" }}
             >
               <Center>
-                <Text color="white" fontSize="lg" paddingBottom="0.4rem">
+                <Text color="white" fontSize="lg" paddingBottom="0.5rem">
                   DELETE
                 </Text>
               </Center>
@@ -221,7 +221,7 @@ function CustomCarousel({ res_id, isOwner }) {
           </Stack>
         </Center>
       )}
-      {isOwner && !pictureEdit && (
+      {isOwner && (!pictureEdit || imagesReq.count === 0) && (
         <HStack>
           <IconButton
             style={{ marginTop: ".5rem" }}
