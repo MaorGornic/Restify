@@ -17,6 +17,7 @@ import {
     GridItem,
     Stack,
   } from "@chakra-ui/react";
+  import { Text } from '@chakra-ui/react'
   import { FaHeart, FaUserFriends } from "react-icons/fa";
   import * as colors from "../../utils/colors";
   import axios from "axios";
@@ -93,50 +94,60 @@ import {
               {blog.title}        
                 </Heading>
               
-                  <Box
-                    background="white"
-                  >
                     <Center>
                       <Image
                         borderRadius="2rem"
-                        width="250px"
-                        height="150px"
+                        width="500px"
+                        height="400px"
                         marginTop="1.4rem"
                         src={blog.banner}
                       />
                     </Center>
-                  </Box>
+                    
                   <Center>
                     
-                    {/* display contents of the blog */}
+                    {/* display contents of the blog. */}
                     <Box
                         style={{
                             marginTop: "1rem",
                             marginBottom: "1rem",
+                            marginLeft: "2em",
+                            marginRight: "2em",
+                            fontSize: "1.2rem",
                             background: "white",
                             borderRadius: "4rem",
                             height: "200px",
                             padding: "1rem",
                             overflow: "scroll",
+                            height: "100%",
                         }}
                     >
                     {blog.contents}
                     </Box>
                   </Center>
-  
-                  <Center>
-                    <Stack marginTop="2rem" marginBottom="1rem">
-                      <Tag size="md" background={colors.grey.dark}>
-                        <FaUserFriends color="white" />
-                      </Tag>
-                      <Tag size="md" background={colors.grey.dark}>
-                        <FaHeart color="white" />
 
-                      </Tag>
-                    </Stack>
+                  <Center>
+
+                    <Text style={{
+                        color: "black",
+                        marginTop: "1rem",
+                        marginBottom: "1rem",
+                        marginLeft: "2em",
+                        marginRight: "2em",
+                        fontSize: "1.2rem",
+                        background: "white",
+                        borderRadius: "4rem",
+                        height: "200px",
+                        width: "2000px",
+                        padding: "1rem",
+                        overflow: "scroll",
+                      }}>
+                          Number of likes:
+                      {blog.likes ? blog.likes.length : "loading..."}. 
+                      TODO: users should be able to like from here. 
+                    </Text>
                   </Center>
-                <Box marginLeft="2rem">
-                </Box>
+  
 
           </Box>
         ) : (
