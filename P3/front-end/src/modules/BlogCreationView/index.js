@@ -227,7 +227,7 @@ const BlogCreate = () => {
                 size="lg"
                 _hover={{ opacity: "1" }}
               >
-                Create Restaurant
+                Create Blog
               </Button>
             </Center>
           </Box>
