@@ -47,7 +47,7 @@ function NavBar() {
             src={logo}
             alt="Restify"
           ></Image>
-          <Flex>
+          <Flex onClick={() => navigate("/restaurants")} cursor="pointer">
             <Text
               style={{
                 color: "white",

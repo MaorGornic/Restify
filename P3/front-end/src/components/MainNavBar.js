@@ -33,7 +33,7 @@ function NavBar() {
 
   return (
     <Box bg={colors.purple.medium} h="70px">
-      <Flex justify="space-between">
+      <Flex justify="space-between" onClick={() => navigate("/restaurants")} cursor="pointer"> 
         <HStack>
           <Image
             onClick={() => navigate("/restaurants")}
