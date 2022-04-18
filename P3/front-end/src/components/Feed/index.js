@@ -4,17 +4,17 @@ import axios from "axios";
 import { useMemo, useState, useEffect, useLocation } from "react";
 import {
     Box, Flex, Heading, Spacer, Text, Center, Square, FormLabel,
-    FormControl, Input, FormHelperText, WrapItem, Avatar, Button,
+    FormControl, Input, FormHelperText, WrapItem, Avatar, Button, Stack, Spinner
 } from "@chakra-ui/react";
 import MainNavBar from "../MainNavBar";
+import BlogLarge from "../BlogLarge";
+import * as colors from "../../utils/colors";
 
 
 const Feed = () => {
-    const [userProfile, setuserProfile] = useState([]);
-
-    const [formErr, setFormErr] = useState({});
     const [blog, setBlog] = useState({});
     const [totalBlogs, setTotalBlogs] = useState(0)
+    const [loading, setLoading] = useState(true);
     const navigate = useNavigate();
 
     const config = {
@@ -32,11 +32,10 @@ const Feed = () => {
             .then(respond => {
                 setBlog(respond.data.results);
                 setTotalBlogs(respond.data.count);
-                console.log(blog[0]); 
-                console.log(totalBlogs);
+                setLoading(false);
             })
             .catch((err) => {
-                if (err.response.status === 401){
+                if (err.response.status === 401) {
                     navigate('/login');
                     alert('User Validation Failed. Please Login.');
                 }
@@ -45,8 +44,31 @@ const Feed = () => {
 
     return (
         <Box>
-            <MainNavBar>
-            </MainNavBar>
+            <MainNavBar></MainNavBar>
+
+            {!loading ? (
+                <Box>
+                    <Stack mt="2%" ml="1.5%" mr="1.5%" >
+
+                        {blog.map((thisBlog) => (
+                            <BlogLarge
+                                thisBlog={thisBlog}
+                            />
+                        ))}
+                        
+                    </Stack>
+                </Box>
+            ) : (
+                <Box textAlign="center" marginTop="50vh">
+                    <Spinner
+                        thickness="4px"
+                        speed="0.65s"
+                        emptyColor="gray.200"
+                        color={colors.purple.medium}
+                        size="xl"
+                    />
+                </Box>
+            )}
         </Box>
     );
 }
