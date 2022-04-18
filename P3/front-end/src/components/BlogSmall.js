@@ -31,7 +31,7 @@ function BlogSmall({ title, contents, banner, id, setBlog, isOwner }) {
         setBlog(res.data);
       })
       .catch((err) => {
-        setBlog(err.data);
+        setBlog(err.response);
       });
   };
 
@@ -88,7 +88,6 @@ function BlogSmall({ title, contents, banner, id, setBlog, isOwner }) {
                   _hover={{ opacity: "1" }}
                   onClick={() => {
                     deleteBlog();
-                    // deleteComment();
                   }}
                 />
               )}

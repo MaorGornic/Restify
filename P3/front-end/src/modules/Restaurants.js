@@ -85,11 +85,11 @@ function Restaurants() {
               gap="0.5rem"
             >
               {restaurantsReq.count > 0 &&
-                restaurantsReq.results.map((restraurant) => (
+                restaurantsReq.results.map((restraurant, index) => (
                   <RestaurantCard
+                    key={index}
                     id={restraurant.id}
                     title={restraurant.name}
-                    // isLiked={doesLike(restraurant.id)} // need to check if the currently logged in user likes this restaurant
                     likes={restraurant.likes.length}
                     restaurantImg={restraurant.logo}
                   />

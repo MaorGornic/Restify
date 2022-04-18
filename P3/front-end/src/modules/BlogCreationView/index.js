@@ -5,7 +5,7 @@ import { useState, useEffect } from "react";
 import {
   Box,
   Flex,
-  Heading,
+  Spinner,
   Text,
   Center,
   FormLabel,
@@ -20,6 +20,7 @@ import * as colors from "../../utils/colors";
 const BlogCreate = () => {
   const { id } = useParams();
   const [userProfile, setuserProfile] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   const initState = {
     title: "",
@@ -51,6 +52,7 @@ const BlogCreate = () => {
   };
 
   const handleSubmit = (e) => {
+    setLoading(true);
     e.preventDefault();
     setFormErr(validation(formValue));
     setIsSubmit(true);
@@ -76,8 +78,8 @@ const BlogCreate = () => {
       axios
         .post(`http://127.0.0.1:8000/restaurants/${id}/blog/new/`, fd, config)
         .then((res) => {
-          console.log(res);
           navigate(`/restaurants/${id}`);
+          setLoading(false);
         })
         .catch((error) => {
           if (error.response.status === 401) {
@@ -140,7 +142,7 @@ const BlogCreate = () => {
       });
   }, []);
 
-  return (
+  return !loading ? (
     <Box>
       <MainNavBar />
 
@@ -231,6 +233,16 @@ const BlogCreate = () => {
           </Box>
         </Flex>
       </FormControl>
+    </Box>
+  ) : (
+    <Box textAlign="center" marginTop="50vh">
+      <Spinner
+        thickness="4px"
+        speed="0.65s"
+        emptyColor="gray.200"
+        color={colors.purple.medium}
+        size="xl"
+      />
     </Box>
   );
 };
