@@ -48,12 +48,12 @@ $ cd my-app
 ### Installation
 ```bash
 $ cd back-end
-$ pip install -r back-end/requirements.txt #install all required packages
-$ python back-end/manage.py migrate
+$ pip install -r requirements.txt #install all required packages
+$ python manage.py migrate
 ```
 
 ### Running the back-end
 
 ```bash
-$ python back-end/manage.py runserver
+$ python manage.py runserver
 ```
