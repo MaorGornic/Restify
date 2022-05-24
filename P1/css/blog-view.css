@@ -1,7 +1,0 @@
-:root {
-  --primary-color: #3734a9;
-}
-
-.badge {
-  background-color: var(--primary-color);
-}
